@@ -3,23 +3,31 @@
 <head>
   <meta charset="utf-8">
   
-  <title>About | Sisicca</title>
+  <title>数据库大作业 | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="PostgreSQL" />
   
   
   
-  <meta name="description" content="Something about sisicca WHY BLOG?  Don’t wanna show up in WeChat or OICQ, just wanna record my life but not share it with people in my “friend list”. A way for some old friends who really want to know">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://example.com/about/index.html">
+  
+  <meta name="description" content="假设你是一个系统分析员，正在接受一个电子商务平台项目委托，要求如下： 1、网站只经营图书，要求图书向读者呈现书号、书名、出版社、图书简介、作者、出版时间等；网站用户包含管理用户和读者用户，用户资料包含编号、用户名、姓名、地址、联系手机、邮编、密码、权限设定；注册用户下订单后，供应商可以登陆查询订单并向服务对象发货，包含供应商编号、名称、经营范围、办公电话、办公地址。 2、网站分为前端和后端两部分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库大作业">
+<meta property="og:url" content="http://example.com/2020/12/28/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%A7%E4%BD%9C%E4%B8%9A/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Something about sisicca WHY BLOG?  Don’t wanna show up in WeChat or OICQ, just wanna record my life but not share it with people in my “friend list”. A way for some old friends who really want to know">
+<meta property="og:description" content="假设你是一个系统分析员，正在接受一个电子商务平台项目委托，要求如下： 1、网站只经营图书，要求图书向读者呈现书号、书名、出版社、图书简介、作者、出版时间等；网站用户包含管理用户和读者用户，用户资料包含编号、用户名、姓名、地址、联系手机、邮编、密码、权限设定；注册用户下订单后，供应商可以登陆查询订单并向服务对象发货，包含供应商编号、名称、经营范围、办公电话、办公地址。 2、网站分为前端和后端两部分">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-12-24T06:41:02.000Z">
-<meta property="article:modified_time" content="2020-12-24T11:39:34.300Z">
+<meta property="og:image" content="http://example.com/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/74E38FEF29E1ED54D0184B0AA786C063.png">
+<meta property="og:image" content="http://example.com/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/975316ED6FD01B31FDE1C33AEC40D583.png">
+<meta property="og:image" content="http://example.com/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/81E52671EA4D509595C2D1C431B5AE0B.png">
+<meta property="og:image" content="http://example.com/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/8D3488FA3F1FF3413924B60B049952FD.png">
+<meta property="article:published_time" content="2020-12-28T13:46:22.000Z">
+<meta property="article:modified_time" content="2020-12-31T01:42:01.508Z">
 <meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="PostgreSQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/74E38FEF29E1ED54D0184B0AA786C063.png">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
   
@@ -68,8 +76,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css" >
-  
   
   
 
@@ -77,7 +83,7 @@
 
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -100,7 +106,7 @@
             
               <a class="brand" style="
                  margin-top: 0px;"  
-                 >
+                href="#" data-toggle="modal" data-target="#myModal" >
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
               </a>
             
@@ -167,111 +173,11 @@
 
 
 
-  
-    <section class="awSlider">
-      <div class="carousel slide carousel-fade " data-ride="carousel">
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-           
-              
-                <div class="item active" style="max-height:600px; overflow: hidden;">
-              
-                <img id="carousel-img0" src="/css/images/1.jpg">
-              </div>
-
-              <!-- 自适应大图 -->
-              <script>
-              	  var carouselResize = function() {
-              	  	  var h = document.body.clientHeight / 3;
-	                  var img0 = new Image();
-	                  var imageTag0 = document.getElementById("carousel-img0");
-	                  img0.src = imageTag0.src;
-	                  img0.onload=function(){
-	                    if (img0.width / img0.height <= document.body.clientWidth / h) {
-	                      imageTag0.style.width = document.body.clientWidth + "px";
-	                    } else {
-	                      imageTag0.style.height = h + "px";
-	                      imageTag0.style.marginLeft = -(h * img0.width / img0.height - document.body.clientWidth) / 2 + "px";
-	                    }
-	                  };
-              	  };
-                  carouselResize();
-              </script>
-            
-              
-                <div class="item" style="max-height:600px; overflow: hidden;">
-              
-                <img id="carousel-img1" src="/css/images/2.jpg">
-              </div>
-
-              <!-- 自适应大图 -->
-              <script>
-              	  var carouselResize = function() {
-              	  	  var h = document.body.clientHeight / 3;
-	                  var img1 = new Image();
-	                  var imageTag1 = document.getElementById("carousel-img1");
-	                  img1.src = imageTag1.src;
-	                  img1.onload=function(){
-	                    if (img1.width / img1.height <= document.body.clientWidth / h) {
-	                      imageTag1.style.width = document.body.clientWidth + "px";
-	                    } else {
-	                      imageTag1.style.height = h + "px";
-	                      imageTag1.style.marginLeft = -(h * img1.width / img1.height - document.body.clientWidth) / 2 + "px";
-	                    }
-	                  };
-              	  };
-                  carouselResize();
-              </script>
-            
-              
-                <div class="item" style="max-height:600px; overflow: hidden;">
-              
-                <img id="carousel-img2" src="/css/images/3.jpg">
-              </div>
-
-              <!-- 自适应大图 -->
-              <script>
-              	  var carouselResize = function() {
-              	  	  var h = document.body.clientHeight / 3;
-	                  var img2 = new Image();
-	                  var imageTag2 = document.getElementById("carousel-img2");
-	                  img2.src = imageTag2.src;
-	                  img2.onload=function(){
-	                    if (img2.width / img2.height <= document.body.clientWidth / h) {
-	                      imageTag2.style.width = document.body.clientWidth + "px";
-	                    } else {
-	                      imageTag2.style.height = h + "px";
-	                      imageTag2.style.marginLeft = -(h * img2.width / img2.height - document.body.clientWidth) / 2 + "px";
-	                    }
-	                  };
-              	  };
-                  carouselResize();
-              </script>
-            
-        </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href=".carousel" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span class="sr-only">Geri</span>
-        </a>
-        <a class="right carousel-control" href=".carousel" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span class="sr-only">İleri</span>
-        </a>
-      </div>
-    </section>
-    
-  
-
-
-
       
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="page-"  class="article article-type-page" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-数据库大作业" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -279,7 +185,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      about
+      数据库大作业
     </h1>
   
 
@@ -287,32 +193,62 @@
     
     <div class="article-meta">
       
+	<a href="/2020/12/28/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%A7%E4%BD%9C%E4%B8%9A/" class="article-date">
+	  <time datetime="2020-12-28T13:46:22.000Z" itemprop="datePublished">2020-12-28</time>
+	</a>
+
       
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
       
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
       
 
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Something-about-sisicca"><a href="#Something-about-sisicca" class="headerlink" title="Something about sisicca"></a>Something about sisicca</h1><hr>
-<h2 id="WHY-BLOG"><a href="#WHY-BLOG" class="headerlink" title="WHY BLOG?"></a>WHY BLOG?</h2><blockquote>
-<ul>
-<li>Don’t wanna show up in WeChat or OICQ, just wanna record my life but not share it with people in my “friend list”.</li>
-<li>A way for some old friends who really want to know what’s going on with me recently, a chance to look at myself.</li>
-</ul>
+        <blockquote>
+<p>假设你是一个系统分析员，正在接受一个电子商务平台项目委托，要求如下：</p>
+<p>1、网站只经营图书，要求图书向读者呈现书号、书名、出版社、图书简介、作者、出版时间等；网站用户包含管理用户和读者用户，用户资料包含编号、用户名、姓名、地址、联系手机、邮编、密码、权限设定；注册用户下订单后，供应商可以登陆查询订单并向服务对象发货，包含供应商编号、名称、经营范围、办公电话、办公地址。</p>
+<p>2、网站分为前端和后端两部分，后台用户主要是系统操作人员，包含管理员（全部权限）、销售（具有查看未支付订单、浏览客户信息权限）和售后客服（具有查看已经支付订单、浏览客户信息权限），前端用户主要是买家，分为游客（只有浏览权限）和注册用户（可以浏览、下订单、支付款项、查看订单状态、发起售后问题等）；</p>
+<p> 请根据所学知识在Powerdesigner完成上述数据库的建模设计及规范化设计，然后在Postgre SQL上完成数据库和表的创建、数据操作（插入、修改、删除）、授权管理及所有销售记录的备份、恢复。</p>
+<p> 备注：其他未提及的信息可以自行进行假设。</p>
 </blockquote>
-<h2 id="WHY-ENGLISH"><a href="#WHY-ENGLISH" class="headerlink" title="WHY ENGLISH?"></a>WHY ENGLISH?</h2><blockquote>
-<ul>
-<li>Practice my poor English writing,though my Chinese writing sucks as well.</li>
-<li>Lots of Information Technology terms would be naturally expressed in English,considering I will post technical learning notes on this blog.</li>
-</ul>
-</blockquote>
-<h2 id="ME"><a href="#ME" class="headerlink" title="ME."></a>ME.</h2><blockquote>
-<ul>
-<li>Technical Life: A coder.</li>
-<li>Private Life: A liar.</li>
-</ul>
-</blockquote>
+<h2 id="需求文档"><a href="#需求文档" class="headerlink" title="需求文档"></a>需求文档</h2><p>数据库需要完成的功能主要有：</p>
+<p>1.图书基本信息的输入、插入、修改、删除，包括书号、书名、出版社、图书简介、作者、出版时间、价格；</p>
+<p>2.读者用户基本信息的输入、插入、修改、删除，包括编号、用户名、姓名、地址、联系手机、邮编、密码、权限设定等；</p>
+<p>3.管理用户基本信息的输入、插入、修改、删除，包括编号、管理员用户名、姓名、地址、联系手机、邮编、密码、权限设定；</p>
+<p>4.书籍订单信息的输入、插入、修改、删除，包括订单编号、书籍编号、供应商信息、买书用户编号、成交日期、发货日期、订单支付情况；</p>
+<p>5.供应商信息的输入、插入、修改、删除，包含供应商编号、名称、经营范围、办公电话、办公地址；</p>
+<h2 id="实体图及E-R图"><a href="#实体图及E-R图" class="headerlink" title="实体图及E-R图"></a>实体图及E-R图</h2><p>图书实体图：</p>
+<p>![image-20201229171030363](/Users/violet/Library/Application Support/typora-user-images/image-20201229171030363.png)</p>
+<p>读者用户实体图：![image-20201229100850543](/Users/violet/Library/Application Support/typora-user-images/image-20201229100850543.png)</p>
+<p>管理用户实体图：</p>
+<p>![image-20201229101125666](/Users/violet/Library/Application Support/typora-user-images/image-20201229101125666.png)</p>
+<p>书籍订单实体图：![image-20201229191220011](/Users/violet/Library/Application Support/typora-user-images/image-20201229191220011.png)</p>
+<p>供应商实体图：</p>
+<p>![image-20201229100143680](/Users/violet/Library/Application Support/typora-user-images/image-20201229100143680.png)</p>
+<p>E-R图：</p>
+<p>![image-20201229191355519](/Users/violet/Library/Application Support/typora-user-images/image-20201229191355519.png)</p>
+<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>概念数据模型：<img src="/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/74E38FEF29E1ED54D0184B0AA786C063.png" alt="74E38FEF29E1ED54D0184B0AA786C063"></p>
+<p>逻辑概念模型：</p>
+<p><img src="/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/975316ED6FD01B31FDE1C33AEC40D583.png" alt="975316ED6FD01B31FDE1C33AEC40D583"></p>
+<p>物理概念模型：</p>
+<p><img src="/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/81E52671EA4D509595C2D1C431B5AE0B.png" alt="81E52671EA4D509595C2D1C431B5AE0B"></p>
+<h2 id="数据字典"><a href="#数据字典" class="headerlink" title="数据字典"></a>数据字典</h2><p><img src="/Users/violet/Library/Containers/com.tencent.qq/Data/Library/Caches/Images/8D3488FA3F1FF3413924B60B049952FD.png" alt="8D3488FA3F1FF3413924B60B049952FD"></p>
+<h2 id="PostgreSQL操作"><a href="#PostgreSQL操作" class="headerlink" title="PostgreSQL操作"></a>PostgreSQL操作</h2><p>数据库以及表的创建通过Powerdesigner导出SQL语句，在pgAdmin 4创建脚本并输入导出的SQL语句即可完成；![image-20201231093600454](/Users/violet/Library/Application Support/typora-user-images/image-20201231093600454.png)</p>
+<p>数据操作（插入、修改、删除）以及授权通过pgAdmin 4的GUI即可完成；</p>
+<p>![image-20201231093639076](/Users/violet/Library/Application Support/typora-user-images/image-20201231093639076.png)</p>
+<p>授权管理通过pgAdmin 4的GUI的授权向导可以完成：</p>
+<p>![image-20201231093753845](/Users/violet/Library/Application Support/typora-user-images/image-20201231093753845.png)</p>
+<p>备份与恢复通过pgAdmin 4的GUI可以完成：</p>
+<p>![image-20201231093913306](/Users/violet/Library/Application Support/typora-user-images/image-20201231093913306.png)</p>
+<p>![image-20201231093948818](/Users/violet/Library/Application Support/typora-user-images/image-20201231093948818.png)</p>
 
       
     </div>
@@ -326,7 +262,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/about/index.html" target="_blank" title="about">http://example.com/about/index.html</a>
+          <a href="/2020/12/28/数据库大作业/" target="_blank" title="数据库大作业">http://example.com/2020/12/28/数据库大作业/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -365,15 +301,38 @@
 
       
       
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+      
 
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">数据库系统</div>
+    </a>
+  
+</nav>
+
   
 </article>
 
 <!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3"><span class="nav-number">1.</span> <span class="nav-text">需求文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BD%93%E5%9B%BE%E5%8F%8AE-R%E5%9B%BE"><span class="nav-number">2.</span> <span class="nav-text">实体图及E-R图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8"><span class="nav-number">4.</span> <span class="nav-text">数据字典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PostgreSQL%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">PostgreSQL操作</span></a></li></ol>
+    
+    </div>
+  </aside>
 
 </section>
         
@@ -477,6 +436,10 @@
 
 
 
+  
+<script src="/js/dialog.js"></script>
+
+
 
 
 
@@ -560,6 +523,8 @@
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>
