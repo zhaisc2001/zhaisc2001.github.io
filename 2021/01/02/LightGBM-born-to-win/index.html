@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>lightgbm:born to win | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="LightGBM" />
+  
+  
+  
+  
+  <meta name="description" content="IntroductionBefore reading, I assume that you already know something about ensamble learning, such as the difference between boosting and bagging. The full name of LightGBM is light gradient boosting">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LightGBM:born to win">
+<meta property="og:url" content="http://example.com/2021/01/02/LightGBM-born-to-win/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="IntroductionBefore reading, I assume that you already know something about ensamble learning, such as the difference between boosting and bagging. The full name of LightGBM is light gradient boosting">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-02T01:46:19.000Z">
+<meta property="article:modified_time" content="2021-01-02T07:11:52.309Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="LightGBM">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-LightGBM-born-to-win" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      LightGBM:born to win
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/01/02/LightGBM-born-to-win/" class="article-date">
+	  <time datetime="2021-01-02T01:46:19.000Z" itemprop="datePublished">2021-01-02</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Before reading, I assume that you already know something about ensamble learning, such as the difference between boosting and bagging.</p>
+<p>The full name of LightGBM is light gradient boosting machine, it’s an engineering inplementation of GBDT algorithm like xgboost, as it’s shown in name, it’s light, so it can converge faster and use less memory than xgboost,  then how did it do these?</p>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><h3 id="Gradient-based-One-Side-Sampling-GOSS"><a href="#Gradient-based-One-Side-Sampling-GOSS" class="headerlink" title="Gradient-based One-Side Sampling(GOSS)"></a>Gradient-based One-Side Sampling(GOSS)</h3><p>The smaller the gradient, the better the model fits. The Gradient-based One-Side Sampling (GOSS) algorithm uses this information to sample the samples, reducing the number of samples with small gradients, and only focusing on samples with large gradients in the next iteration, greatly reducing the computational effort.</p>
+<p>The GOSS algorithm retains the samples with large gradients and randomly samples the samples with small gradients. In order not to change the data distribution of the samples, a constant is introduced for the samples with small gradients for balancing when calculating the gain. The specific algorithm is shown below:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Input:I:training data, d:iterations</span><br><span class="line">      a:sampling ratio of large gradient data</span><br><span class="line">      b:sampling ratio of small gradient data</span><br><span class="line">      loss:loss function,L:weak learner</span><br><span class="line">models&lt;-&#123;&#125;,fack&lt;-(<span class="number">1</span>-a)/b</span><br><span class="line">topN&lt;-a*<span class="built_in">len</span>(I),randN&lt;-b*<span class="built_in">len</span>(I)</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span> to d do</span><br><span class="line">	preds&lt;-models.predict(I)</span><br><span class="line">  g&lt;-loss(I,preds),w&lt;-&#123;<span class="number">1</span>,<span class="number">1</span>,...&#125;</span><br><span class="line">  <span class="built_in">sorted</span>&lt;-GetSortedIndices(<span class="built_in">abs</span>(g))</span><br><span class="line">  topSet&lt;-<span class="built_in">sorted</span>[<span class="number">1</span>:topN]</span><br><span class="line">  randSet&lt;-RandomPick(<span class="built_in">sorted</span>[topN:<span class="built_in">len</span>(I)],randN)</span><br><span class="line">  usedSet&lt;-topSet+randSet</span><br><span class="line">  w[randSet]*=fact<span class="comment">#Assign weight fact to the small gradient data.</span></span><br><span class="line">  newModel&lt;-L(I[usedSet],-g[usedSet],w[usedSet])</span><br><span class="line">  models.append(newModel)</span><br></pre></td></tr></table></figure>
+<p>We can see that GOSS first sorts the samples based on the absolute value of the gradient (without saving the sorted results), then gets the top a% of the samples with large gradients, and b% of the overall samples, and scales up the weights of the samples with small gradients by multiplying by (1-a)/b when calculating the gain. On the one hand the algorithm focuses more attention on the undertrained samples, and on the other hand by multiplying the weights it prevents the sampling from affecting the original data distribution too much.</p>
+<h3 id="histogram-based-algorithms"><a href="#histogram-based-algorithms" class="headerlink" title="histogram-based algorithms"></a>histogram-based algorithms</h3><p>The basic idea of the histogram algorithm is to discretize a continuous feature into k discrete features and to construct a histogram of width k for statistical information (containing k bins). With the histogram algorithm we do not need to traverse the data, but only the k bins to find the best splitting point. We know that feature discretization has many advantages, such as easy storage, faster operations, robustness, more stable models, etc. For the histogram algorithm, the two most immediate advantages are as follows (taking k=256 as an example): </p>
+<blockquote>
+<ul>
+<li>smaller memory footprint: XGBoost requires 32-bit floating point numbers to store the feature values and 32-bit shaping to store the indexes, whereas LightGBM only requires 8 bits to store the histogram, which is 7/8 less;</li>
+<li>smaller computational cost: when computing the When calculating the feature splitting gain, XGBoost needs to traverse the data once to find the best splitting point, while LightGBM only needs to traverse the data once k times, directly reducing the time complexity from O(#data*#feature) to O(k*#feature), which we know #data&gt;&gt;k. Although the inability to find the exact splitting point after discretizing the features may have some impact on the accuracy of the model, the coarser splitting also has a regularizing effect, reducing the variance of the model to some extent.</li>
+</ul>
+</blockquote>
+<h3 id="The-Exclusive-Feature-Bundling"><a href="#The-Exclusive-Feature-Bundling" class="headerlink" title="The Exclusive Feature Bundling"></a>The Exclusive Feature Bundling</h3><p>High-dimensional features tend to be sparse and features may be mutually exclusive (e.g. two features do not take non-zero values at the same time). If two features are not completely mutually exclusive (e.g. only in some cases they do not take non-zero values at the same time), the degree of mutually exclusive can be expressed as the mutually exclusive rate. The Exclusive Feature Bundling (EFB) algorithm states that the number of features can be reduced if some features are fused and bound.<br>For this idea, we encounter two problems:<br>1.Which features can be bound together?<br>2.How are the feature values determined after the features are bound?</p>
+<p>For problem 1: The EFB algorithm uses the relationship between features and features to construct a weighted undirected graph and converts it into a graph colouring algorithm. We know that graph colouring is an NP-Hard problem, so a greedy algorithm is used to obtain an approximate solution, as follows: construct a weighted undirected graph, where the vertices are the features and the edges are the degree of mutual exclusion between two features; sort the nodes in descending order according to their degrees, the greater the degree, the greater the conflict with other features; iterate through each feature and assign it to an existing feature package, or create a new feature package, so that the overall conflict is minimised. The algorithm allows two features that are not completely mutually exclusive to increase the number of feature bundles, and balances the accuracy and efficiency of the algorithm by setting the maximum mutually exclusive ratio. the pseudo code for the EFB algorithm is shown below.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Input:F:features,K:<span class="built_in">max</span> conflict count</span><br><span class="line">Construct graph G</span><br><span class="line">searchOrder&lt;-G.sortByDgree()</span><br><span class="line">bundles&lt;-&#123;&#125;,bundlesConflict&lt;-&#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> searchOrder do</span><br><span class="line">	needNew&lt;-<span class="literal">True</span></span><br><span class="line">  <span class="keyword">for</span> j=<span class="number">1</span> to <span class="built_in">len</span>(bundles) do</span><br><span class="line">  	cnt&lt;-ConflictCnt(bundles[j],F[i])</span><br><span class="line">    <span class="keyword">if</span> cnt+bundlesConflict[i]≤K then</span><br><span class="line">    	bundles[j].add(F[i]),needNew&lt;-<span class="literal">False</span></span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> needNew then</span><br><span class="line">    	Add F[i] <span class="keyword">as</span> a new bundle to bundles</span><br><span class="line">Output:bundles</span><br></pre></td></tr></table></figure>
+<p>We see that a time complexity of O(#feature<sup>2</sup>) , can be manageable with few features, but if the feature dimensionality reaches the millions level, the computation can be very large. To improve the efficiency, we propose a faster solution: the strategy of the EFB algorithm of sorting by constructing a graph, based on the node degree, is changed to a technique of sorting based on non-zero values, because the more non-zero values there are, the higher the probability of mutual exclusion will be.</p>
+<p>For Problem 2: The paper gives the feature merging algorithm, the key to which is that the original features can be separated from the merged features. Suppose there are two features in the Bundle, A takes  value from [0, 10) and B takes  value from [0, 20). To ensure the mutual exclusivity of features A and B, we can add an offset to feature B to convert it to [10, 30), and the feature after the Bundle takes the value [0, 30]. The exact algorithm is shown below.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Input:numData:number of data</span><br><span class="line">Input:F:One bundle of exclusive features</span><br><span class="line">binRanges&lt;-&#123;<span class="number">0</span>&#125;,totalBin&lt;-<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> F do</span><br><span class="line">	totalBin+=f.numBin</span><br><span class="line">  binRanges.append(totalBin)</span><br><span class="line">newBin&lt;-new Bin(numData)</span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span> to numData do</span><br><span class="line">	newBin[i]&lt;-<span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> j=<span class="number">1</span> to <span class="built_in">len</span>(F) do</span><br><span class="line">  	<span class="keyword">if</span> F[j].<span class="built_in">bin</span>[i]≠<span class="number">0</span> then</span><br><span class="line">    	newBin[i]&lt;-F[j].<span class="built_in">bin</span>[i]+binRanges[j]</span><br><span class="line">Output:new Bin,binRanges</span><br></pre></td></tr></table></figure>
+<h3 id="Leaf-wise-Best-first-Tree-Growth"><a href="#Leaf-wise-Best-first-Tree-Growth" class="headerlink" title="Leaf-wise (Best-first) Tree Growth"></a>Leaf-wise (Best-first) Tree Growth</h3><p>There are two strategies in the tree building process:<br>Level-wise: grow based on layers until the stopping condition is reached;<br>Leaf-wise: split the leaf node with the highest gain each time until the stopping condition is reached; </p>
+<p>XGBoost uses the Level-wise growth strategy to facilitate parallel calculation of split nodes at each layer, which improves the training speed, but also because the node gain is too small, it increases the number of unnecessary splits and increases the computational effort. </p>
+<p>LightGBM uses a Leaf-wise growth strategy to reduce the computational effort and prevent overfitting by limiting the maximum depth, but because the node with the highest gain needs to be computed each time, it cannot be split in parallel.</p>
+<h3 id="Optimal-Split-for-Categorical-Features"><a href="#Optimal-Split-for-Categorical-Features" class="headerlink" title="Optimal Split for Categorical Features"></a>Optimal Split for Categorical Features</h3><p>Most machine learning algorithms do not support category features directly, and typically encode them before feeding them into the model. A common way to handle category features is one-hot coding, but we know that one-hot coding is not recommended for decision trees:<br>1.it creates a sample cut imbalance problem and the cut gain is very small. For example, the nationality cut produces a series of features such as whether it is Chinese or not, whether it is American or not, and so on, where only a small number of samples are 1s and a large number of samples are 0s. The gain of this division is very small: the smaller set of split samples is too small a proportion of the total sample. Whatever the gain, it is almost negligible when multiplied by that proportion; the larger split sample set, which is almost the original sample set, has almost zero gain;<br>2.it affects decision tree learning: decision trees rely on statistical information about the data, whereas the unique heat code encoding slices the data into small, fragmented spaces. If the statistical information is not accurate on these small scattered spaces, the learning effect becomes poor.<br>LightGBM natively supports category features, which are divided into two subsets using many-vs-many slicing. The optimal slicing of category features is achieved. Assuming that there are k categories for a given dimensional feature, there are 2<sup>(k-1)</sup>-1 medium possibilities with a time complexity of O(2<sup>k</sup>), which LightGBM achieves O(klgk) based on Fisher’s “On Grouping For Maximum Homogeneity”.</p>
+<h2 id="Referances"><a href="#Referances" class="headerlink" title="Referances"></a>Referances</h2><p><strong>[1]Microsoft.LightGBM’s documentation[EB/OL].<a target="_blank" rel="noopener" href="https://lightgbm.readthedocs.io/en/latest/index.html">https://lightgbm.readthedocs.io/en/latest/index.html</a></strong></p>
+<p><strong>[2]M Qi.LightGBM: A Highly Efficient Gradient Boosting Decision Tree[EB/OL].<a target="_blank" rel="noopener" href="http://papers.nips.cc/paper/6907-lightgbm-a-highly-efficient-gradient-boosting-decision-tree.pdf,2017">http://papers.nips.cc/paper/6907-lightgbm-a-highly-efficient-gradient-boosting-decision-tree.pdf,2017</a>.</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/01/02/LightGBM-born-to-win/" target="_blank" title="LightGBM:born to win">http://example.com/2021/01/02/LightGBM-born-to-win/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LightGBM/" rel="tag">LightGBM</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">数据库系统</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Features"><span class="nav-number">2.</span> <span class="nav-text">Features</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradient-based-One-Side-Sampling-GOSS"><span class="nav-number">2.1.</span> <span class="nav-text">Gradient-based One-Side Sampling(GOSS)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#histogram-based-algorithms"><span class="nav-number">2.2.</span> <span class="nav-text">histogram-based algorithms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Exclusive-Feature-Bundling"><span class="nav-number">2.3.</span> <span class="nav-text">The Exclusive Feature Bundling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leaf-wise-Best-first-Tree-Growth"><span class="nav-number">2.4.</span> <span class="nav-text">Leaf-wise (Best-first) Tree Growth</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimal-Split-for-Categorical-Features"><span class="nav-number">2.5.</span> <span class="nav-text">Optimal Split for Categorical Features</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Referances"><span class="nav-number">3.</span> <span class="nav-text">Referances</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
