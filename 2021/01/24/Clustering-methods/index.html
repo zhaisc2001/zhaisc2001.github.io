@@ -3,19 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>tag: unsupervised learning | Sisicca</title>
+  <title>clustering methods | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
   
   
-  <meta name="description" content="Born To Die.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sisicca">
-<meta property="og:url" content="http://example.com/tags/unsupervised-learning/index.html">
+  <meta name="description" content="Fundamentals of clusteringsimilarity or distanceA training set which has n samples and m features can be presented as an M*N matrix X. xij means the value of i th feature of the j th sample. Minkowski">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clustering methods">
+<meta property="og:url" content="http://example.com/2021/01/24/Clustering-methods/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Born To Die.">
+<meta property="og:description" content="Fundamentals of clusteringsimilarity or distanceA training set which has n samples and m features can be presented as an M*N matrix X. xij means the value of i th feature of the j th sample. Minkowski">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-24T08:17:49.000Z">
+<meta property="article:modified_time" content="2021-01-30T01:10:37.462Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta name="twitter:card" content="summary">
   
@@ -66,8 +68,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css" >
-  
   
   
 
@@ -75,7 +75,7 @@
 
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -98,7 +98,7 @@
             
               <a class="brand" style="
                  margin-top: 0px;"  
-                 >
+                href="#" data-toggle="modal" data-target="#myModal" >
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
               </a>
             
@@ -169,43 +169,147 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-  
-  
+          <section id="main" style="float:none;"><article id="post-Clustering-methods" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
     
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/archives/2021" class="archive-year">2021</a></h1>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/01/24/Introduction-to-unsupervised-learning/" class="archive-article-date">
-	  <time datetime="2021-01-24T00:54:23.000Z" itemprop="datePublished">2021-01-24</time>
-	</a>
-
-      
+      <header class="article-header">
+        
   
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/01/24/Introduction-to-unsupervised-learning/">Introduction to unsupervised learning</a>
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Clustering methods
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/01/24/Clustering-methods/" class="article-date">
+	  <time datetime="2021-01-24T08:17:49.000Z" itemprop="datePublished">2021-01-24</time>
+	</a>
 
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Fundamentals-of-clustering"><a href="#Fundamentals-of-clustering" class="headerlink" title="Fundamentals of clustering"></a>Fundamentals of clustering</h1><h2 id="similarity-or-distance"><a href="#similarity-or-distance" class="headerlink" title="similarity or distance"></a>similarity or distance</h2><p>A training set which has n samples and m features can be presented as an M*N matrix X.</p>
+<p>x<sub>ij</sub> means the value of i th feature of the j th sample.</p>
+<h3 id="Minkowski-distance"><a href="#Minkowski-distance" class="headerlink" title="Minkowski distance"></a>Minkowski distance</h3><p>$$<br>Minkowski\ distance\<br>d_{ij}=(\sum^{m}<em>{k=1}|x</em>{ki}-x_{kj}|^{p})^{\frac{1}{p}},p ≥1.<br>$$</p>
+<p>Minkowski distance presents the distance of x<sub>i</sub> and x<sub>j</sub>.</p>
+<p>p=2, it is Euclidean distance.p=1, it is Manhattan distance.p=∞, it is Chebyshev distance.<br>$$<br>Chebyshev\ distance\<br>d_{ij}=max_{k}|x_{ki}-x_{kj}|<br>$$</p>
+<h3 id="Mahalanobis-distance"><a href="#Mahalanobis-distance" class="headerlink" title="Mahalanobis distance"></a>Mahalanobis distance</h3><p>It’s an extension of Euclidean distance:<br>$$<br>Mahalanobis\ distance\<br>d_{ij}=[(x_{i}-x_{j})^{T}S^{-1}(x_{i}-x_{j})]^{\frac{1}{2}}<br>$$<br>S is the covariance matrix of X.</p>
+<h3 id="Correlation-coefficient"><a href="#Correlation-coefficient" class="headerlink" title="Correlation coefficient"></a>Correlation coefficient</h3><p>The absolute value of correlation coefficient<br>$$<br>r_{ij}=\frac{\sum_{k=1}^{m}(x_{ki}-\overline{x}<em>{i})(x</em>{kj}-\overline{x}<em>{j}))}{[\sum</em>{k=1}^{m}(x_{ki}-\overline{x}<em>{i})^2\sum</em>{k=1}^{m}(x_{kj}-\overline{x}_{j})^2]^{\frac{1}{2}}}<br>$$<br>The more it is close to 1, the more similar i and j are, the more it is close to 0, the more unsimilar they are.</p>
+<h3 id="Cosine"><a href="#Cosine" class="headerlink" title="Cosine"></a>Cosine</h3><p>s<sub>ij</sub> is defined as<br>$$<br>s_{ij}=\frac{\sum_{k=1}^{m}x_{ki}x_{kj}}{[\sum_{k=1}^{m}x_{ki}^2\sum_{k=1}^{m}x_{kj}^2]^{\frac{1}{2}}}<br>$$<br>The more cosine is close to 1, the more similar i and j are, the more it is close to 0, the more unsimilar they are.</p>
+<h2 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h2><p>There are several definitions of cluster, they are as follow:</p>
+<blockquote>
+<ul>
+<li>Suppose T is a given positive number, if x<sub>i</sub>,x<sub>j</sub> are two random samples of set G, when<br>$$<br>d_{ij}≤T<br>$$<br>we say G is a cluster.</li>
+<li>Suppose T is a given positive number, if </li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/01/24/Clustering-methods/" target="_blank" title="Clustering methods">http://example.com/2021/01/24/Clustering-methods/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/02/01/HFOs%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          HFOs检测技术调研文献综述
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/01/23/%E7%90%90%E4%BA%8B%E8%AE%B0%E5%BF%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">琐事记忆</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fundamentals-of-clustering"><span class="nav-number">1.</span> <span class="nav-text">Fundamentals of clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#similarity-or-distance"><span class="nav-number">1.1.</span> <span class="nav-text">similarity or distance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Minkowski-distance"><span class="nav-number">1.1.1.</span> <span class="nav-text">Minkowski distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mahalanobis-distance"><span class="nav-number">1.1.2.</span> <span class="nav-text">Mahalanobis distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Correlation-coefficient"><span class="nav-number">1.1.3.</span> <span class="nav-text">Correlation coefficient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cosine"><span class="nav-number">1.1.4.</span> <span class="nav-text">Cosine</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster"><span class="nav-number">1.2.</span> <span class="nav-text">Cluster</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
 
 </section>
         
@@ -309,6 +413,10 @@
 
 
 
+  
+<script src="/js/dialog.js"></script>
+
+
 
 
 
@@ -392,6 +500,8 @@
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>

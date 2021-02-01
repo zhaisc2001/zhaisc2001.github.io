@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>hfos检测技术调研文献综述 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="HFOs" />
+  
+  
+  
+  
+  <meta name="description" content="​    调研了2002年至2016年的19篇文献，自动检测方法主要使用的数据来自于局部场电位（LFP）以及颅内脑电图（iEEG）。 ​    导致检测出错的原因主要有以下三个： （1）带通滤波数据中振荡的出现可能是由滤波的伪影或其他频率成分的谐波引起的。 （2）噪声、移动趋势和多重振荡的存在可能会破坏代表规律活动的谱峰的可辨性。 （3）最后，校准通常是以半监督的方式进行的，即需要人类专家审查自动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HFOs检测技术调研文献综述">
+<meta property="og:url" content="http://example.com/2021/02/01/HFOs%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="​    调研了2002年至2016年的19篇文献，自动检测方法主要使用的数据来自于局部场电位（LFP）以及颅内脑电图（iEEG）。 ​    导致检测出错的原因主要有以下三个： （1）带通滤波数据中振荡的出现可能是由滤波的伪影或其他频率成分的谐波引起的。 （2）噪声、移动趋势和多重振荡的存在可能会破坏代表规律活动的谱峰的可辨性。 （3）最后，校准通常是以半监督的方式进行的，即需要人类专家审查自动">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-01T00:31:27.000Z">
+<meta property="article:modified_time" content="2021-02-01T02:27:04.293Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="HFOs">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-HFOs检测技术调研文献综述" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      HFOs检测技术调研文献综述
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/02/01/HFOs%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" class="article-date">
+	  <time datetime="2021-02-01T00:31:27.000Z" itemprop="datePublished">2021-02-01</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>​    调研了2002年至2016年的19篇文献，自动检测方法主要使用的数据来自于局部场电位（LFP）以及颅内脑电图（iEEG）。</p>
+<p>​    导致检测出错的原因主要有以下三个：</p>
+<p>（1）带通滤波数据中振荡的出现可能是由滤波的伪影或其他频率成分的谐波引起的。</p>
+<p>（2）噪声、移动趋势和多重振荡的存在可能会破坏代表规律活动的谱峰的可辨性。</p>
+<p>（3）最后，校准通常是以半监督的方式进行的，即需要人类专家审查自动检测器识别的候选事件样本。这些方法是针对特定的数据库进行优化的，而检测受到检测者经验的限制，从而诱发了可能的偏差、评级器的可靠性和重复性较低问题。</p>
+<p>​    不同的方法都采用三个主要的步骤：（一）预处理过程；(二)从背景中选择事件；(三)辨识并移除虚假振荡。</p>
+<h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><p>​    任何HFOs检测方法的第一步，大多数情况下需要将信号进行带通滤波处理以限制观察范围，此外还可能进行频谱均衡等滤波。大多数情况下，滤波过程会因为伪影的频率成分使数据收到虚假振荡信号的影响。</p>
+<h2 id="从背景中选择事件"><a href="#从背景中选择事件" class="headerlink" title="从背景中选择事件"></a>从背景中选择事件</h2><p>​    从背景中选择事件是一个两步走的过程：(一) 实施一种方法，监测有关频段内振荡活动的能量变化；(二) 使用一种程序以突出显示同一频段内的事件。</p>
+<p>​    第一步中，已经有3种经典方法进行检测：</p>
+<p>（一）均方根（RMS）检测，基于能量定义为滤波信号的均方根振幅的移动平均数。对每个通道进行过滤，能量超过整个EEG平均能量标准差（SD）5倍且超过6ms的片段被认为是HFO。据报道，这种方法的灵敏度为84%<sup>[2]</sup>。（二）线长能量检测，每个信道通过一个频谱均衡器（一阶差分滤波器），然后进行带通滤波，能量阈值计算为该时段的经验累积分布函数的95百分位数。时段持续3min，包括可能的事件。在伽马波段研究中，这种方法的灵敏度为89.5%。特异性尚未报道，但在以前的一项研究中，85%的候选事件作为假阳性被拒绝<sup>[2]</sup>。</p>
+<p>（三）希尔伯特变换检测，每个通道都经过带通滤波，用整个脑电图上包络SD的5倍阈值检测事件。灵敏度为100%，特异度为90.5%<sup>[3]</sup>。</p>
+<p>此外还有一些可以与上述三种方法进行结合或独立的检测方法，不再赘述：</p>
+<p>​    第二步中，目前使用的方法都是采用统计阈值来识别，可以使用标准差作为统计阈值，也有使用累计分布第n个百分位数作为阈值的，还有非统计方法。</p>
+<h2 id="拒绝虚假事件"><a href="#拒绝虚假事件" class="headerlink" title="拒绝虚假事件"></a>拒绝虚假事件</h2><p>​    这一步中可以简单的计算每个检测信号的时间超过阈值以及计算振荡次数、计算宽带信号和滤波信号的最大绝对值之间的比率，也可以使用聚类，支持向量机等复杂算法。</p>
+<p>​    最后，使用人眼对自动算法的结果进行验证是必须的，因为目前的最好标准还是人类的视觉识别结果。</p>
+<h2 id="无监督学习方法概述-4"><a href="#无监督学习方法概述-4" class="headerlink" title="无监督学习方法概述[4]"></a>无监督学习方法概述<sup>[4]</sup></h2><h1 id="Fundamentals-of-unsupervised-learning"><a href="#Fundamentals-of-unsupervised-learning" class="headerlink" title="Fundamentals of unsupervised learning"></a>Fundamentals of unsupervised learning</h1><p>Unsupervised learning is a machine learning method, which can learn the statistical patterns or internal structure from the data without labels, mainly includes clustering, dimensionality reduction and probability estimation, it can be used as pre-process of data analysis or supervised learning.</p>
+<p>Suppose we have a training set which can be presented as a M*N matrix, each single row means a feature and each single line means a sample. The basic idea of unsupervised learning is to give some kind of “compression” to the matrix in case that we can find a potential structrue of the data. Unsupervised learning can find the horizontal structrue of data such as clustering, can find the vertical structrue of data such as dimensionality reduction, and can find both horizontal structrue and vertical structrue of data such as learning the generated model from the data.</p>
+<h1 id="Basic-questions"><a href="#Basic-questions" class="headerlink" title="Basic questions"></a>Basic questions</h1><h2 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h2><p>There are two kinds of clustering, one is hard clustering, the other one is soft clustering. The former  cluster one sample to one class, the later cluster one sample to multiple calsses. Suppose input zone X ⊆ R<sup>d</sup>, output zone is class set Z = {1,2,…,k}, then the clustering model is z= g<sub>θ</sub>(x) or P<sub>θ</sub>(z|x), x∈X is the sample vector,z∈Z is the class of sample, θ is parameter, z= g<sub>θ</sub>(x) is the modle of hard clustering and P<sub>θ</sub>(z|x) is the model of soft clustering. </p>
+<p>Clustering can help find the potential horizontal structrue of data, as an exception, co-clustering is an algorithm of clustering, it clusters both samples and features, it learns the vertical and horizontal structrue of data in the meanwhile.</p>
+<h2 id="Dimensionality-reduction"><a href="#Dimensionality-reduction" class="headerlink" title="Dimensionality reduction"></a>Dimensionality reduction</h2><p>Dimensionality reduction is convert the sample from high-dimen zone to low-dimen zone, or convert the sample into same dimensionality zone but a proper strctrue, it will present the relationship between samples better. There are two kinds of dimensinality reduction: linear and non-linear. The model of dimensionality reduction is z<sub>i</sub>=g<sub>θ</sub>(x<sub>i</sub>),i=1,2,…,N. Dimensionality reduction can help find the potential horizontal structrue of data.</p>
+<h2 id="Probability-model-estimation"><a href="#Probability-model-estimation" class="headerlink" title="Probability model estimation"></a>Probability model estimation</h2><p>Suppose that the training data was generated by a probability model, we can learn the structrue and parameters from training data. The structrue type of the probability model was given by us, and probability model includes hybrid model, probabilistic graphic model and so on. Probabilistic model includes directed graphic model and undirected graphic model.</p>
+<p>Probability model can be presented as P<sub>θ</sub>(x|z), z means the number of components in hybrid model, and means the structrue of graph in probability graphic model.Soft clustering can be considered as a probability model estimation problem as well, according to the bayesian formula:<br>$$<br>P(z|x)=\frac{P(x|z)P(z)}{P(x)}\propto P(x|z)P(z)<br>$$<br>Assume that P(z) follows a uniform distribution, we just need to estimate P<sub>θ</sub>(x|z).</p>
+<p>Probability model estimation is used in topic analytics and graph analytics.</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><strong>[1]Staba RJ, Wilson CL, Bragin A, Fried I, Engel J Jr. Quantitative analysis of high-frequency oscillations (80-500 Hz) recorded in human epileptic hippocampus and entorhinal cortex. J Neurophysiol. 2002;88(4):1743–52.</strong></p>
+<p><strong>[2]Worrell GA, Gardner AB, Stead SM, Hu S, Goerss S, Cascino GJ, et al. High- frequency oscillations in human temporal lobe: simultaneous microwire and clinical macroelectrode recordings. Brain. 2008;131(4):928–37.</strong></p>
+<p><strong>[3]Salami P, Levesque M, Gotman J, Avoli M. A comparison between automated detection methods of high-frequency oscillations (80-500 Hz) during seizures. J Neurosci Methods. 2012;211(2):265–71</strong></p>
+<p><strong>[4]李航. 统计学习方法. 清华大学出版社, 2012.</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/02/01/HFOs检测技术调研文献综述/" target="_blank" title="HFOs检测技术调研文献综述">http://example.com/2021/02/01/HFOs检测技术调研文献综述/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HFOs/" rel="tag">HFOs</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/24/Clustering-methods/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Clustering methods</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E8%83%8C%E6%99%AF%E4%B8%AD%E9%80%89%E6%8B%A9%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">从背景中选择事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%92%E7%BB%9D%E8%99%9A%E5%81%87%E4%BA%8B%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">拒绝虚假事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0-4"><span class="nav-number">4.</span> <span class="nav-text">无监督学习方法概述[4]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fundamentals-of-unsupervised-learning"><span class="nav-number"></span> <span class="nav-text">Fundamentals of unsupervised learning</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-questions"><span class="nav-number"></span> <span class="nav-text">Basic questions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Clustering"><span class="nav-number">1.</span> <span class="nav-text">Clustering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dimensionality-reduction"><span class="nav-number">2.</span> <span class="nav-text">Dimensionality reduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Probability-model-estimation"><span class="nav-number">3.</span> <span class="nav-text">Probability model estimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
