@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>hfo经典检测方法以及最新的无监督半监督方法(4) | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="HFOs" />
+  
+  
+  
+  
+  <meta name="description" content="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clusteringIntroduction从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。 之后说明文章写作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HFO经典检测方法以及最新的无监督半监督方法(4)">
+<meta property="og:url" content="http://example.com/2021/02/15/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-4/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clusteringIntroduction从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。 之后说明文章写作">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-15T11:04:14.000Z">
+<meta property="article:modified_time" content="2021-02-15T13:27:01.979Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="HFOs">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-HFO经典检测方法以及最新的无监督半监督方法-4" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      HFO经典检测方法以及最新的无监督半监督方法(4)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/02/15/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-4/" class="article-date">
+	  <time datetime="2021-02-15T11:04:14.000Z" itemprop="datePublished">2021-02-15</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering"><a href="#A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering" class="headerlink" title="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering"></a>A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。</p>
+<p>之后说明文章写作时期（2019）领域几种经典方法的缺点：RMS不能准确预测EEG信号及其唤醒信号；复Morlet小波变换，但不同患者的视频分辨率不高。用于HFOs的分类方法主要包括阈值法，FNN，SVM。之后提到了一些最新进展，比如从EEG中提取短时能量和模糊熵作为输入进入FNN来区分HFOs和普通信号；EEG数据进行Gabor变换，对HFOs的能量比和持续时间特征进行提取，同时输入和训练多种类型的SVM能够识别多种HFOs和人工噪音；连续小波变换和改进的短时傅里叶变换对疑似事件的时频图进行转换；</p>
+<p>最后终于说到了本文使用的k-means聚类和均值移动算法，k-means处理的是预处理后得到的数据，均值移动算法处理的是聚类后的数据。</p>
+<h3 id="A-new-method-for-detecting-HFOs"><a href="#A-new-method-for-detecting-HFOs" class="headerlink" title="A new method for detecting HFOs"></a>A new method for detecting HFOs</h3><p>数据预处理：</p>
+<p>(1)数据正则化，作者使用的是min-max正则化：<br>$$<br>y_{ij}=(l_{2}-l_{1})\frac{x_{ij}-x_{min}}{x_{max}-x_{min}}-x_{min}<br>$$<br>(2)Chebyshev IIR 滤波器滤波，有：<br>$$<br>H_{a}(s)=\sum_{k=1}^{N}\frac{A_{k}}{s-s_{k}}<br>$$<br>再通过模拟滤波器的双线性变换转换成数字滤波器，数字滤波器传递函数如下：<br>$$<br>H(z)=H_{a}(s)|<em>{s=\frac{2}{T}\frac{1-z^{-1}}{1+z^{-1}}}<br>$$<br>(3)梳状滤波器，去除50Hz及其整数倍的噪声，给定为：<br>$$<br>H(z)=\frac{b(1-z^{-N})}{1-\rho z^{-N}},b=\frac{1+\rho}{2}<br>$$<br>特征提取：介绍了teager能量算子，一种非线性算子，可以追踪信号的瞬时能量，有实验表明SOZ通道相较于其他区域的TEO更大，对于离散信号TEO公式为：<br>$$<br>\psi[x(n)]=[x(n)]^2-x(n-1)x(n+1)<br>$$<br>小波熵，用来衡量随机信号的复杂性，通过小波变换的频谱熵称为小波熵，对于不同分辨率j假设其能量公式为<br>$$<br>E</em>{j}=\sum_{k}|C_{j}(k)|^2<br>$$<br>小波系数C<sub>j</sub>(k)≤x(t)，总能量为<br>$$<br>E_{tot}=||x(t)||^2=\sum_{j}\sum_{k}|C_{j}(k)|^2=\sum_{j}E_{j}<br>$$<br>归一化相对小波熵P<sub>j</sub>=E<sub>j</sub>/E<sub>tot</sub>，有<br>$$<br>where\ \sum_{j}P_{j}=1,so\ WE=-\sum_{j}P_{j}ln(P_{j})<br>$$<br>半监督k-means算法：</p>
+<p>k-means算法算是老熟人了，这里的半监督k-means不同之处在于它不是随机选择k个点作为初始聚类中心，而是选择标注的数据作为初始聚类中心。值得说明的一点是这里的聚类使用的距离是普通的欧式距离。</p>
+<p>均值移动算法：</p>
+<p>一般聚类算法最终聚类结果收到初始聚类中心影响并且需要事先指定聚类数量k，均值移动算法正是为了处理未知聚类数的场景提出的。</p>
+<p>(1)从数据集中随机选择一个点作为聚类中心μ；</p>
+<p>(2)找出h内所有与μ有距离的点作为集合M，认为这些点属于聚类S，并将此点数据的概率加1；</p>
+<p>(3)对M中的每个样本点进行均值移位计算，直到均值移位的幅度小于阈值，计算结束。最后计算出的均值移位点作为新的簇中心μ′；</p>
+<p>(4)如果当前聚类S的新聚类中心μ′与原聚类中心μ之间的距离小于阈值，则将两个聚类合并，否则μ′作为新聚类S′的聚类中心，返回步骤2。</p>
+<p>改进的均值移动向量公式为：<br>$$<br>M_{h}(X)=\frac{\sum_{x\in S_{h}{}}{[K(\frac{x-x_{i}}{h}(x-x_{i}))]}}{\sum_{x\in S_{h}}{[K(\frac{x-x_{i}}{h})]}}<br>$$<br>其中核函数是高斯核函数。</p>
+<p>聚类结果分析：</p>
+<p>聚类后结果包括Rs、FRs、噪声、Rs和FRs混合型等，通过计算每个簇的频谱中心点并绘制框图，对其进行判别</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/02/15/HFO经典检测方法以及最新的无监督半监督方法-4/" target="_blank" title="HFO经典检测方法以及最新的无监督半监督方法(4)">http://example.com/2021/02/15/HFO经典检测方法以及最新的无监督半监督方法-4/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HFOs/" rel="tag">HFOs</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/02/15/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HFO经典检测方法以及最新的无监督半监督方法(3)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering"><span class="nav-number">1.</span> <span class="nav-text">A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-new-method-for-detecting-HFOs"><span class="nav-number">1.2.</span> <span class="nav-text">A new method for detecting HFOs</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
