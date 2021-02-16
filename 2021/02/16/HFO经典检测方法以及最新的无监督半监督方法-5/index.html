@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>hfo经典检测方法以及最新的无监督半监督方法(4) | Sisicca</title>
+  <title>hfo经典检测方法以及最新的无监督半监督方法(5) | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keywords" content="HFOs" />
@@ -11,15 +11,15 @@
   
   
   
-  <meta name="description" content="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clusteringIntroduction从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。 之后说明文章写作">
+  <meta name="description" content="A New Unsupervised Detector of High-Frequency Oscillations in Accurate Localization of Epileptic Seizure Onset ZonesINTRODUCTION经典癫痫简介，HFOs简介，介绍领域相关工作，值得注意的是这个团队之前做过一个FNN的检测器； 本文的无监督算法无需预设特定簇数，经过三阶段实现">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HFO经典检测方法以及最新的无监督半监督方法(4)">
-<meta property="og:url" content="http://example.com/2021/02/15/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-4/index.html">
+<meta property="og:title" content="HFO经典检测方法以及最新的无监督半监督方法(5)">
+<meta property="og:url" content="http://example.com/2021/02/16/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-5/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clusteringIntroduction从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。 之后说明文章写作">
+<meta property="og:description" content="A New Unsupervised Detector of High-Frequency Oscillations in Accurate Localization of Epileptic Seizure Onset ZonesINTRODUCTION经典癫痫简介，HFOs简介，介绍领域相关工作，值得注意的是这个团队之前做过一个FNN的检测器； 本文的无监督算法无需预设特定簇数，经过三阶段实现">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-02-15T11:04:14.000Z">
-<meta property="article:modified_time" content="2021-02-16T01:12:40.696Z">
+<meta property="article:published_time" content="2021-02-16T01:13:16.000Z">
+<meta property="article:modified_time" content="2021-02-16T07:52:32.212Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="HFOs">
 <meta name="twitter:card" content="summary">
@@ -172,7 +172,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-HFO经典检测方法以及最新的无监督半监督方法-4" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-HFO经典检测方法以及最新的无监督半监督方法-5" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +180,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      HFO经典检测方法以及最新的无监督半监督方法(4)
+      HFO经典检测方法以及最新的无监督半监督方法(5)
     </h1>
   
 
@@ -188,8 +188,8 @@
     
     <div class="article-meta">
       
-	<a href="/2021/02/15/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-4/" class="article-date">
-	  <time datetime="2021-02-15T11:04:14.000Z" itemprop="datePublished">2021-02-15</time>
+	<a href="/2021/02/16/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-5/" class="article-date">
+	  <time datetime="2021-02-16T01:13:16.000Z" itemprop="datePublished">2021-02-16</time>
 	</a>
 
       
@@ -207,27 +207,30 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering"><a href="#A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering" class="headerlink" title="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering"></a>A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。</p>
-<p>之后说明文章写作时期（2019）领域几种经典方法的缺点：RMS不能准确预测EEG信号及其唤醒信号；复Morlet小波变换，但不同患者的视频分辨率不高。用于HFOs的分类方法主要包括阈值法，FNN，SVM。之后提到了一些最新进展，比如从EEG中提取短时能量和模糊熵作为输入进入FNN来区分HFOs和普通信号；EEG数据进行Gabor变换，对HFOs的能量比和持续时间特征进行提取，同时输入和训练多种类型的SVM能够识别多种HFOs和人工噪音；连续小波变换和改进的短时傅里叶变换对疑似事件的时频图进行转换；</p>
-<p>最后终于说到了本文使用的k-means聚类和均值移动算法，k-means处理的是预处理后得到的数据，均值移动算法处理的是聚类后的数据。</p>
-<h3 id="A-new-method-for-detecting-HFOs"><a href="#A-new-method-for-detecting-HFOs" class="headerlink" title="A new method for detecting HFOs"></a>A new method for detecting HFOs</h3><p>数据预处理：</p>
-<p>(1)数据正则化，作者使用的是min-max正则化：<br>$$<br>y_{ij}=(l_{2}-l_{1})\frac{x_{ij}-x_{min}}{x_{max}-x_{min}}-x_{min}<br>$$<br>(2)Chebyshev IIR 滤波器滤波，有：<br>$$<br>H_{a}(s)=\sum_{k=1}^{N}\frac{A_{k}}{s-s_{k}}<br>$$<br>再通过模拟滤波器的双线性变换转换成数字滤波器，数字滤波器传递函数如下：<br>$$<br>H(z)=H_{a}(s)|<em>{s=\frac{2}{T}\frac{1-z^{-1}}{1+z^{-1}}}<br>$$<br>(3)梳状滤波器，去除50Hz及其整数倍的噪声，给定为：<br>$$<br>H(z)=\frac{b(1-z^{-N})}{1-\rho z^{-N}},b=\frac{1+\rho}{2}<br>$$<br>特征提取：介绍了teager能量算子，一种非线性算子，可以追踪信号的瞬时能量，有实验表明SOZ通道相较于其他区域的TEO更大，对于离散信号TEO公式为：<br>$$<br>\psi[x(n)]=[x(n)]^2-x(n-1)x(n+1)<br>$$<br>小波熵，用来衡量随机信号的复杂性，通过小波变换的频谱熵称为小波熵，对于不同分辨率j假设其能量公式为<br>$$<br>E</em>{j}=\sum_{k}|C_{j}(k)|^2<br>$$<br>小波系数C<sub>j</sub>(k)≤x(t)，总能量为<br>$$<br>E_{tot}=||x(t)||^2=\sum_{j}\sum_{k}|C_{j}(k)|^2=\sum_{j}E_{j}<br>$$<br>归一化相对小波熵P<sub>j</sub>=E<sub>j</sub>/E<sub>tot</sub>，有<br>$$<br>where\ \sum_{j}P_{j}=1,so\ WE=-\sum_{j}P_{j}ln(P_{j})<br>$$<br>半监督k-means算法：</p>
-<p>k-means算法算是老熟人了，这里的半监督k-means不同之处在于它不是随机选择k个点作为初始聚类中心，而是选择标注的数据作为初始聚类中心。值得说明的一点是这里的聚类使用的距离是普通的欧式距离。</p>
-<p>均值移动算法：</p>
-<p>一般聚类算法最终聚类结果收到初始聚类中心影响并且需要事先指定聚类数量k，均值移动算法正是为了处理未知聚类数的场景提出的。</p>
-<p>(1)从数据集中随机选择一个点作为聚类中心μ；</p>
-<p>(2)找出h内所有与μ有距离的点作为集合M，认为这些点属于聚类S，并将此点数据的概率加1；</p>
-<p>(3)对M中的每个样本点进行均值移位计算，直到均值移位的幅度小于阈值，计算结束。最后计算出的均值移位点作为新的簇中心μ′；</p>
-<p>(4)如果当前聚类S的新聚类中心μ′与原聚类中心μ之间的距离小于阈值，则将两个聚类合并，否则μ′作为新聚类S′的聚类中心，返回步骤2。</p>
-<p>改进的均值移动向量公式为：<br>$$<br>M_{h}(X)=\frac{\sum_{x\in S_{h}{}}{[K(\frac{x-x_{i}}{h}(x-x_{i}))]}}{\sum_{x\in S_{h}}{[K(\frac{x-x_{i}}{h})]}}<br>$$<br>其中核函数是高斯核函数。</p>
-<p>聚类结果分析：</p>
-<p>聚类后结果包括Rs、FRs、噪声、Rs和FRs混合型等，通过计算每个簇的频谱中心点（spectral centroid）并绘制框图，对其进行判别。</p>
-<h3 id="Simulations-and-analysis"><a href="#Simulations-and-analysis" class="headerlink" title="Simulations and analysis"></a>Simulations and analysis</h3><p>在特征提取模块，通过展示的两张折线图，我们可以看到WE和TEO能够很好地区分病理性和生理性HFOs；</p>
-<p>半监督聚类模块，作者通过已标注的一个生理性HFO和一个病理性HFO初始化聚类中心进行k-means聚类；</p>
-<p>再对半监督聚类结果进行均值移动算法聚类，文章采用的半径h为0.07，迭代停止的阈值定为0.002，都是根据特征提取后的特征值的分布范围大致得到的；</p>
-<p>均值移动聚类后得到四个簇，使用SC算法得到箱型图可以根据频率分布分别得到为伪影、Rs、Rs和FRs混合型、FRs；</p>
-<p>使用灵敏性和特异性，在这五位病患的数据上与FNN算法和RMS算法进行对比，本文的算法在这两项性能上更为优秀</p>
-<p>与之前阅读的文献相比，这一篇文章算法上的工作做得更多，两次聚类的算法设计使得聚类结果更具有稳健性，遗憾的就是对于均值移动聚类中半径和阈值该如何确定讲的不是很明白，还有就是临床数据太少。</p>
+        <h2 id="A-New-Unsupervised-Detector-of-High-Frequency-Oscillations-in-Accurate-Localization-of-Epileptic-Seizure-Onset-Zones"><a href="#A-New-Unsupervised-Detector-of-High-Frequency-Oscillations-in-Accurate-Localization-of-Epileptic-Seizure-Onset-Zones" class="headerlink" title="A New Unsupervised Detector of High-Frequency Oscillations in Accurate Localization of Epileptic Seizure Onset Zones"></a>A New Unsupervised Detector of High-Frequency Oscillations in Accurate Localization of Epileptic Seizure Onset Zones</h2><h3 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h3><p>经典癫痫简介，HFOs简介，介绍领域相关工作，值得注意的是这个团队之前做过一个FNN的检测器；</p>
+<p>本文的无监督算法无需预设特定簇数，经过三阶段实现，可以消除伪影来避免误检。</p>
+<h3 id="MATERIALS-AND-METHODS"><a href="#MATERIALS-AND-METHODS" class="headerlink" title="MATERIALS AND METHODS"></a>MATERIALS AND METHODS</h3><p>这个检测器叫做基于模糊c均值量化误差建模的最大期望值高斯混合模型检测器(FCM-QEM-based EM-GMM)，分为三个阶段，一阶段阈值法得出疑似HFO，二阶段疑似HFO作4个特征的提取，三阶段进行FCM-QEM-based EM-GMM聚类。</p>
+<p>(1)使用Staba的方法进行预处理和一阶段选出疑似HFO，先经过50Hz多凹槽滤波，80-500Hz带通滤波预处理，然后是15ms滑动窗口，计算均方根信号，阈值定为平均值上下3*SD，连续样本要求超过阈值最小持续时间为30ms，标记为疑似的HFO还需要有至少6个峰值；</p>
+<p>(2)特征提取：</p>
+<p>i)FuzzyEn能将HFO与背景活动区分开：</p>
+<p>Step1:设置疑似HFO信号的N点序列X=[x(1),x(2),…,x(N)];</p>
+<p>Step2:构造一系列的m维向量<br>$$<br>X_{i}^{m}=[x(i),x(i+1),…,x(i+m-1)]-u_{0}(i)<em>I,i=1,2,…,N-m+1.<br>$$<br>I是1</em>m大小的元素全部为1的向量，平均值u<sub>0</sub>计算公式为：<br>$$<br>u_{0}(i)=\frac{1}{m}\sum_{j=0}^{m-1}x(i+j)<br>$$<br>Step3:计算两个m维向量之间的距离：<br>$$<br>d_{ij}^{m}=max[x(i+k)-u_{0}(i)-(x(j+k)-u_{0}(j))]<br>$$<br>Step4:定义并计算相似度两个m维向量之间的相似度：<br>$$<br>D_{ij}^{m}=\mu(d_{ij}^{m},n,r)=exp[-(\frac{d_{ij}^{m}}{r})^n]<br>$$<br>r和n是指数函数的梯度和宽度，通常来说，太大的r会导致有用信息的损失，过低估计r会导致对于噪声的敏感性增加；</p>
+<p>Step5：定义函数：<br>$$<br>\phi^m(n,r)=\frac{1}{N-m}\sum_{i=1}^{N-m}(\frac{1}{N-m-1}\sum_{j=1,j\ne i}^{N-m}D_{ij}^m)<br>$$<br>Step6:重复上述步骤2-5得到ɸ<sup>m+1</sup>(n,r);</p>
+<p>Step7:计算疑似HFO的N长度序列的FuzzyEn<br>$$<br>FuzzyEn(n,r,N)=ln\phi ^m(n,r)-ln\phi ^{m+1}(n,r).<br>$$<br>ii)短时能量<br>$$<br>E^*(t)=\frac{1}{N}\sum_{k=t-N+1}^{t}x^2(k)<br>$$<br>x(k)是疑似HFO的幅度，N是用来估计短时能量的样本数量；</p>
+<p>iii)功率比，将HFOs从不相关活动当中区分出来：<br>$$<br>R = \frac{P_{[80-200]}}{P_{[250-500]}}<br>$$<br>iv)频谱中心点，这个特点测量了频谱的中心点，被表达为：<br>$$<br>f_{c}=\frac{\sum^{L/2}<em>{k=1} \frac{k}{LT}|M(k)|^2}{\sum^{L/2}</em>{k=1}|M(k|^2}<br>$$<br>M(k)是一个多锥度功率谱密度估计值，被定义为：<br>$$<br>M(k)=\sum_{l=0}^{L-1}\omega(l)x(l)e^{-j(2\pi/L)lk}<br>$$<br>有一个L点的离散傅里叶变换，这里的ω(l)是长度L的Hamming窗；</p>
+<p>我们可以用这四个特征构建特征向量来进行聚类。</p>
+<p>(3)FCM-QEM-based EM-GMM 聚类算法：</p>
+<p>QEM得出最优聚类数量，FCM算法优化聚类算法初始参数降低计算复杂度，先介绍了一些相关术语和参数，这里不多赘述。算法具体步骤如下：</p>
+<p>Step1:初始化，利用FCM算法生成相关参数来降低计算复杂度，目标是最小化下列函数：<br>$$<br>J_{m}=\sum_{i=1}^{N_{f}}\sum_{c=1}^C \mu <em>{ic}^m||V</em>{i}-v_{c}||^2,1&lt;m&lt;\infin<br>$$<br>a)随机生成初始聚类中心v<sub>c</sub>(c=1,2,…,C)</p>
+<p>b)μ<sub>ic</sub>计算公式为<br>$$<br>\mu_{ic}=(\sum_{k=1}^{C}(\frac{||V_{i}-v_{c}||}{||V_{i}-v_{k}||})^{\frac{2}{m-1}})^{-1}<br>$$</p>
+<p>c)v<sub>c</sub>更新公式：<br>$$<br>v_{c}=\frac{\sum_{i=1}^{N_{f}}\mu_{ic}^{m}V_{i}}{\sum_{i=1}^{N_{f}}\mu_{ic}^{m}}<br>$$<br>d)当满足下列关系式时停止迭代：<br>$$<br>max_{1≤j≤C}||v_{c,new}-v_{c,old}||&lt;\epsilon<br>$$<br>v<sub>j,new</sub>是更新后的聚类中心，v<sub>j,old</sub>是更新前的聚类中心，epsilon是事先决定好的一个常数。关于W<sub>c</sub>,u<sub>c</sub>,∑<sub>c</sub>的初始值如何计算这里略过；</p>
+<p>Step2:期望值计算，计算V<sub>i</sub>在第t轮迭代属于第c簇的可能：<br>$$<br>P_{ic}^{t}=\frac{W_{c}^{t}P_{c}(V_{i}|u_{c}^{t},\sum_{c}^t)}{P(V_{i})^t},t=1,2,…,T,<br>$$<br>Step3:最大化，更新GMM的参数：<br>$$<br>W_{c}^{t+1}=\frac{N_{c}^t}{N_{f}},\u_{c}^{t+1}=\frac{1}{N_{c}^t}\sum_{i=1}^{N_{f}}P_{ic}^tV_{i},\\sum\ <em>{c}^{t+1}=\frac{1}{N</em>{c}^{t}}\sum_{i=1}^{N_{f}}P_{ic}^t(V_{i}-u_{c}^{t+1})(V_{i}-u_{c}^{t+1})^T<br>$$<br>Step4:终止，当t=T或者满足：<br>$$<br>L^{t+1}=\sum_{i=1}^{N_{f}}logP(V_{i})^{t+1},\|L^{t+1}-L^t|&lt;E.<br>$$<br>E是事先给定的。</p>
+<p>QEM算法是基于一个单调递减的R-D曲线建立的，它描述了聚类误差J<sub>C</sub>和聚类数C之间的关系；它有三个主要特征：1.聚类中心数较少时，聚类误差单调递减速率先快后慢；2.聚类数量接近特征向量数量时，聚类误差平缓到几乎为零；3.R-D曲线实际形状取决于特征向量在D维空间中的分布情况；基于上述情况，将QEM函数定义为<br>$$<br>\widehat{J}<em>{C}=\frac{Const}{C^{\frac{2}{a}}}<br>$$<br>a是模型参数和Const都大于0，两边同时取对数（两边都大于零），可以得到：<br>$$<br>lg(\widehat J</em>{C})+\frac{2}{a}.lg(C)+b=0<br>$$<br>b也是个模型参数，我们用J<sub>C</sub>替代QEM函数左边，a和b都可以通过一个公式计算，但我这里只写下只用计算a的方式<br>$$<br>a = 2.\frac{M\sum_{C=2}^{C_{max}}lg^2(C)-(\sum_{C=2}^{C_{max}}lg(C))^2}{M\sum_{C=2}^{C_{max}}lg(C).lg(J_c)-\sum_{C=2}^{C_{max}}lg(C).\sum_{C=2}^{C_{max}}lg(J_C)}<br>$$<br>M=C<sub>max</sub>-1，最优聚类数量C<sub>opt</sub>满足：<br>$$<br>C_{opt}=argmin{PCF(C)}=argmin\ J_C.C^{2/a}<br>$$<br>EM-GMM算法实际上以前已经提出过了，但是它要求聚类数量提前给出而且聚类效率很低，作者给出的FCM和QEM这两步就是解决这样的问题的。</p>
+<p>在评估检测器方面，本文除了使用特异性和灵敏性之外还使用了两个指标%Dev<sub>n</sub>和%Dev<sub>d</sub>，计算公式为：<br>$$<br>%Dev_{n}=\frac{v_{n}-\mu_{v_{n}}}{\mu_{v_{n}}}*100%,\%Dev_{d}=\frac{v_{d}-\mu_{v_{d}}}{\mu_{v_{d}}}*100%<br>$$</p>
+<p>v<sub>n</sub>是某通道上真HFO对应的簇的特征向量数量；v<sub>d</sub>是某通道上上述所有特征向量对应的HFO的总持续时间；μ<sub>v<sub>n</sub></sub>是v<sub>n</sub>在所有通道上的平均值；μ<sub>v<sub>d</sub></sub>是v<sub>d</sub>在所有通道上的平均值；当一个通道的这两个指标都超过其最大值的一半时，我们认为这个通道是一个SOZ，这是半最大阈值法。</p>
+<h3 id="RESULTS"><a href="#RESULTS" class="headerlink" title="RESULTS"></a>RESULTS</h3><p>先用图分步说明了第一步的处理疑似HFO选取情况，然后又用图说明了第二部4个特征的都是很有区分度的，再通过对子集频道的数据（即正常和HFO段）进行Mann-Whitney U检验，说明四个提取的特征使得HFO和正常活动之间存在显著差异。</p>
+<p>与RMS、CMWT、SE-CMWT、AGA-MP、FNN5种算法比较，相同的数据，相同的预处理，相同的半最大阈值法，结果当然是总体上优于上述所有。</p>
+<p>很强很nobel，但样本数量少了，同时也没有临床实验。</p>
 
       
     </div>
@@ -241,7 +244,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/02/15/HFO经典检测方法以及最新的无监督半监督方法-4/" target="_blank" title="HFO经典检测方法以及最新的无监督半监督方法(4)">http://example.com/2021/02/15/HFO经典检测方法以及最新的无监督半监督方法-4/</a>
+          <a href="/2021/02/16/HFO经典检测方法以及最新的无监督半监督方法-5/" target="_blank" title="HFO经典检测方法以及最新的无监督半监督方法(5)">http://example.com/2021/02/16/HFO经典检测方法以及最新的无监督半监督方法-5/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -291,19 +294,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/02/16/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-5/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          HFO经典检测方法以及最新的无监督半监督方法(5)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/02/15/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-3/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/02/15/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-4/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">HFO经典检测方法以及最新的无监督半监督方法(3)</div>
+      <div class="article-nav-title">HFO经典检测方法以及最新的无监督半监督方法(4)</div>
     </a>
   
 </nav>
@@ -317,7 +311,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering"><span class="nav-number">1.</span> <span class="nav-text">A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-new-method-for-detecting-HFOs"><span class="nav-number">1.2.</span> <span class="nav-text">A new method for detecting HFOs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simulations-and-analysis"><span class="nav-number">1.3.</span> <span class="nav-text">Simulations and analysis</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-New-Unsupervised-Detector-of-High-Frequency-Oscillations-in-Accurate-Localization-of-Epileptic-Seizure-Onset-Zones"><span class="nav-number">1.</span> <span class="nav-text">A New Unsupervised Detector of High-Frequency Oscillations in Accurate Localization of Epileptic Seizure Onset Zones</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">1.1.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MATERIALS-AND-METHODS"><span class="nav-number">1.2.</span> <span class="nav-text">MATERIALS AND METHODS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RESULTS"><span class="nav-number">1.3.</span> <span class="nav-text">RESULTS</span></a></li></ol></li></ol>
     
     </div>
   </aside>
