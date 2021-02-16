@@ -19,7 +19,7 @@
 <meta property="og:description" content="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clusteringIntroduction从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。 之后说明文章写作">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-15T11:04:14.000Z">
-<meta property="article:modified_time" content="2021-02-15T13:27:01.979Z">
+<meta property="article:modified_time" content="2021-02-16T01:12:40.696Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="HFOs">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,13 @@
 <p>(4)如果当前聚类S的新聚类中心μ′与原聚类中心μ之间的距离小于阈值，则将两个聚类合并，否则μ′作为新聚类S′的聚类中心，返回步骤2。</p>
 <p>改进的均值移动向量公式为：<br>$$<br>M_{h}(X)=\frac{\sum_{x\in S_{h}{}}{[K(\frac{x-x_{i}}{h}(x-x_{i}))]}}{\sum_{x\in S_{h}}{[K(\frac{x-x_{i}}{h})]}}<br>$$<br>其中核函数是高斯核函数。</p>
 <p>聚类结果分析：</p>
-<p>聚类后结果包括Rs、FRs、噪声、Rs和FRs混合型等，通过计算每个簇的频谱中心点并绘制框图，对其进行判别</p>
+<p>聚类后结果包括Rs、FRs、噪声、Rs和FRs混合型等，通过计算每个簇的频谱中心点（spectral centroid）并绘制框图，对其进行判别。</p>
+<h3 id="Simulations-and-analysis"><a href="#Simulations-and-analysis" class="headerlink" title="Simulations and analysis"></a>Simulations and analysis</h3><p>在特征提取模块，通过展示的两张折线图，我们可以看到WE和TEO能够很好地区分病理性和生理性HFOs；</p>
+<p>半监督聚类模块，作者通过已标注的一个生理性HFO和一个病理性HFO初始化聚类中心进行k-means聚类；</p>
+<p>再对半监督聚类结果进行均值移动算法聚类，文章采用的半径h为0.07，迭代停止的阈值定为0.002，都是根据特征提取后的特征值的分布范围大致得到的；</p>
+<p>均值移动聚类后得到四个簇，使用SC算法得到箱型图可以根据频率分布分别得到为伪影、Rs、Rs和FRs混合型、FRs；</p>
+<p>使用灵敏性和特异性，在这五位病患的数据上与FNN算法和RMS算法进行对比，本文的算法在这两项性能上更为优秀</p>
+<p>与之前阅读的文献相比，这一篇文章算法上的工作做得更多，两次聚类的算法设计使得聚类结果更具有稳健性，遗憾的就是对于均值移动聚类中半径和阈值该如何确定讲的不是很明白，还有就是临床数据太少。</p>
 
       
     </div>
@@ -302,7 +308,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering"><span class="nav-number">1.</span> <span class="nav-text">A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-new-method-for-detecting-HFOs"><span class="nav-number">1.2.</span> <span class="nav-text">A new method for detecting HFOs</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering"><span class="nav-number">1.</span> <span class="nav-text">A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-new-method-for-detecting-HFOs"><span class="nav-number">1.2.</span> <span class="nav-text">A new method for detecting HFOs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simulations-and-analysis"><span class="nav-number">1.3.</span> <span class="nav-text">Simulations and analysis</span></a></li></ol></li></ol>
     
     </div>
   </aside>
