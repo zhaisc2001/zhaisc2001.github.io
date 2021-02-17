@@ -19,7 +19,7 @@
 <meta property="og:description" content="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clusteringIntroduction从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。 之后说明文章写作">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-15T11:04:14.000Z">
-<meta property="article:modified_time" content="2021-02-16T01:12:40.696Z">
+<meta property="article:modified_time" content="2021-02-17T11:02:05.433Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="HFOs">
 <meta name="twitter:card" content="summary">
@@ -208,7 +208,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering"><a href="#A-method-for-detecting-high-frequency-oscillations-using-semi-supervised-k-means-and-mean-shift-clustering" class="headerlink" title="A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering"></a>A method for detecting high-frequency oscillations using semi-supervised k-means and mean shift clustering</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>从癫痫治疗谈起，谈到了HFOs的作用，同时对于VHFO也有简短的分析（难以收集同时不清楚其作用机理），然后介绍了些机器学习在医学上成功运用的例子。</p>
-<p>之后说明文章写作时期（2019）领域几种经典方法的缺点：RMS不能准确预测EEG信号及其唤醒信号；复Morlet小波变换，但不同患者的视频分辨率不高。用于HFOs的分类方法主要包括阈值法，FNN，SVM。之后提到了一些最新进展，比如从EEG中提取短时能量和模糊熵作为输入进入FNN来区分HFOs和普通信号；EEG数据进行Gabor变换，对HFOs的能量比和持续时间特征进行提取，同时输入和训练多种类型的SVM能够识别多种HFOs和人工噪音；连续小波变换和改进的短时傅里叶变换对疑似事件的时频图进行转换；</p>
+<p>之后说明文章写作时期（2019）领域几种经典方法的缺点：RMS不能准确预测EEG信号及其唤醒信号；复Morlet小波变换，不同患者的时频分辨率不高。用于HFOs的分类方法主要包括阈值法，FNN，SVM。之后提到了一些最新进展，比如从EEG中提取短时能量和模糊熵作为输入进入FNN来区分HFOs和普通信号；EEG数据进行Gabor变换，对HFOs的能量比和持续时间特征进行提取，同时输入和训练多种类型的SVM能够识别多种HFOs和人工噪音；连续小波变换和改进的短时傅里叶变换对疑似事件的时频图进行转换；</p>
 <p>最后终于说到了本文使用的k-means聚类和均值移动算法，k-means处理的是预处理后得到的数据，均值移动算法处理的是聚类后的数据。</p>
 <h3 id="A-new-method-for-detecting-HFOs"><a href="#A-new-method-for-detecting-HFOs" class="headerlink" title="A new method for detecting HFOs"></a>A new method for detecting HFOs</h3><p>数据预处理：</p>
 <p>(1)数据正则化，作者使用的是min-max正则化：<br>$$<br>y_{ij}=(l_{2}-l_{1})\frac{x_{ij}-x_{min}}{x_{max}-x_{min}}-x_{min}<br>$$<br>(2)Chebyshev IIR 滤波器滤波，有：<br>$$<br>H_{a}(s)=\sum_{k=1}^{N}\frac{A_{k}}{s-s_{k}}<br>$$<br>再通过模拟滤波器的双线性变换转换成数字滤波器，数字滤波器传递函数如下：<br>$$<br>H(z)=H_{a}(s)|<em>{s=\frac{2}{T}\frac{1-z^{-1}}{1+z^{-1}}}<br>$$<br>(3)梳状滤波器，去除50Hz及其整数倍的噪声，给定为：<br>$$<br>H(z)=\frac{b(1-z^{-N})}{1-\rho z^{-N}},b=\frac{1+\rho}{2}<br>$$<br>特征提取：介绍了teager能量算子，一种非线性算子，可以追踪信号的瞬时能量，有实验表明SOZ通道相较于其他区域的TEO更大，对于离散信号TEO公式为：<br>$$<br>\psi[x(n)]=[x(n)]^2-x(n-1)x(n+1)<br>$$<br>小波熵，用来衡量随机信号的复杂性，通过小波变换的频谱熵称为小波熵，对于不同分辨率j假设其能量公式为<br>$$<br>E</em>{j}=\sum_{k}|C_{j}(k)|^2<br>$$<br>小波系数C<sub>j</sub>(k)≤x(t)，总能量为<br>$$<br>E_{tot}=||x(t)||^2=\sum_{j}\sum_{k}|C_{j}(k)|^2=\sum_{j}E_{j}<br>$$<br>归一化相对小波熵P<sub>j</sub>=E<sub>j</sub>/E<sub>tot</sub>，有<br>$$<br>where\ \sum_{j}P_{j}=1,so\ WE=-\sum_{j}P_{j}ln(P_{j})<br>$$<br>半监督k-means算法：</p>
@@ -216,7 +216,7 @@
 <p>均值移动算法：</p>
 <p>一般聚类算法最终聚类结果收到初始聚类中心影响并且需要事先指定聚类数量k，均值移动算法正是为了处理未知聚类数的场景提出的。</p>
 <p>(1)从数据集中随机选择一个点作为聚类中心μ；</p>
-<p>(2)找出h内所有与μ有距离的点作为集合M，认为这些点属于聚类S，并将此点数据的概率加1；</p>
+<p>(2)找出h内所有与μ有距离的点作为集合M，认为这些点属于聚类S，并将此点在S中出现的频次加1；</p>
 <p>(3)对M中的每个样本点进行均值移位计算，直到均值移位的幅度小于阈值，计算结束。最后计算出的均值移位点作为新的簇中心μ′；</p>
 <p>(4)如果当前聚类S的新聚类中心μ′与原聚类中心μ之间的距离小于阈值，则将两个聚类合并，否则μ′作为新聚类S′的聚类中心，返回步骤2。</p>
 <p>改进的均值移动向量公式为：<br>$$<br>M_{h}(X)=\frac{\sum_{x\in S_{h}{}}{[K(\frac{x-x_{i}}{h}(x-x_{i}))]}}{\sum_{x\in S_{h}}{[K(\frac{x-x_{i}}{h})]}}<br>$$<br>其中核函数是高斯核函数。</p>

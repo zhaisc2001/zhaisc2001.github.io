@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>hfo经典检测方法以及最新的无监督半监督方法(2) | Sisicca</title>
+  <title>hfo论文知识补充学习 | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keywords" content="HFOs" />
@@ -11,15 +11,15 @@
   
   
   
-  <meta name="description" content="Human and automated detection of high-frequency oscillations in clinical intracranial EEG recordingsIntroduction简介了脑电波高频信号定位致癫灶这个应用的近期发展，以及在该领域中自动检测算法的必要性以及当前欠缺的情况，论文写作的时间点上领域较知名的自动检测算法只有前面一篇均方根处理的算法，">
+  <meta name="description" content="1.equalization filter : In Human and automated detection of high-frequency oscillations in clinical intracranial EEG recordings, equalization filter via first-order backward differencing is proposed i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HFO经典检测方法以及最新的无监督半监督方法(2)">
-<meta property="og:url" content="http://example.com/2021/02/12/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-2/index.html">
+<meta property="og:title" content="HFO论文知识补充学习">
+<meta property="og:url" content="http://example.com/2021/02/17/HFO%E8%AE%BA%E6%96%87%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Human and automated detection of high-frequency oscillations in clinical intracranial EEG recordingsIntroduction简介了脑电波高频信号定位致癫灶这个应用的近期发展，以及在该领域中自动检测算法的必要性以及当前欠缺的情况，论文写作的时间点上领域较知名的自动检测算法只有前面一篇均方根处理的算法，">
+<meta property="og:description" content="1.equalization filter : In Human and automated detection of high-frequency oscillations in clinical intracranial EEG recordings, equalization filter via first-order backward differencing is proposed i">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-02-12T00:37:12.000Z">
-<meta property="article:modified_time" content="2021-02-17T08:12:40.934Z">
+<meta property="article:published_time" content="2021-02-17T03:08:51.000Z">
+<meta property="article:modified_time" content="2021-02-17T13:21:23.027Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="HFOs">
 <meta name="twitter:card" content="summary">
@@ -172,7 +172,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-HFO经典检测方法以及最新的无监督半监督方法-2" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-HFO论文知识补充学习" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +180,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      HFO经典检测方法以及最新的无监督半监督方法(2)
+      HFO论文知识补充学习
     </h1>
   
 
@@ -188,8 +188,8 @@
     
     <div class="article-meta">
       
-	<a href="/2021/02/12/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-2/" class="article-date">
-	  <time datetime="2021-02-12T00:37:12.000Z" itemprop="datePublished">2021-02-12</time>
+	<a href="/2021/02/17/HFO%E8%AE%BA%E6%96%87%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85%E5%AD%A6%E4%B9%A0/" class="article-date">
+	  <time datetime="2021-02-17T03:08:51.000Z" itemprop="datePublished">2021-02-17</time>
 	</a>
 
       
@@ -207,20 +207,31 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Human-and-automated-detection-of-high-frequency-oscillations-in-clinical-intracranial-EEG-recordings"><a href="#Human-and-automated-detection-of-high-frequency-oscillations-in-clinical-intracranial-EEG-recordings" class="headerlink" title="Human and automated detection of high-frequency oscillations in clinical intracranial EEG recordings"></a>Human and automated detection of high-frequency oscillations in clinical intracranial EEG recordings</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>简介了脑电波高频信号定位致癫灶这个应用的近期发展，以及在该领域中自动检测算法的必要性以及当前欠缺的情况，论文写作的时间点上领域较知名的自动检测算法只有前面一篇均方根处理的算法，而且那篇文章既没有考虑HFOs中的gamma波，也没有严格的人眼审核，因此作者团队通过使用1300多个HFOs事件作为数据集提出了一种新的自动检测短暂局灶阵发性HFO(0.1Hz-100Hz)的算法，并与均方根算法进行比较。</p>
-<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><p>数据来源于两位患者，一位患有新皮质癫痫的小儿患者，一名患有非病变性颞外叶癫痫的成年患者；200Hz频率采样的数据通过带通滤波(0.1Hz-100Hz)，数字带通滤波（4阶巴特沃斯滤波，前向-后向滤波，0.1Hz-85Hz)，并通过三位专家人眼审核得出结果。</p>
-<p>在当时的自动检测算法中，通常将这个检测过程分为两个阶段：预处理和检测。预处理中，EEG数据通过带通滤波来限制考虑的频率范围，也可以执行额外的滤波如频谱均衡（通过一阶后向差分），这个通过一阶后向差分作频谱均衡的操作还没学过，来自<em>Digital low-pass differentiation for biological signal processing</em>。</p>
-<p>检测分为测量短时能量或是类似信号和阈值化，首先通过幅度检测，事件的幅度是否显著大于背景信号，然后再通过持续时长检测，事件的持续时间是否具有生理学意义，有时候需要进行检测后过滤，比如波纹计数作为进一步确认。</p>
-<p>作者提出的算法是在Staba的基础上引入了三个算法改进：</p>
-<p>(1)进行了简单的频谱均衡来补偿在30-100Hz临床EEG明显存在的频谱滚降；</p>
-<p>(2)将短时能量估计公式<br>$$<br>E^{<em>}(t)=\sqrt{\frac{1}{N}\sum_{k=t-N+1}^{t}\tilde{x}^{2}(k)}<br>$$<br>更换为线长能量计算公式<br>$$<br>E^{</em>}(t)=\sum_{k=t-N+2}^{t}|\tilde{x}(k)-\tilde{x}(k-1)|<br>$$<br>减小了外围幅度值的权重，这一替换带来的好处是对与尖峰和大振幅伪影的假阳性检测相较于替换之前更稳健；</p>
-<p>(3)选择了一个非参数阈值，通过对一个小训练集（在进一步分析中不包含这个训练集）的线长值经验累积分布函数进行检查，注意到cdf的95%-98%对应的阈值时自然的“断电”，作者说启发式地选择了97.5%作为阈值，并用这个97.5%应用在各个数据集。作者对线长值的一个样本进行KS检验，结果表明它不是正态分布(P&gt;&gt;0.01)，所以通过标准差来导出阈值，可能不是一个合适的选择。</p>
-<p>此外，由于Staba的算法直接使用在作者的低带宽临床iEEG数据上是不可行的，所以作者进行了两个“翻译”修改：(1)在脑电图预处理中使用了较低频率截止的带通滤波器(30-85Hz)；(2)使用了较长的事件持续时长阈值进行检测，并且做了三个额外的修改基准方法提高性能；同时还提出了3个额外的修改基准方法来提高算法性能，首先作者取代了全局阈值指定的短时能量阈值计算方式，更换为每个epoch都有自己的一个阈值；其次作者没有对任何HFO事件进行合并；最后作者基于Staba的两个Y方法使用了不同的阈值，Y<sub>1</sub>使用了较低阈值，旨在提高检测器的灵敏度。</p>
-<p>计算出不同检测器的准确度，使用配对的t检验确定检测器之间的显著精度差异，使用F-度量来评估检测器之间的一致性，F-度量很适合做这种工作因为它不用计算在这里不好度量的TN事件，作者还使用了kappa统计量来评估人类审核专家在识别HFOs方面的可重复性，皮尔逊相关系数q来比较检测器之间的相对检测率。</p>
-<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p>在检测器之间的比较中，作者提出的X算法准确性可以在两位患者的数据集上达到89.7%，大于Y<sub>1</sub>的74.0%和Y<sub>2</sub>的26.4%。</p>
-<p>将正样本定义更改为如果能被两个或更多的检测器独立识别或者验证后，作者比较了自动检测器和人类专家审核结果的不同：人类审核专家表现出了较低的假阳性检测，所犯的错误多是假阴性</p>
-<h2 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h2><p>作者认为自己的非参数阈值方法是要优于参数阈值方法，自己的算法是可以用于进行数据挖掘的一种算法，并且自动检测器的假阳性结果过多实际上是因为人类审核专家结果的假阴性结果过多，也是因此从样本集中形成一个公认的正样本集是非常具有难度的。同时认为未来的工作应该是转向半监督算法来让算法自己确定阈值。</p>
-<p>像是领域内的正常论文了，对于自动检测算法过多的FP结果解释算是我比较能接受的，但样本多样性有点说不过去。</p>
+        <p>1.equalization filter : In <em>Human and automated detection of high-frequency oscillations in clinical intracranial EEG recordings</em>, equalization filter via first-order backward differencing is proposed in signal preprocessing section, that’s not the section I wanna be involved in, so I decide not to learn about it.</p>
+<p>2.KS-test : The Kolmogorov-Smirnov test (KS-test) tries to determine if two datasets or distribution differ significantly. It was used to indicate line length values are not normally distributed.</p>
+<p>3.Cohen’s kappa coefficient : Cohen’s kappa coefficient (κ) is a statistic that is used to measure inter-rater reliability (and also intra-rater reliability) for qualitative (categorical) items. It was used to evaluate human reviewer reproducibility at identifying HFOs.</p>
+<p>4.Pearson correlation coeffcient : is defined in statistics as the measurement of the strength of the relationship between two variables and their association with each other.  It was used to compare the relative detection rate between detectors.</p>
+<p>5.Wavelet entropy or Stockwell entropy : After wavelet transformation or Stockwell transformation, use Shannon entropy formula to calculate.</p>
+<p>6.Hilbert transform : In mathematics and in signal processing, the Hilbert transform is a specific linear operator that takes a function, u(t) of a real variable and produces another function of a real variable H(u)(t). This linear operator is given by convolution with the function 1/(πt). (see § Definition) The Hilbert transform has a particularly simple representation in the frequency domain: It imparts a phase shift of ±90° (⁄₂ radians) to every frequency component of a function, the sign of the shift depending on the sign of the frequency.</p>
+<p>7.Wilcoxon rank sum test : It is a nonparametric statistical test that compares two paired groups. The tests essentially calculate the difference between sets of pairs and analyzes these differences to establish if they are statistically significantly different from one another.</p>
+<p>8.Mean-shift clustering : refer to <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/ml-mean-shift-clustering/">https://www.geeksforgeeks.org/ml-mean-shift-clustering/</a></p>
+<p>Assigns the data points to the clusters iteratively by shifting points towards the mode (mode is the highest density of data points in the region, in the context of the Meanshift).Unlike the popular K-Means cluster algorithm, mean-shift does not require specifying the number of clusters in advance. The number of clusters is determined by the algorithm with respect to the data.The downside to Mean Shift is that it is computationally expensive O(n²).</p>
+<p>It builds upon the concept of kernel density estimation(KDE), KDE is a method to estimate the underlying distribution, it’s also called the probability density function for a set of data. Suppose we are given a data set {ui} of points in d-dimensional space, sampled from some larger population, and that we have chosen a kernel K having bandwidth parameter h. Together, these data and kernel function returns the following kernel density estimator for the full population’s density function.<br>$$<br>f_k(u)=\frac{1}{nh^d}\sum^n_{i=1}K(\frac{u-u_i}{h})<br>$$<br>The kernel function k is required to ensure that our estimate is normalized and it is associated with the symmetry of our space, hence it satisfies:<br>$$<br>1.\int K(u)du=1\2.K(u)=K(|u|)\ for\ all\ values\ of\ u.<br>$$<br>Two popular kernel functions are flat kernel function and Gaussian kernel function.</p>
+<p>Iterative Mode Search:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. Initialize random seed and window W.</span><br><span class="line">2. Calculate the center of gravity (mean) of W.    </span><br><span class="line">3. Shift the search window to the mean.    </span><br><span class="line">4. Repeat Step 2 until convergence.</span><br></pre></td></tr></table></figure>
+<p>9.Spectral centroid :  This feature measures the frequency corresponding to the center of the spectrum, which is expressed as<br>$$<br>f_{c}=\frac{\sum^{L/2}<em>{k=1} \frac{k}{LT}|M(k)|^2}{\sum^{L/2}</em>{k=1}|M(k|^2}<br>$$<br>where <em>M</em>(<em>k</em>) is the multi-window power spectral density estimate:<br>$$<br>M(k)=\sum_{l=0}^{L-1}\omega(l)x(l)e^{-j(2\pi/L)lk}<br>$$<br>with an L-point discrete fourier transform. Here, ω(l) is the Hamming window of length L.</p>
+<p>10.Expectation-Maximization Gaussian-Mixture-Model Algorithm : <a target="_blank" rel="noopener" href="https://machinelearningmastery.com/expectation-maximization-em-algorithm/#:~:text=The%20Expectation-Maximization%20Algorithm%2C%20or%20EM%20algorithm%20for%20short%2C,latent%20variable%20models%20is%20the%20expectation-maximization%20%28EM%29%20algorithm">https://machinelearningmastery.com/expectation-maximization-em-algorithm/#:~:text=The%20Expectation-Maximization%20Algorithm%2C%20or%20EM%20algorithm%20for%20short%2C,latent%20variable%20models%20is%20the%20expectation-maximization%20%28EM%29%20algorithm</a>.</p>
+<p>To solve density estimation problem with latent variables by maximum likelihood estimation, we use the expectation-maximization algorithm. It is an iterative approach cycles between two modes : E-step and M-step.</p>
+<blockquote>
+<ul>
+<li>E-Step. Estimate the missing variables in the dataset.</li>
+<li>M-Step. Maximize the parameters of the model in the presence of the data.</li>
+</ul>
+</blockquote>
+<p>A mixture model is a model comprised of an unspecified combination of multiple probability distribution functions.The Gaussian Mixture Model, or GMM for short, is a mixture model that uses a combination of Gaussian (Normal) probability distributions and requires the estimation of the mean and standard deviation parameters for each.</p>
+<p>In the EM algorithm, the estimation-step would estimate a value for the process latent variable for each data point, and the maximization step would optimize the parameters of the probability distributions in an attempt to best capture the density of the data. The process is repeated until a good set of latent values and a maximum likelihood is achieved that fits the data.</p>
+<p>The algorithm itself is omitted here, you can read <em>李航. 统计学习方法. 清华大学出版社, 2012.</em> for furthre study.</p>
+<p>11.Singular Value Dec</p>
 
       
     </div>
@@ -234,7 +245,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/02/12/HFO经典检测方法以及最新的无监督半监督方法-2/" target="_blank" title="HFO经典检测方法以及最新的无监督半监督方法(2)">http://example.com/2021/02/12/HFO经典检测方法以及最新的无监督半监督方法-2/</a>
+          <a href="/2021/02/17/HFO论文知识补充学习/" target="_blank" title="HFO论文知识补充学习">http://example.com/2021/02/17/HFO论文知识补充学习/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -284,19 +295,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/02/15/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-3/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          HFO经典检测方法以及最新的无监督半监督方法(3)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/02/02/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/02/16/HFO%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%9C%80%E6%96%B0%E7%9A%84%E6%97%A0%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E6%96%B9%E6%B3%95-7/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">HFO经典检测方法以及最新的无监督半监督方法</div>
+      <div class="article-nav-title">HFO经典检测方法以及最新的无监督半监督方法(7)</div>
     </a>
   
 </nav>
@@ -310,7 +312,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Human-and-automated-detection-of-high-frequency-oscillations-in-clinical-intracranial-EEG-recordings"><span class="nav-number">1.</span> <span class="nav-text">Human and automated detection of high-frequency oscillations in clinical intracranial EEG recordings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Methods"><span class="nav-number">1.2.</span> <span class="nav-text">Methods</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Results"><span class="nav-number">2.</span> <span class="nav-text">Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Discussion"><span class="nav-number">3.</span> <span class="nav-text">Discussion</span></a></li></ol>
+        <ol class="nav">None</ol>
     
     </div>
   </aside>
