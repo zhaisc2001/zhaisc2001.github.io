@@ -19,7 +19,7 @@
 <meta property="og:description" content="Automatic detection of HFOs based on singular value decomposition and improved fuzzy c-means clustering for localization of seizure onset zonesIntroduction千篇一律的简介，7000万，30%，HFOs中Rs和FRs；提到了作者团队之前做过的SVD">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-16T11:01:42.000Z">
-<meta property="article:modified_time" content="2021-02-16T13:23:57.890Z">
+<meta property="article:modified_time" content="2021-02-17T03:00:41.445Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="HFOs">
 <meta name="twitter:card" content="summary">
@@ -222,6 +222,31 @@
 <p>2）计算如下距离：<br>$$<br>d_{k}(s_{j},o_{k})=\sqrt{(s_j-o_k)^2},k=1,2.<br>$$<br>其中s<sub>j</sub>∈{𝛔<sub>2</sub>,𝛔<sub>3</sub>,…,𝛔<sub>r</sub>},s<sub>j</sub>≠o<sub>2</sub>，并且当i≠j时s<sub>i</sub>≠s<sub>j</sub>，如果d<sub>1</sub>(s<sub>j</sub>,o<sub>1</sub>)≤d<sub>2</sub>(s<sub>j</sub>,o<sub>2</sub>)，则s<sub>j</sub>被分配到以o<sub>1</sub>为中心的聚类C<sub>1</sub>中；否则，s<sub>j</sub>被分配到以o<sub>2</sub>为中心的聚类C<sub>2</sub>中。</p>
 <p>3）从C<sub>2</sub>簇中随机选择SV，o’<sub>2</sub>，并且令o’<sub>1</sub>=o<sub>1</sub>，根据步骤2的方法，得到以o′<sub>1</sub>为中心的新簇C′<sub>1</sub>和以o′<sub>2</sub>为中心的新簇C<sub>2</sub>′，通过下式计算<br>$$<br>J=\sum_{i=1}^{2}\sum_{s\in C_{i}^{‘}}|s-o_{i}^{‘}|^2-\sum_{i=1}^{2}\sum_{s\in C_{i}^{‘}}|s-o_{i}|^2<br>$$<br>如果J&lt;0，则替换o<sub>2</sub>为o’<sub>2</sub>，否则保持原来的中心点o<sub>2</sub>。</p>
 <p>4） 重复步骤2和步骤3，如果生成的聚类中心不再变化，则停止。在这种情况下，生成的聚类中心σ1包含了所需的SV，其数量为q（1≤q≤r-1），ESV为𝛔<sub>1</sub>,𝛔<sub>2</sub>,…,𝛔<sub>q</sub>。</p>
+<p>Step7:得到以下重新构造的时频矩阵S’(t,f):<br>$$<br>S’(t,f)=U_{M\times M}\sum\ ^{‘}<em>{M\times N}V</em>{N\times N}^{T}<br>$$<br>其中<br>$$<br>\sum\ ^{‘}<em>{M\times N}=\begin{bmatrix}\Lambda</em>{q\times q}^{‘}&amp;0_{q\times (N-q)}\0_{(M-q)\times q}&amp;0_{(M-q)\times (N-q)}\end{bmatrix}<br>$$<br>Λ’<sub>q*q</sub>=diag{𝛔<sub>1</sub>,𝛔<sub>2</sub>,…,𝛔<sub>q</sub>}.</p>
+<p>Step8:通过Stockwell反变换重构信号：<br>$$<br>y’(\tau)=\int^{+\infin}<em>{-\infin}\int^{+\infin}</em>{-\infin}S’(t,f)e^{j2\pi f\tau}dtdf.<br>$$<br>Step9:通过功率阈值消除HFOCs的尖峰,由箱形图得到重建信号在80-500Hz的平均功率分布y′(τ)。对HFOCs的平均功率的阈值，Threshold<sub>Power</sub> ，定义为<br>$$<br>Thereshold_{Power}=Q_1-1.5(Q_3-Q_1)<br>$$<br>其中Q1和Q3分别是下四分位数和上四分位数（重建信号功率分布的第25和75百分位数），重构信号中功率小于阈值对应的HFOCs则被删去。</p>
+<p>为什么作者使用SVD结合k-medoids从HFOCs中消除尖峰（如分别由肌肉活动和滤波器效应产生的尖波和快速瞬变波）1）HFOs和尖峰具有不同的时频分布；2）SVD得到的SVs反映了这些时频分布；3）采用k-medoids聚类方法而不是人工方法来确定ESVs；4）利用ESVs得到重建的信号，预计尖峰和HFOs的信号会有所不同。</p>
+<p>第二步：特征提取</p>
+<p>提取以下四个特征：</p>
+<p>1）MSV，SVs可以反映信号的变化，因此可以用来识别HFO。因此，MSV作为HFO的一个特征，通常按照以下步骤获得。<br>步骤1: 通过 Stockwell 变换获得其余 HFOCs 的时间-频率信息，使用前面Step4的公式。<br>步骤2：基于SVD方法，计算步骤1中获得的时频信息的SVs。<br>步骤3：确定ESVs σ<sub>1</sub>，σ<sub>2</sub>，…，σ<sub>q</sub>通过k-medoids算法。<br>步骤4：定义MSV为<br>$$<br>MSV=\frac{1}{q}\sum_{i=1}^q\sigma_i<br>$$<br>2）线长，可以反映HFOs信号幅度的增加，线长估计值f<sub>l</sub>被描述为<br>$$<br>f_l=\frac{1}{L_l}\sum_{k=1}^{L_l-1}|x(k+1)-x(k)|<br>$$<br>L<sub>l</sub>是样本的数量，x(k)代表的是其余HFOCs的幅度。</p>
+<p>3）功率比，定义如下：<br>$$<br>R=\frac{P_{[80-250]}}{P_{[250-500]}}<br>$$<br>4)频谱中心点,可以反映出HFO的频谱集中在哪个频率上,频谱中心点表示为：<br>$$<br>f_c=\frac{\sum_{k=1}^{L/2}\frac{k}{LT}|M(k)|^2}{\sum_{k=1}^{L/2}|M(k)|^2}<br>$$<br>其中T为采样周期，M(k)为多锥度功率谱密度估计值。</p>
+<p>MSV反映信号时频特征，线长反映时域信息，功率比和频谱中心点反映频域信息，我们可以用它们组成4维特征向量进行FCM聚类。</p>
+<p>第三步：改进后的FCM聚类算法</p>
+<p>通过和SA算法以及GA算法结合，我们改进的FCM聚类算法相较于普通FCM算法更容易得到全局最优解，我们首先对普通FCM算法进行介绍，其目标是最小化以下目标函数：<br>$$<br>J_m=\sum_{i=1}^{N_f}\sum_{c=1}^{C}\mu_{ic}^{m}||V_i-v_c||^2,1&lt;m&lt;\infin<br>$$<br>其中，一般来说，作为加权模糊度参数，m=2，C为簇数，v<sub>c</sub>为簇中心，μ<sub>ic</sub>是V<sub>i</sub>在簇c中的成员度。</p>
+<p>a)随机初始化v<sub>c</sub>(c=1,2,…,C);</p>
+<p>b)μ<sub>ic</sub>的计算公式为<br>$$<br>\mu_{ic}=(\sum_{k=1}^C(\frac{||V_i-v_c||}{||V_i-v_k||})^{\frac{2}{m-1}})^{-1}<br>$$<br>c)中心向量v<sub>c</sub>更新公式为<br>$$<br>v_c=\frac{\sum_{i=1}^{N_f}\mu_{ic}^mV_i}{\sum_{i=1}^{N_f}\mu_{ic}^m}<br>$$<br>d)<br>$$<br>\Delta=||J_m^{(h)}-J_m^{(h-1)}||<br>$$<br>J<sup>(h)</sup><sub>m</sub>是目标函数在h轮迭代的值；</p>
+<p>e)算法终止条件为<br>$$<br>\Delta&lt;\epsilon<br>$$<br>其中ℇ是预先给定的一个很小的正常数；</p>
+<p>作者给出的改进后的FCM算法如下：</p>
+<p>step1:初始化参数：预定常数ε，最大进化次数N<sub>maxgen</sub>，种群数量N<sub>popsize</sub> ，交叉概率Pc ，突变概率P<sub>m</sub> ，初始温度T<sub>0</sub> ，温度冷却系数t<sub>0</sub> ，终止温度T<sub>end</sub> 。</p>
+<p>step2:通过一篇关系户论文（《HFO经典检测方法以及最新的无监督半监督方法(5)》中阅读的论文）中的方法确定聚类数量C，随机初始化聚类中心v<sub>c</sub>(c=1,2,…,C)，生成一个初始种群P<sub>popsize</sub>，有N<sub>popsize</sub>组聚类中心，每组都有C个聚类中心，根据上面的b)中的公式计算每个V<sub>i</sub>相对于v<sub>c</sub>的成员度，然后对于每一个个体计算其适配度f<sub>j</sub>，公式为1/J<sub>m</sub>。</p>
+<p>step3:设置循环次数变量gen=0。</p>
+<p>step4:对种群P<sub>popsize</sub>进行选择、交叉和突变的遗传操作，新生成的个体是N<sub>popsize</sub>组的新聚类中心，每组有C个，然后计算每个V<sub>i</sub>对应新的聚类中心的成员度，再计算适配度f’<sub>j</sub>，如果适配度比原先的适配度大，那么就用新的个体替换原先的；否则用概率P=exp((f’<sub>j</sub>-f<sub>j</sub>)/T<sub>0</sub>)接受新的个体并丢弃旧个体。</p>
+<p>step5:如果gen&lt;N<sub>maxgen</sub>，令gen+=1并返回step4；否则转到step6；</p>
+<p>step6:如果T<sub>i</sub>&lt;T<sub>end</sub>，则终止算法并返回全局最优解，否则执行冷却操作T<sub>i+1</sub>=t<sub>0</sub>T<sub>i</sub>，并且跳回step3。</p>
+<p>得到聚类结果后，采用统计法寻找由Rs和FRs组成的对应HFO的簇。</p>
+<p>这里对于检测器的评估指标也是照搬了关系户论文（《HFO经典检测方法以及最新的无监督半监督方法(5)》中阅读的论文）的半阈值最大法以及灵敏性和特异性；</p>
+<h3 id="Results-and-analysis"><a href="#Results-and-analysis" class="headerlink" title="Results and analysis"></a>Results and analysis</h3><p>首先是多凹槽和带通滤波很有效，令背景噪音和HFOs有明显区别；然后用实验结果过名了80-500Hz预处理后的iEEG信号，很难用时域或频域方法来消除尖峰，因此使用重建信号的功率来消除尖峰是很有效的一个方法；为了说明四个特征的有效性，给出了两种脑电信号的特征对比（HFOs和正常活动），实验结果表明具有明显差异；改进后的FCM比原先的性能要好，因为在同一目标函数的前提下，改进后的FCM优化情况更好，之后是一波与其他自动检测器的对比，得到的结论当然是总体性能是本文的improved FCM更好。</p>
+<h3 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h3><p>作者认为本文的优点是消除了尖峰、不用选择阈值、优化了FCM提高了性能，并且说在之后的工作他们将会采用分布式滤波、马尔可夫跳转系统方法、粒子群优化算法、深度特征提取方法、神经网络来分析iEEG数据。</p>
+<p>将机器学习方法运用于医疗领域的技术并不如我想象的那样成熟，这个方向的研究也许是大有可为的。</p>
 
       
     </div>
@@ -302,7 +327,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Automatic-detection-of-HFOs-based-on-singular-value-decomposition-and-improved-fuzzy-c-means-clustering-for-localization-of-seizure-onset-zones"><span class="nav-number">1.</span> <span class="nav-text">Automatic detection of HFOs based on singular value decomposition and improved fuzzy c-means clustering for localization of seizure onset zones</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Materials-and-Methods"><span class="nav-number">2.</span> <span class="nav-text">Materials and Methods</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Automatic-detection-of-HFOs-based-on-singular-value-decomposition-and-improved-fuzzy-c-means-clustering-for-localization-of-seizure-onset-zones"><span class="nav-number">1.</span> <span class="nav-text">Automatic detection of HFOs based on singular value decomposition and improved fuzzy c-means clustering for localization of seizure onset zones</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Materials-and-Methods"><span class="nav-number">2.</span> <span class="nav-text">Materials and Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Results-and-analysis"><span class="nav-number">2.1.</span> <span class="nav-text">Results and analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Discussion"><span class="nav-number">2.2.</span> <span class="nav-text">Discussion</span></a></li></ol></li></ol>
     
     </div>
   </aside>
