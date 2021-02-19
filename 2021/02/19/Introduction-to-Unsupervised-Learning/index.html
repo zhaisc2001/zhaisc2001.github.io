@@ -3,22 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>clustering methods | Sisicca</title>
+  <title>introduction to unsupervised learning | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="unsupervised learning" />
   
   
   
-  <meta name="description" content="Fundamentals of clusteringsimilarity or distanceA training set which has n samples and m features can be presented as an M*N matrix X. xij means the value of i th feature of the j th sample. Minkowski">
+  
+  <meta name="description" content="What is unsupervised learning?Unsupervised learning, also known as unsupervised machine learning, uses machine learning algorithms to analyze and cluster unlabeled datasets. These algorithms discover">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Clustering methods">
-<meta property="og:url" content="http://example.com/2021/01/24/Clustering-methods/index.html">
+<meta property="og:title" content="Introduction to Unsupervised Learning">
+<meta property="og:url" content="http://example.com/2021/02/19/Introduction-to-Unsupervised-Learning/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Fundamentals of clusteringsimilarity or distanceA training set which has n samples and m features can be presented as an M*N matrix X. xij means the value of i th feature of the j th sample. Minkowski">
+<meta property="og:description" content="What is unsupervised learning?Unsupervised learning, also known as unsupervised machine learning, uses machine learning algorithms to analyze and cluster unlabeled datasets. These algorithms discover">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-01-24T08:17:49.000Z">
-<meta property="article:modified_time" content="2021-01-30T01:10:37.462Z">
+<meta property="article:published_time" content="2021-02-19T08:25:29.000Z">
+<meta property="article:modified_time" content="2021-02-19T10:31:37.406Z">
 <meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="unsupervised learning">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
@@ -169,7 +172,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Clustering-methods" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-Introduction-to-Unsupervised-Learning" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -177,7 +180,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Clustering methods
+      Introduction to Unsupervised Learning
     </h1>
   
 
@@ -185,8 +188,8 @@
     
     <div class="article-meta">
       
-	<a href="/2021/01/24/Clustering-methods/" class="article-date">
-	  <time datetime="2021-01-24T08:17:49.000Z" itemprop="datePublished">2021-01-24</time>
+	<a href="/2021/02/19/Introduction-to-Unsupervised-Learning/" class="article-date">
+	  <time datetime="2021-02-19T08:25:29.000Z" itemprop="datePublished">2021-02-19</time>
 	</a>
 
       
@@ -204,21 +207,19 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Fundamentals-of-clustering"><a href="#Fundamentals-of-clustering" class="headerlink" title="Fundamentals of clustering"></a>Fundamentals of clustering</h1><h2 id="similarity-or-distance"><a href="#similarity-or-distance" class="headerlink" title="similarity or distance"></a>similarity or distance</h2><p>A training set which has n samples and m features can be presented as an M*N matrix X.</p>
-<p>x<sub>ij</sub> means the value of i th feature of the j th sample.</p>
-<h3 id="Minkowski-distance"><a href="#Minkowski-distance" class="headerlink" title="Minkowski distance"></a>Minkowski distance</h3><p>$$<br>Minkowski\ distance\<br>d_{ij}=(\sum^{m}<em>{k=1}|x</em>{ki}-x_{kj}|^{p})^{\frac{1}{p}},p ≥1.<br>$$</p>
-<p>Minkowski distance presents the distance of x<sub>i</sub> and x<sub>j</sub>.</p>
-<p>p=2, it is Euclidean distance.p=1, it is Manhattan distance.p=∞, it is Chebyshev distance.<br>$$<br>Chebyshev\ distance\<br>d_{ij}=max_{k}|x_{ki}-x_{kj}|<br>$$</p>
-<h3 id="Mahalanobis-distance"><a href="#Mahalanobis-distance" class="headerlink" title="Mahalanobis distance"></a>Mahalanobis distance</h3><p>It’s an extension of Euclidean distance:<br>$$<br>Mahalanobis\ distance\<br>d_{ij}=[(x_{i}-x_{j})^{T}S^{-1}(x_{i}-x_{j})]^{\frac{1}{2}}<br>$$<br>S is the covariance matrix of X.</p>
-<h3 id="Correlation-coefficient"><a href="#Correlation-coefficient" class="headerlink" title="Correlation coefficient"></a>Correlation coefficient</h3><p>The absolute value of correlation coefficient<br>$$<br>r_{ij}=\frac{\sum_{k=1}^{m}(x_{ki}-\overline{x}<em>{i})(x</em>{kj}-\overline{x}<em>{j}))}{[\sum</em>{k=1}^{m}(x_{ki}-\overline{x}<em>{i})^2\sum</em>{k=1}^{m}(x_{kj}-\overline{x}_{j})^2]^{\frac{1}{2}}}<br>$$<br>The more it is close to 1, the more similar i and j are, the more it is close to 0, the more unsimilar they are.</p>
-<h3 id="Cosine"><a href="#Cosine" class="headerlink" title="Cosine"></a>Cosine</h3><p>s<sub>ij</sub> is defined as<br>$$<br>s_{ij}=\frac{\sum_{k=1}^{m}x_{ki}x_{kj}}{[\sum_{k=1}^{m}x_{ki}^2\sum_{k=1}^{m}x_{kj}^2]^{\frac{1}{2}}}<br>$$<br>The more cosine is close to 1, the more similar i and j are, the more it is close to 0, the more unsimilar they are.</p>
-<h2 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h2><p>There are several definitions of cluster, they are as follow:</p>
-<blockquote>
-<ul>
-<li>Suppose T is a given positive number, if x<sub>i</sub>,x<sub>j</sub> are two random samples of set G, when<br>$$<br>d_{ij}≤T<br>$$<br>we say G is a cluster.</li>
-<li>Suppose T is a given positive number, if </li>
-</ul>
-</blockquote>
+        <h2 id="What-is-unsupervised-learning"><a href="#What-is-unsupervised-learning" class="headerlink" title="What is unsupervised learning?"></a>What is unsupervised learning?</h2><p>Unsupervised learning, also known as unsupervised machine learning, uses machine learning algorithms to analyze and cluster unlabeled datasets. These algorithms discover hidden patterns or data groupings without the need for human intervention. Its ability to discover similarities and differences in information make it the ideal solution for exploratory data analysis, cross-selling strategies, customer segmentation, and image recognition.</p>
+<h2 id="Common-unsupervised-learning-approaches"><a href="#Common-unsupervised-learning-approaches" class="headerlink" title="Common unsupervised learning approaches"></a>Common unsupervised learning approaches</h2><p>Main tasks : clustering, association and dimensionality reduction.</p>
+<h3 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h3><p>Exclusive clustering is a form of grouping that stipulates a data point can exist only in one cluster. This can also be referred to as “hard” clustering. Overlapping clusters differs from exclusive clustering in that it allows data points to belong to multiple clusters with separate degrees of membership. K-means clustering and Hierarchical clustering are exclusive clustering, Gaussian mixture model and fuzzy C-means clustering are overlapping clustering.</p>
+<h3 id="Association-Rules"><a href="#Association-Rules" class="headerlink" title="Association Rules"></a>Association Rules</h3><p>An association rule is a rule-based method for finding relationships between variables in a given dataset. These methods are frequently used for market basket analysis, allowing companies to better understand relationships between different products. Understanding consumption habits of customers enables businesses to develop better cross-selling strategies and recommendation engines. Examples of this can be seen in Amazon’s “Customers Who Bought This Item Also Bought” or Spotify’s “Discover Weekly” playlist. While there are a few different algorithms used to generate association rules, such as Apriori, Eclat, and FP-Growth, the Apriori algorithm is most widely used.</p>
+<h3 id="Dimensionality-reduction"><a href="#Dimensionality-reduction" class="headerlink" title="Dimensionality reduction"></a>Dimensionality reduction</h3><p>While more data generally yields more accurate results, it can also impact the performance of machine learning algorithms (e.g. overfitting) and it can also make it difficult to visualize datasets. Dimensionality reduction is a technique used when the number of features, or dimensions, in a given dataset is too high. It reduces the number of data inputs to a manageable size while also preserving the integrity of the dataset as much as possible. It is commonly used in the preprocessing data stage, and there are a few different dimensionality reduction methods that can be used, such as PCA, SVD and autoencoders.</p>
+<h2 id="Applications-of-unsupervised-learning"><a href="#Applications-of-unsupervised-learning" class="headerlink" title="Applications of unsupervised learning"></a>Applications of unsupervised learning</h2><p>News sections : categorize articles on the same story from various online news outlets. For example, the results of a presidential election could be categorized under their label for “US” news.</p>
+<p>Computer vision : object recognition.</p>
+<p>Medical imaging : image detection, classification and segmentation, used in radiology and pathology to diagnose patients quickly and accurately.</p>
+<p>Anomaly detection : comb through large amounts of data and discover atypical data points within a dataset.</p>
+<p>Customer personas :allows businesses to build better buyer persona profiles, enabling organizations to align their product messaging more appropriately.</p>
+<h2 id="Unsupervised-vs-supervised-vs-semi-unsupervised-learning"><a href="#Unsupervised-vs-supervised-vs-semi-unsupervised-learning" class="headerlink" title="Unsupervised vs. supervised vs. semi-unsupervised learning"></a>Unsupervised vs. supervised vs. semi-unsupervised learning</h2><p>Unsupervised learning and supervised learning are frequently discussed together. Unlike unsupervised learning algorithms, supervised learning algorithms use labeled data. From that data, it either predicts future outcomes or assigns data to specific categories based on the regression or classification problem that it is trying to solve. While supervised learning algorithms tend to be more accurate than unsupervised learning models, they require upfront human intervention to label the data appropriately. However, these labelled datasets allow supervised learning algorithms to avoid computational complexity as they don’t need a large training set to produce intended outcomes. Common regression and classification techniques are linear and logistic regression, naïve bayes, KNN algorithm, and random forest.</p>
+<p>Semi-supervised learning occurs when only part of the given input data has been labelled. Unsupervised and semi-supervised learning can be more appealing alternatives as it can be time-consuming and costly to rely on domain expertise to label data appropriately for supervised learning.</p>
+<h2 id="Challenges-of-unsupervised-learning"><a href="#Challenges-of-unsupervised-learning" class="headerlink" title="Challenges of unsupervised learning"></a>Challenges of unsupervised learning</h2><p>While unsupervised learning has many benefits, some challenges can occur when it allows machine learning models to execute without any human intervention. Some of these challenges can include : computational complexity due to a high volume of training data, longer training times, higher risks of inaccurate results, human intervention to validate output variables and lack of transparency into the basis on which data was clustered.</p>
 
       
     </div>
@@ -232,7 +233,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/01/24/Clustering-methods/" target="_blank" title="Clustering methods">http://example.com/2021/01/24/Clustering-methods/</a>
+          <a href="/2021/02/19/Introduction-to-Unsupervised-Learning/" target="_blank" title="Introduction to Unsupervised Learning">http://example.com/2021/02/19/Introduction-to-Unsupervised-Learning/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -272,6 +273,8 @@
       
       
         
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unsupervised-learning/" rel="tag">unsupervised learning</a></li></ul>
+
       
 
     </footer>
@@ -280,19 +283,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/02/01/HFOs%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          HFOs检测技术调研文献综述
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/01/23/%E7%90%90%E4%BA%8B%E8%AE%B0%E5%BF%86/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/02/17/HFO%E8%AE%BA%E6%96%87%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">琐事记忆</div>
+      <div class="article-nav-title">HFO论文知识补充学习</div>
     </a>
   
 </nav>
@@ -306,7 +300,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fundamentals-of-clustering"><span class="nav-number">1.</span> <span class="nav-text">Fundamentals of clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#similarity-or-distance"><span class="nav-number">1.1.</span> <span class="nav-text">similarity or distance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Minkowski-distance"><span class="nav-number">1.1.1.</span> <span class="nav-text">Minkowski distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mahalanobis-distance"><span class="nav-number">1.1.2.</span> <span class="nav-text">Mahalanobis distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Correlation-coefficient"><span class="nav-number">1.1.3.</span> <span class="nav-text">Correlation coefficient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cosine"><span class="nav-number">1.1.4.</span> <span class="nav-text">Cosine</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster"><span class="nav-number">1.2.</span> <span class="nav-text">Cluster</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-unsupervised-learning"><span class="nav-number">1.</span> <span class="nav-text">What is unsupervised learning?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Common-unsupervised-learning-approaches"><span class="nav-number">2.</span> <span class="nav-text">Common unsupervised learning approaches</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Clustering"><span class="nav-number">2.1.</span> <span class="nav-text">Clustering</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Association-Rules"><span class="nav-number">2.2.</span> <span class="nav-text">Association Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dimensionality-reduction"><span class="nav-number">2.3.</span> <span class="nav-text">Dimensionality reduction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Applications-of-unsupervised-learning"><span class="nav-number">3.</span> <span class="nav-text">Applications of unsupervised learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unsupervised-vs-supervised-vs-semi-unsupervised-learning"><span class="nav-number">4.</span> <span class="nav-text">Unsupervised vs. supervised vs. semi-unsupervised learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Challenges-of-unsupervised-learning"><span class="nav-number">5.</span> <span class="nav-text">Challenges of unsupervised learning</span></a></li></ol>
     
     </div>
   </aside>
