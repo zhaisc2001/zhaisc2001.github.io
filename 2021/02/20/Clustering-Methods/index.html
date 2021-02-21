@@ -6,19 +6,22 @@
   <title>clustering methods | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="unsupervised learning" />
   
   
   
-  <meta name="description" content="Born To Die.">
+  
+  <meta name="description" content="Fundamental ConceptsBefore we talk about clustering methods, there are some required knowledge. Similarity or Distance1.Minkowski distance:$$d_{ig} &#x3D; (\sum_{k&#x3D;1}^{m}|x_{ki}-x_{kj}|^p)^{\frac{1}{p}}$$w">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Clustering Methods">
 <meta property="og:url" content="http://example.com/2021/02/20/Clustering-Methods/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Born To Die.">
+<meta property="og:description" content="Fundamental ConceptsBefore we talk about clustering methods, there are some required knowledge. Similarity or Distance1.Minkowski distance:$$d_{ig} &#x3D; (\sum_{k&#x3D;1}^{m}|x_{ki}-x_{kj}|^p)^{\frac{1}{p}}$$w">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-20T08:23:47.000Z">
-<meta property="article:modified_time" content="2021-02-20T08:23:47.397Z">
+<meta property="article:modified_time" content="2021-02-21T11:03:28.027Z">
 <meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="unsupervised learning">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
@@ -190,6 +193,8 @@
 	</a>
 
       
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
       
 	<a class="article-views">
 	<span id="busuanzi_container_page_pv">
@@ -202,7 +207,59 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Fundamental-Concepts"><a href="#Fundamental-Concepts" class="headerlink" title="Fundamental Concepts"></a>Fundamental Concepts</h2><p>Before we talk about clustering methods, there are some required knowledge.</p>
+<h3 id="Similarity-or-Distance"><a href="#Similarity-or-Distance" class="headerlink" title="Similarity or Distance"></a>Similarity or Distance</h3><p>1.Minkowski distance:<br>$$<br>d_{ig} = (\sum_{k=1}^{m}|x_{ki}-x_{kj}|^p)^{\frac{1}{p}}<br>$$<br>where p≥1, and if p=2, it is Euclidean distance:<br>$$<br>d_{ij}=(\sum_{k=1}^{m}|x_{ki}-x_{kj}|^2)^{\frac{1}{2}}<br>$$<br> when p=1, it is Manhattan distance:<br>$$<br>d_{ij}=\sum_{k=1}^m|x_{ki}-x_{kj}|<br>$$<br>when p=∞, it is Chebyshev distance:<br>$$<br>d_{ij}=\mathop{max}\limits_{k} |x_{ki}-x_{kj}|<br>$$<br>2.Mahalanobis distance:<br>$$<br>d_{ij}=[(x_i-x_j)^TS^{-1}(x_i-x_j)]^{\frac{1}{2}}<br>$$<br>where S is the covariance matrix of X. Mahalanobis distance is unitless and scale-invariant.</p>
+<p>3.Correlation coeffiicient:<br>$$<br>r_{ij}=\frac{\sum_{k=1}^m(x_{ki}-\overline{x}<em>i)(x</em>{kj}-\overline{x}<em>j)}{[\sum</em>{k=1}^m (x_{ki}-\overline{x}<em>i)^2\sum</em>{k=1}^m(x_{kj}-\overline{x}_j)^2]^{\frac{1}{2}}}<br>$$<br>where \overline{x}_i and \overline{x}_j are mean values of x_i and x_j.</p>
+<p>4.cosine:<br>$$<br>s_{ij}=\frac{\sum_{k=1}^m x_{ki}x_{kj}}{[\sum_{k=1}^{m}x_{ki}^2 \sum_{k=1}^mx_{kj}^2]^{\frac{1}{2}}}<br>$$</p>
+<h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>There are kinds of definitions of cluster  as follows :</p>
+<p>1.G is a cluster for any  x<sub>i</sub> and x<sub>j</sub> have:<br>$$<br>d_{ij}≤T<br>$$<br>where T is a positive number.</p>
+<p>2.x<sub>i</sub> is in G cluster, if for any j in G cluster:<br>$$<br>\frac{1}{n_G-1}\sum_{x_j\in G}d_{ij}≤T<br>$$<br>where T is a positive number.</p>
+<p>3.G is a cluster if x<sub>i</sub> and x<sub>j</sub> :<br>$$<br>\frac{1}{n_G(n_G-1)}\sum_{x_i\in G}\sum_{x_j\in G}d_{ij}≤T<br>$$<br>The features of cluster are as follows:</p>
+<p>1.mean value(centroid):<br>$$<br>\overline{x}<em>G=\frac{1}{n_G}\sum^{n_G}</em>{i=1}x_i<br>$$<br>2.diameter:<br>$$<br>D_G=\mathop{max}\limits_{x_i,x_j\in G}d_{ij}<br>$$<br>3.scatter matrix A<sub>G</sub> and covariance matrix S<sub>G</sub>:<br>$$<br>A_G=\sum_{i=1}^{n_G}(x_i-\overline{x}<em>G)(x_i-\overline{x}_G)^T\<br>S_G=\frac{1}{m-1}A_G\<br>=\frac{1}{m-1}\sum</em>{i=1}^{n_G}(x_i-\overline{x}_G)(x_i-\overline{x}_G)^T<br>$$<br>where m is the dimensionalities of x<sub>k</sub>.</p>
+<h3 id="Distance-linkage-between-clusters"><a href="#Distance-linkage-between-clusters" class="headerlink" title="Distance(linkage) between clusters"></a>Distance(linkage) between clusters</h3><p>1.single linkage:<br>$$<br>D_{pq}=min{d_{ij}|x_i\in G_p,x_j\in G_q}<br>$$<br>2.complete linkage:<br>$$<br>D_{pq}=max{d_{ij}|x_i\in G_p,x_j\in G_q}<br>$$<br>3.centroid linkage:<br>$$<br>D_{pq}=d_{\overline{x}<em>p \overline{x}<em>q}<br>$$<br>4.average linkage:<br>$$<br>D</em>{pq}=\frac{1}{n_p n_q}\sum</em>{x_i\in G_q}\sum_{x_j \in G_p}d_{ij}<br>$$</p>
+<h2 id="Hierarchical-clustering"><a href="#Hierarchical-clustering" class="headerlink" title="Hierarchical clustering"></a>Hierarchical clustering</h2><p>Hierarchical clustering is separating data into groups based on some measure of similarity, finding a way to measure how they’re alike and different, and further narrowing down the data.</p>
+<p>Hierarchical clustering is divided into agglomerative and divisive. Divisive clustering is known as the top-down approach. We take a large cluster and start dividing it into two, three, four, or more clusters. Agglomerative clustering is known as a bottom-up approach. Consider it as bringing things together.</p>
+<p>There are three elements we need to know before cluster:(1)similarity;(2)merge rules;(3)stop condition.</p>
+<p>Agglomerative hierarchical clustering:</p>
+<p>Input:a sample set consist of n samples and the distance between samples;</p>
+<p>Output:a hierarchical cluster for the sample set.</p>
+<p>step 1: calculate the Euclidean distance between each other for n samples, represent it as D={d<sub>ij</sub>}<sub>n*n</sub>;</p>
+<p>step 2: construct n clusters, each cluster only contains one sample;</p>
+<p>step 3:merge two clusters whose distance is the shortest between clusters to construct a new cluster;</p>
+<p>step 4:calculate the distance between new cluster and other clusters, stop clustering if the number of clusters is 1, otherwise jump to step3.</p>
+<p>The time complexity of the algorithm is O(n<sup>3</sup>m), m is the dimensionalities of sample and n is the nubmer of samples.</p>
+<h2 id="K-means-clustering"><a href="#K-means-clustering" class="headerlink" title="K-means clustering"></a>K-means clustering</h2><p>K-Means clustering algorithm is defined as a unsupervised learning methods having an iterative process in which the dataset are grouped into k number of predefined non-overlapping clusters or subgroups making the inner points of the cluster as similar as possible while trying to keep the clusters at distinct space it allocates the data points to a cluster so that the sum of the squared distance between the clusters centroid and the data point is at a minimum, at this position the centroid of the cluster is the arithmetic mean of the data points that are in the clusters.</p>
+<p>k-means clustering:</p>
+<p>Input:n samples set X;</p>
+<p>Output: cluster set C;</p>
+<p>step 1:initialization, make t = 0, select k samples as initial centroids randomly, m<sup>(0)</sup>=(m<sub>1</sub><sup>(0)</sup>,…,m<sub>l</sub><sup>(0)</sup>,…,m<sub>k</sub><sup>(0)</sup>)</p>
+<p>step 2:cluster for samples, for centroids m<sup>(t)</sup>, m<sub>l</sub><sup>(t)</sup> is the centroid of cluster G<sub>l</sub>, calculate each the distance of sample to its cluster cnetroid, assign each sample into their nearest cluster, we can get a new cluster C<sup>(t)</sup>.</p>
+<p>step 3:calculate the new cluster centroid, for C<sup>(t)</sup>, calculate the average value of each cluster as new centroids m<sup>(t+1)</sup>=(m<sub>1</sub><sup>(t+1)</sup>,…,m<sub>l</sub><sup>(t+1)</sup>,…,m<sub>k</sub><sup>(t+1)</sup>).</p>
+<p>step 4:if the literation converges or elegible for termination, output C<sup>*</sup>=C<sup>(t)</sup>. Otherwise, t+=1, jump to step 2. The time complexity of k-means clustering is O(mnk). Where m is the dimensionality of sample, n is the number of samples, k is the number of clusters.</p>
+<h2 id="EM-GMM"><a href="#EM-GMM" class="headerlink" title="EM-GMM"></a>EM-GMM</h2><p>In most cases, Expectation-Maximization is an effective method to train Gaussian mixture model</p>
+<p>EM algorithm:</p>
+<p>Input:observed data Y, unobserved data Z, statistical model P(Y,Z|θ) and P(Z|Y,θ)</p>
+<p>Output:model parameters θ.</p>
+<p>step 1:choose initial value θ<sup>(0)</sup>, start the iteration;</p>
+<p>step 2:expectation step, notate θ<sup>(i)</sup> as the estimated value of parameter θ in i iteration, in i+1 iteration, calculate<br>$$<br>Q(\theta,\theta^{(i)})=E_Z[logP(Y,Z|\theta)|Y,\theta^{(i)}]\=\sum_{Z}logP(Y,Z|\theta)P(Z|Y,\theta^{(i)})<br>$$<br>where P(Z|Y,θ<sup>(i)</sup>) represents a conditional probability distribution of given observed data Y and hidden variables Z under estimated parameter θ<sup>(i)</sup>;</p>
+<p>step 3:maximazation step, find the parameters that maximize the expectation of the Q function:<br>$$<br>\theta^{(i+1)}=arg\mathop{max}\limits_{\theta}Q(\theta,\theta^{(i)})<br>$$<br>step 4:repeat step 2 and step 3, until convergence.</p>
+<p>Q function is the expectation of logP(Y,Z|θ) under P(Z|Y,θ<sup>(i)</sup>).</p>
+<p>The termination always be:<br>$$<br>||\theta^{(i+1)}-\theta^{(i)}||&lt;\epsilon_1\ or\ ||Q(\theta^{(i+1)},\theta^{(i)})-Q(\theta^{(i)},\theta^{(i)})||<br>$$<br>Gaussian mixture model is a probabilitisc distribution model:<br>$$<br>P(y|\theta)=\sum_{k=1}^{K}\alpha_k\phi(y|\theta_k)<br>$$<br>where 𝛂<sub>k</sub>≥0, the sum of 𝛂<sub>k</sub> euqals to 1, ɸ(y|θ<sub>k</sub>)  is the density of Gaussian distribution, θ<sub>k</sub>=(μ<sub>k</sub>,𝞂<sub>k</sub>)</p>
+<p>We use EM algorithm to estimate parameter θ={𝛂<sub>1</sub>,…,𝛂<sub>k</sub>,𝛉<sub>1</sub>,…,𝛉<sub>k</sub>};</p>
+<p>The configuration of hidden latent variable 𝞬 is omitted, you can read <em>李航. 统计学习方法. 清华大学出版社, 2012.</em> for details.</p>
+<p>EM-GMM clustering:</p>
+<p>Input:ovserved data Y={y<sub>1</sub>,y<sub>2</sub>,…,y<sub>k</sub>}, Gaussian mixture model</p>
+<p>Output:parameters of Gaussian mixture model.</p>
+<p>step 1:initialize the parameters;</p>
+<p>step 2:according to the current parameters, calculate the responsibility of sub model  to observed data y<sub>j</sub>.<br>$$<br>\hat{\gamma}_{jk}=\frac{\alpha_k \phi(y_j|\theta_k)}{\sum_{k=1}^K\alpha_k \phi(y_j|\theta_k)}<br>$$</p>
+<p>step 3:calculate the model parameters for next iteration:<br>$$<br>\hat{\mu}<em>k=\frac{\sum</em>{j=1}^N\hat\gamma_{jk}y_j}{\sum_{j=1}^N\hat\gamma_{jk}}\\hat{\sigma}<em>k^2=\frac{\sum</em>{j=1}^{N}\hat\gamma_{jk}(y_j-\mu_k)^2}{\sum_{j=1}^{N}\hat\gamma_{jk}}\\hat\alpha_{k}=\frac{\sum_{j=1}^N\hat\gamma_{jk}}{N}<br>$$<br>step 4:repeat step 2 and step 3, until convergence.</p>
+<p>More clustering methods can be viewed in papers as follows:</p>
+<p><strong>[1]Pelleg D . Extending K-means with efficient estimation of the number of clusters[J]. ICML2000, 2000, 17.</strong></p>
+<p><strong>[2]Comaniciu D , Meer P . Mean shift: a robust approach toward feature space analysis[J]. IEEE Trans Pattern Analysis &amp; Machine Intelligence, 2002, 24(5):603-619.</strong></p>
+<p><strong>[3]Shi J , Malik J M . Normalized Cuts and Image Segmentation[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2000.</strong></p>
+<p><strong>[4]Ester M . A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise[J]. Proc.int.conf.knowledg Discovery &amp; Data Mining, 1996.</strong></p>
+<p><strong>[5]Dhillon, I. Co-clustering documents and words using bipartite spectral graph partitioning. In Proceedings of the seventh ACM SIGKDD international conference on Knowledge discovery and data mining (KDD) (pp. 269 – 274). New York: ACM Press, 2001.</strong></p>
+
       
     </div>
     <footer class="article-footer">
@@ -255,6 +312,8 @@
       
       
         
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unsupervised-learning/" rel="tag">unsupervised learning</a></li></ul>
+
       
 
     </footer>
@@ -280,7 +339,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav">None</ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fundamental-Concepts"><span class="nav-number">1.</span> <span class="nav-text">Fundamental Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Similarity-or-Distance"><span class="nav-number">1.1.</span> <span class="nav-text">Similarity or Distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster"><span class="nav-number">1.2.</span> <span class="nav-text">Cluster</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distance-linkage-between-clusters"><span class="nav-number">1.3.</span> <span class="nav-text">Distance(linkage) between clusters</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hierarchical-clustering"><span class="nav-number">2.</span> <span class="nav-text">Hierarchical clustering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-means-clustering"><span class="nav-number">3.</span> <span class="nav-text">K-means clustering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EM-GMM"><span class="nav-number">4.</span> <span class="nav-text">EM-GMM</span></a></li></ol>
     
     </div>
   </aside>
