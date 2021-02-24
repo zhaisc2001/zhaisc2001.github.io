@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>singular value decomposition | Sisicca</title>
+  <title>principal component analysis | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keywords" content="unsupervised learning" />
@@ -11,15 +11,15 @@
   
   
   
-  <meta name="description" content="Definition of SVD and its propertiesThe singular value decomposition of a matrix is usually referred to as the SVD. This is the final and best factorization of a matrix:$$A&#x3D;U\sum V^T$$where U and V ar">
+  <meta name="description" content="Population PCAIn data science, we generally have large datasets with multiple features to work on. If the computation of your models gets slow enough or your system is not powerful enough to perform s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Singular Value Decomposition">
-<meta property="og:url" content="http://example.com/2021/02/21/Singular-Value-Decomposition/index.html">
+<meta property="og:title" content="Principal Component Analysis">
+<meta property="og:url" content="http://example.com/2021/02/22/Principal-Component-Analysis/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Definition of SVD and its propertiesThe singular value decomposition of a matrix is usually referred to as the SVD. This is the final and best factorization of a matrix:$$A&#x3D;U\sum V^T$$where U and V ar">
+<meta property="og:description" content="Population PCAIn data science, we generally have large datasets with multiple features to work on. If the computation of your models gets slow enough or your system is not powerful enough to perform s">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-02-21T11:54:20.000Z">
-<meta property="article:modified_time" content="2021-02-22T01:44:29.827Z">
+<meta property="article:published_time" content="2021-02-22T01:54:45.000Z">
+<meta property="article:modified_time" content="2021-02-24T01:36:50.089Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="unsupervised learning">
 <meta name="twitter:card" content="summary">
@@ -172,7 +172,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Singular-Value-Decomposition" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-Principal-Component-Analysis" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +180,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Singular Value Decomposition
+      Principal Component Analysis
     </h1>
   
 
@@ -188,8 +188,8 @@
     
     <div class="article-meta">
       
-	<a href="/2021/02/21/Singular-Value-Decomposition/" class="article-date">
-	  <time datetime="2021-02-21T11:54:20.000Z" itemprop="datePublished">2021-02-21</time>
+	<a href="/2021/02/22/Principal-Component-Analysis/" class="article-date">
+	  <time datetime="2021-02-22T01:54:45.000Z" itemprop="datePublished">2021-02-22</time>
 	</a>
 
       
@@ -207,11 +207,26 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Definition-of-SVD-and-its-properties"><a href="#Definition-of-SVD-and-its-properties" class="headerlink" title="Definition of SVD and its properties"></a>Definition of SVD and its properties</h2><p>The <em>singular value decomposition</em> of a matrix is usually referred to as the <em>SVD</em>. This is the final and best factorization of a matrix:<br>$$<br>A=U\sum V^T<br>$$<br>where U and V are orthogonal, and ∑ is a rectangular diagonal matrix. Here, A can be any matrix, besides they satisfies:<br>$$<br>UU^T=I\VV^T=I\\sum=diag(\sigma_1,\sigma_2,…,\sigma_p)\\sigma_1≥\sigma_2≥…≥\sigma_p≥0\p=min(m,n)<br>$$<br>We call the singular value decomposition as below full SVD. We often use compact singular value decomposition and truncated singular value decomposition in practice.</p>
-<p>Compact SVD: for a m<em>n matrix, rank(A)=r, r≤min(m,n), its compact SVD is :<br>$$<br>A=U_r\sum\ _rV_r^T<br>$$<br>U<sub>r</sub> is a m</em>r matrix, ∑<sub>r</sub> is a r*r matrix, V<sub>r</sub> is a n*r matrix. U<sub>r</sub> is the first r lines of U, V<sub>r</sub> is the first r lines of V, ∑ is composed with the first r dialog elements of ∑.</p>
-<p>And truncated SVD is :<br>$$<br>A\approx U_k\sum\ _kV_k^T<br>$$<br>where rank(A) = r, 0&lt;k&lt;r, U<sub>k</sub> is a m<em>k matrix, ∑<sub>r</sub> is a k\</em>k matrix, V<sub>k</sub> is a n*k matrix. U<sub>k</sub> is the first k lines of U, V<sub>r</sub> is the first k lines of V, ∑ is composed with the first k dialog elements of ∑.</p>
-<h2 id="Calculation-of-SVD"><a href="#Calculation-of-SVD" class="headerlink" title="Calculation of SVD"></a>Calculation of SVD</h2><p>Read <strong>Marcus M , Minc H . Introduction to Linear Algebra[J]. Introduction to Linear Algebra, 2009.</strong> for details.</p>
-<h2 id="Singular-value-decompostion-and-approximation-of-matrix"><a href="#Singular-value-decompostion-and-approximation-of-matrix" class="headerlink" title="Singular value decompostion and approximation of matrix"></a>Singular value decompostion and approximation of matrix</h2><p>SVD is also an approximation method under Frobenius norm. The definition of Frobenius norm is :<br>$$<br>||A||<em>F=(\sum</em>{i=1}^m\sum_{j=1}^n(a_{ij})^2)^{\frac{1}{2}}<br>$$<br>Actually, in SVD we have :<br>$$<br>||A||_F=||U\sum V^T||_F=||\sum||_F\=(\sigma_1^2+\sigma_2^2+…+\sigma_n^2)^{\frac{1}{2}}<br>$$</p>
+        <h2 id="Population-PCA"><a href="#Population-PCA" class="headerlink" title="Population PCA"></a>Population PCA</h2><p>In data science, we generally have large datasets with multiple features to work on. If the computation of your models gets slow enough or your system is not powerful enough to perform such a huge computation, then you might end up looking for the alternatives. This is where PCA comes in to picture. With the help of Principal Component Analysis, you reduce the dimension of the dataset that contains many features or independent variables that are highly correlated with each other, while keeping the variation in the dataset up to a maximum extent. The new features that are created by combining the correlated features are termed as principal components. These principal components are the eigenvectors that are decomposed from a covariance matrix; hence they are orthogonal.</p>
+<p>x=(x<sub>1</sub>,x<sub>2</sub>,…,x<sub>m</sub>)<sup>T</sup> is a m-dimension random variable, its mean value vector is μ :<br>$$<br>\mu = E(x)=(\mu_1,\mu_2,…,\mu_m)^T<br>$$<br>covariance matrix is :<br>$$<br>\sum=cov(x,x)=E[(x-\mu)(x-\mu)^T]<br>$$<br>y=(y<sub>1</sub>,y<sub>2</sub>,…,y<sub>m</sub>)<sup>T</sup> is the linear transform of x :<br>$$<br>y_i=\alpha_i^Tx=\alpha_{1i}x_1+\alpha_{2i}x_2+…+\alpha_{mi}x_m<br>$$<br>we can know from random variables :<br>$$<br>E(y_i)=\alpha_i^T\mu,i=1,2,…,m\var(y_i)=\alpha^T_i\sum\alpha_i,i=1,2,…,m\<br>cov(y_i,y_j)=\alpha^T_i\sum\alpha_j,i=1,2,…,m;j=1,2,…,m<br>$$<br>A population PCA satisfies :<br>$$<br>(1)\alpha^T_i\alpha_i=1,i=1,2,…,m;\<br>(2)cov(y_i,y_j)=0(i≠j);<br>$$<br>y<sub>1</sub> is the variable has largest variance in linear transform of x, y<sub>2</sub> is the variable has largest variance in linear transform of x exclude x are correlated with y<sub>1</sub>.</p>
+<p>Principal components y has properties:<br>$$<br>cov(y)=\Lambda=diag(\lambda_1,\lambda_2,…,\lambda_m)<br>$$<br>The sum of variance of y equal s the sum of variance of x:<br>$$<br>\sum_{i=1}^m\lambda_i=\sum_{i=1}^m\sigma_{ii}<br>$$<br>factor loading, it represents the correlation between y<sub>k</sub> and x<sub>i</sub> :<br>$$<br>\rho(y_k,x_i)=\frac{\sqrt{\lambda_k}{\alpha_{ik}}}{\sqrt{var(x_i)}}<br>$$</p>
+<h2 id="Sample-PCA"><a href="#Sample-PCA" class="headerlink" title="Sample PCA"></a>Sample PCA</h2><p>Given a sample matrix X:<br>$$<br>X_{m*n}=[x_1\ x_2\ …\ x_n]<br>$$<br>where x<sub>j</sub> = (x<sub>1j</sub>,x<sub>2j</sub>,…,x<sub>mj</sub>)<sup>T</sup>.</p>
+<p>The sample covariance matrix of X is :<br>$$<br>S=[s_{ij}]<em>{m*m},s</em>{ij}=\frac{1}{n-1}\sum_{k=1}^n(x_{ik}-\overline{x}<em>i)(x</em>{jk}-\overline{x}<em>j)\where\ \overline{x}<em>i=\frac{1}{n}\sum</em>{k=1}^{n}x</em>{ik}<br>$$<br>A linear transform from x to y:<br>$$<br>y=A^Tx\where\ A=[a_1\ a_2\ …\ a_m]<br>$$</p>
+<h2 id="Methods-of-PCA"><a href="#Methods-of-PCA" class="headerlink" title="Methods of PCA"></a>Methods of PCA</h2><p>There are mainly two methods of PCA, eigenvalue decomposition algorithm for correlation matrix and singular value decomposition algorithm for matrix X.</p>
+<h3 id="Eigenvalue-decomposition-algorithm"><a href="#Eigenvalue-decomposition-algorithm" class="headerlink" title="Eigenvalue decomposition algorithm"></a>Eigenvalue decomposition algorithm</h3><p>(1)Normalize the observed data, we still notate it as X;</p>
+<p>(2)eigenvalue decompostion algoim: for X<sub>m<em>n</sub>, calculate the the correlation matrix of sample :<br>$$<br>R=[r_{ij}]_{m</em>m}=\frac{1}{n-1}XX^T\where\ r_{ij}=\frac{1}{n-1}\sum_{l=1}^nx_{il}x_{lj},i,j=1,2,…,m<br>$$</p>
+<p>(3)calculate the eigenvalues and the corresponding unit eigenvectors, solving the equation:<br>$$<br>|R-\lambda I|=0<br>$$<br> we can get the m eigenvalues of R :<br>$$<br>\lambda_1≥\lambda_2≥…≥\lambda_m<br>$$<br>find the number of principal components with a predetermined value of variance contribution k :<br>$$<br>\sum_{i=1}^k \eta_i<br>$$<br>calculate the unit eigenvectors corresponding with the first k eigenvalues :<br>$$<br>a_i=(a_{1i},a_{2i},…,a_{mi})^T,i=1,2,…,k<br>$$<br>(4)calculate the principal components of k samples :<br>$$<br>y_i=a_i^Tx,i=1,2,…,k<br>$$<br>(5)calculate the correlation coefficient 𝞀(x<sub>i</sub>,y<sub>j</sub>), and the contribution rate v<sub>i</sub>.</p>
+<p>(6)calculate the k principal component values of n samples :<br>$$<br>y_{ij}=(a_{1i},a_{2i},…,a_{mi})(x_{1j},x_{2j},…,x_{mj})^T=\sum_{l=1}^ma_{li}x_{lj}\i=1,2,…,m,j=1,2,…,n<br>$$</p>
+<h3 id="SVD-algorithm"><a href="#SVD-algorithm" class="headerlink" title="SVD algorithm"></a>SVD algorithm</h3><p>Input: X<sub>m*n</sub>, the mean value of each row is 0;</p>
+<p>Output: principal matrix Y of k*n;</p>
+<p>parameters: k;</p>
+<p>(1)construct a new n*m matrix:<br>$$<br>X’=\frac{1}{\sqrt{n-1}}X^T<br>$$<br>where the mean value of each line is 0;</p>
+<p>(2)truncated SVD the matrix X’, we can get:<br>$$<br>X\approx U\sum V^T<br>$$<br>we can get k singular values and vectors. The first k lines are the k principal components of  k samples.</p>
+<p>(3)calculate the k*n principal components matrix:<br>$$<br>Y=V^T X<br>$$</p>
+<p><strong>[1]Shlens J . A Tutorial on Principal Component Analysis[J]. International Journal of Remote Sensing, 2014, 51(2).</strong></p>
+<p><strong>[2]Scholkopf B , Smola A . Kernel Principal Component Analysis[C]// International Conference on Artificial Neural Networks. Springer, Berlin, Heidelberg, 1997.</strong></p>
+<p><strong>[3]Hardoon D R , Szedmak S , Shawe-Taylor J . Canonical Correlation Analysis: An Overview with Application to Learning Methods[J]. Neural Computation, 2004, 16(12):2639-2664.</strong></p>
+<p><strong>[4]University S , EMMANUEL J. CANDE`, Xiaodong L I . Robust Principal Component Analysis?[J]. 2009.</strong></p>
 
       
     </div>
@@ -225,7 +240,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/02/21/Singular-Value-Decomposition/" target="_blank" title="Singular Value Decomposition">http://example.com/2021/02/21/Singular-Value-Decomposition/</a>
+          <a href="/2021/02/22/Principal-Component-Analysis/" target="_blank" title="Principal Component Analysis">http://example.com/2021/02/22/Principal-Component-Analysis/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -275,19 +290,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/02/22/Principal-Component-Analysis/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Principal Component Analysis
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/02/20/Clustering-Methods/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/02/21/Singular-Value-Decomposition/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Clustering Methods</div>
+      <div class="article-nav-title">Singular Value Decomposition</div>
     </a>
   
 </nav>
@@ -301,7 +307,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Definition-of-SVD-and-its-properties"><span class="nav-number">1.</span> <span class="nav-text">Definition of SVD and its properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Calculation-of-SVD"><span class="nav-number">2.</span> <span class="nav-text">Calculation of SVD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Singular-value-decompostion-and-approximation-of-matrix"><span class="nav-number">3.</span> <span class="nav-text">Singular value decompostion and approximation of matrix</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Population-PCA"><span class="nav-number">1.</span> <span class="nav-text">Population PCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sample-PCA"><span class="nav-number">2.</span> <span class="nav-text">Sample PCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methods-of-PCA"><span class="nav-number">3.</span> <span class="nav-text">Methods of PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Eigenvalue-decomposition-algorithm"><span class="nav-number">3.1.</span> <span class="nav-text">Eigenvalue decomposition algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVD-algorithm"><span class="nav-number">3.2.</span> <span class="nav-text">SVD algorithm</span></a></li></ol></li></ol>
     
     </div>
   </aside>
