@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>latent semantic analysis | Sisicca</title>
+  <title>3月1日组会报告 | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="unsupervised learning" />
+  <meta name="keywords" content="HFOs" />
   
   
   
   
-  <meta name="description" content="Word vector space and topic vector spaceword vector spaceA strict definition of word vector space model: given a text set D&#x3D;{d1,d2,…,dn}, and a word set W&#x3D;{w1,w2,…,wm}. We can get a matrix X, its size">
+  <meta name="description" content="目前领域提出的HFO检测器，如阈值检测器、人工神经网络检测器、模糊神经网络检测器等，其实主要可以分成经典方法以及和机器学习中的有监督学习结合的方法，然而这两种方法的缺点都是很明显的：HFOs的振幅和主频没有明确的标准范围，阈值检测器可能导致精度低，同时需要使用者想方法确定一个合理的阈值；有监督方法需要训练集，也就是需要人工对数据进行标注，来用于有监督模型训练。在这样的背景下，我们选择无监督学习方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Latent Semantic Analysis">
-<meta property="og:url" content="http://example.com/2021/02/24/Latent-Semantic-Analysis/index.html">
+<meta property="og:title" content="3月1日组会报告">
+<meta property="og:url" content="http://example.com/2021/02/25/3%E6%9C%881%E6%97%A5%E7%BB%84%E4%BC%9A%E6%8A%A5%E5%91%8A/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Word vector space and topic vector spaceword vector spaceA strict definition of word vector space model: given a text set D&#x3D;{d1,d2,…,dn}, and a word set W&#x3D;{w1,w2,…,wm}. We can get a matrix X, its size">
+<meta property="og:description" content="目前领域提出的HFO检测器，如阈值检测器、人工神经网络检测器、模糊神经网络检测器等，其实主要可以分成经典方法以及和机器学习中的有监督学习结合的方法，然而这两种方法的缺点都是很明显的：HFOs的振幅和主频没有明确的标准范围，阈值检测器可能导致精度低，同时需要使用者想方法确定一个合理的阈值；有监督方法需要训练集，也就是需要人工对数据进行标注，来用于有监督模型训练。在这样的背景下，我们选择无监督学习方法">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-02-24T01:48:12.000Z">
-<meta property="article:modified_time" content="2021-02-25T01:47:08.192Z">
+<meta property="article:published_time" content="2021-02-25T06:37:22.000Z">
+<meta property="article:modified_time" content="2021-02-27T11:27:24.687Z">
 <meta property="article:author" content="Uestc_Sicca">
-<meta property="article:tag" content="unsupervised learning">
+<meta property="article:tag" content="HFOs">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
@@ -172,7 +172,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Latent-Semantic-Analysis" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-3月1日组会报告" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +180,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Latent Semantic Analysis
+      3月1日组会报告
     </h1>
   
 
@@ -188,8 +188,8 @@
     
     <div class="article-meta">
       
-	<a href="/2021/02/24/Latent-Semantic-Analysis/" class="article-date">
-	  <time datetime="2021-02-24T01:48:12.000Z" itemprop="datePublished">2021-02-24</time>
+	<a href="/2021/02/25/3%E6%9C%881%E6%97%A5%E7%BB%84%E4%BC%9A%E6%8A%A5%E5%91%8A/" class="article-date">
+	  <time datetime="2021-02-25T06:37:22.000Z" itemprop="datePublished">2021-02-25</time>
 	</a>
 
       
@@ -207,29 +207,12 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Word-vector-space-and-topic-vector-space"><a href="#Word-vector-space-and-topic-vector-space" class="headerlink" title="Word vector space and topic vector space"></a>Word vector space and topic vector space</h2><h3 id="word-vector-space"><a href="#word-vector-space" class="headerlink" title="word vector space"></a>word vector space</h3><p>A strict definition of word vector space model: given a text set D={d<sub>1</sub>,d<sub>2</sub>,…,d<sub>n</sub>}, and a word set W={w<sub>1</sub>,w<sub>2</sub>,…,w<sub>m</sub>}. We can get a matrix X, its size is m*n, x<sub>ij</sub> means the times or the weight of word w<sub>i</sub> occurs in the text d<sub>j</sub>.</p>
-<p>We often presents the weight as TF-IDF(term frequency-inverse document frequency) :<br>$$<br>TF-IDF_{ij}=\frac{tf_{ij}}{tf_{\bullet j}}log\frac{df}{df_i},i=1,2,…,m;j=1,2,…,n.<br>$$<br>where tf<sub>ij</sub> means the frequency that w<sub>i</sub> occurs in d<sub>j</sub>, tf<sub>.j </sub>means the sum of the frequency that all terms occurs in document d<sub>j</sub>, df is the number of all documents of set D, df<sub>i</sub> means the documents that contains term w<sub>i</sub>.</p>
-<p>The inner multiply or cosine of two term vectors is the similarity of two documents :<br>$$<br>x_i\bullet x_j,\frac{x_i\bullet x_j}{||x_i||\ ||x_j||}<br>$$<br>The downsides about word vector space model are the polysemy and the synonymy of natural language.</p>
-<h3 id="topic-vector-space"><a href="#topic-vector-space" class="headerlink" title="topic vector space"></a>topic vector space</h3><p>Given a document set D={d<sub>1</sub>,d<sub>2</sub>,…,d<sub>n</sub>} and a corresponding word set W={w<sub>1</sub>,w<sub>2</sub>,…,w<sub>3</sub>}. We can get a term-document matrix matrix X. Suppose all documents have k topics, each topic is presented as a m-dimension vector on set W :<br>$$<br>t_l=[t_{1l},t_{2l},…,t_{ml}]^T,l=1,2,…,k<br>$$<br>where t<sub>il</sub> is the weight of w<sub>i</sub> in topic t<sub>l</sub>, k topic vectors t<sub>1</sub>,t<sub>2</sub>,…,t<sub>k</sub> consist of a topic vector space,  its dimension is k. We can get a word-topic matrix, notates :<br>$$<br>T=[t_1,t_2,…,t_k]<br>$$<br>The document d<sub>j</sub> in set D, is a vector x<sub>j</sub> in word vector space, project it into topic vector space T, we can get a vector y<sub>j</sub> :<br>$$<br>y_j=[y_{1j},y_{2j},…,y_{kj}]^T,j=1,2,…,n<br>$$<br>where y<sub>lj</sub> is the weight of document d<sub>j</sub> in topic t<sub>l</sub>. We can get a topic-document matrix Y :<br>$$<br>Y=[y_1,y_2,…,y_n]<br>$$</p>
-<h3 id="Linear-transform-from-word-vector-space-to-topic-vector-space"><a href="#Linear-transform-from-word-vector-space-to-topic-vector-space" class="headerlink" title="Linear transform from word vector space to topic vector space"></a>Linear transform from word vector space to topic vector space</h3><p>Now we can present x<sub>j</sub> approximately using y<sub>j</sub> :<br>$$<br>x_j\approx y_{1j}t_1+y_{2j}t_2+…+y_{kj}t_k<br>\X\approx TY<br>$$</p>
-<h2 id="LSA-algorithm"><a href="#LSA-algorithm" class="headerlink" title="LSA algorithm"></a>LSA algorithm</h2><p>Given the number of topics k, word-document matrix X, we use truncated matrix :<br>$$<br>X \approx U_k\sum\ _kV_k^T<br>$$<br>We use u<sub>k</sub> as topic vector space, and (∑<sub>k</sub>V<sub>k</sub><sup>T</sup>) as the presentation of document in topic vector space.</p>
-<h2 id="Non-negative-matrix-factorization"><a href="#Non-negative-matrix-factorization" class="headerlink" title="Non-negative matrix factorization"></a>Non-negative matrix factorization</h2><p>Given a non-negative matrix X≥0, find two matrixes W≥0 and H≥0, we have :<br>$$<br>X\approx WH<br>$$<br>If X is m<em>n, W is m\</em>k, H is k*n, k&lt;min(m,n), NMF is a compressing method for former data.W is a topic vector space, H is document in topic vector space</p>
-<p>NMF can be presented as an optimal question, we definite the loss function or the cost function first :</p>
-<p>(1)square loss, non-negative matrix A=[a<sub>ij</sub>]<sub>m<em>n</sub>, B=[b<sub>ij</sub>]<sub>m\</em>n</sub> :<br>$$<br>||A-B||^2=\sum_{i,j}(a_{ij}-b_{ij})^2<br>$$<br>its lower boundary is 0 when A = B.</p>
-<p>(2)divergence, non-negative matrix A=[a<sub>ij</sub>]<sub>m<em>n</sub>, B=[b<sub>ij</sub>]<sub>m\</em>n</sub> :<br>$$<br>D(A||B)=\sum_{i,j}(a_{ij}log\frac{a_{ij}}{b_{ij}}-a_{ij}+b_{ij})<br>$$<br>its lower boundary is also 0 when A = B.D(A||B)≠D(B||A).Then we get the optimal problem as follows :<br>$$<br>\mathop{min}\limits_{W,H}||X-WH||^2\s.t.\ W,H≥0<br>$$<br>or<br>$$<br>\mathop{min}\limits_{W,H}D(X||WH)\s.t.\ W,H≥0<br>$$<br>For square loss function, we have update rule:<br>$$<br>H_{lj}&lt;=H_{lj}\frac{(W^TX)<em>{lj}}{(W^TWH)</em>{lj}}\W_{il}&lt;=W_{il}\frac{(XH^T)<em>{il}}{(WHH^T)</em>{il}}<br>$$<br>for divergence loss function, we have :<br>$$<br>H_{lj}&lt;=H_{lj}\frac{\sum_i[W_{il}X_{ij}/(WH)<em>{ij}]}{\sum_iW_{il}}\W</em>{il}&lt;=W_{il}{\frac{\sum_j[H_{lj}X_{ij}/(WH)_{ij}]}{\sum_jH_{lj}}}<br>$$<br>The update rule is based on gradient descent method. We use the rules in iterative algorithm for NMF, before each iteration, we normalize the line vector of W matrix :</p>
-<p>Input :term-document matrix X ≥0, topics k, max iterations t;</p>
-<p>Output :topic matrix W, document matrix H;</p>
-<p>(1)initialization, W≥0, and normalize the every line vector; H≥0;</p>
-<p>(2)iteration :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(t):</span><br><span class="line">  <span class="keyword">for</span> l <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">      Update W_il <span class="keyword">with</span> W_Update_Rule</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">      Update H_il <span class="keyword">with</span> H_Update_Rule</span><br></pre></td></tr></table></figure>
-
-
-<p>For further study :</p>
-<p><strong>[1]Deerwester S , Dumais S T , Furnas G W , et al. Indexing by latent semantic analysis[J]. Journal of the American Society for Information Science, 1990, 41(6).</strong></p>
-<p><strong>[2]Lee D D . Algorithm for Non-negative Matrix Factorization[J]. Proc Nips, 2001.</strong></p>
-<p><strong>[3]Lee D D , Seung H S . Learning the parts of objects by non-negative matrix factorization.[J]. Nature, 1999, 401(6755):788-791.</strong></p>
-<p><strong>[4]Wang Q , Xu J , Li H , et al. Regularized Latent Semantic Indexing[J]. Acm Transactions on Information Systems, 2013, 31(1):1-44.</strong></p>
-<p><strong>[5]Xu, Wei, Liu, et al. Document clustering based on non-negative matrix factorization[J]. Proc Acm Sigir, 2003:267-273.</strong></p>
+        <p>目前领域提出的HFO检测器，如阈值检测器、人工神经网络检测器、模糊神经网络检测器等，其实主要可以分成经典方法以及和机器学习中的有监督学习结合的方法，然而这两种方法的缺点都是很明显的：HFOs的振幅和主频没有明确的标准范围，阈值检测器可能导致精度低，同时需要使用者想方法确定一个合理的阈值；有监督方法需要训练集，也就是需要人工对数据进行标注，来用于有监督模型训练。在这样的背景下，我们选择无监督学习方法。</p>
+<p>对于有监督学习和无监督学习这两种机器学习方法，我在这里做一个简介与区分，方便接下来对HFOs检测与无监督学习方法的阐述。机器学习主要可以分为三种方法，分别是有监督学习、无监督学习以及强化学习。机器学习模型使用有标注属性的数据进行训练，并对未标注该属性的数据进行该属性的预测，这样的机器学习方法叫做有监督学习方法；使用周志华老师的《机器学习》中的例子来阐述，就是：我们吃过很多的西瓜，味道有好有坏，根据我们的总结好瓜和坏瓜在外观上有些不同，可能是瓜蒂的不同，可能是条纹的不同；于是我们就可以根据总结的经验通过外观去预测西瓜摊上的西瓜味道的好坏。而无监督学习使用的数据没有是否标注属性之分，它主要的任务是聚类（把在某些属性上体现出相似的数据划分为一类）、降维（提取特征）、生成（根据已有数据的特征生成具有相似特征的新数据），在我们的技术调研中，HFOs自动检测中主要使用无监督学习方法进行聚类。</p>
+<p>调研的文献中使用的聚类算法有半监督k-means与mean-shift结合的算法、EM-GMM算法、SVD与improved-FCM结合的算法；这些无监督方法的大致过程都是将iEEG信号进行预处理之后进行聚类，但就像阈值法需要确定一个合理的阈值以及有监督学习需要人工标注数据一样，无监督学习检测也有它的局限性，目前我们了解到的主要是在两个方面：一是需要人工确定聚类数量，二是聚类算法的时间复杂度较高，对于大规模数据的处理可能不如人意。而我们也通过调研文献得到了部分答案。</p>
+<p>对于需要人工确定聚类数量这个问题，首先要说明是k-means和EM-GMM算法以及FCM算法会有这样的问题，有些聚类算法可以自己确定最优聚类数量，但这些聚类算法的聚类结果不如需要指定聚类数量的聚类算法结果误差小，目前该领域的解决方法是将可以自己确定最优聚类数量的算法（比如QEM方法）与需要指定聚类数量的聚类算法进行结合，通过前者确定最优聚类数量之后，再使用后面的聚类算法进行聚类；也有通过半监督聚类方法（比如半监督k-means）和能自行确定最优聚类数量的聚类方法结合进行聚类的，半监督聚类它使用一小部分标注了的数据作为初始聚类中心，这就要求这一小部分标注数据集的具有代表性；最后还有直接将聚类数量预设为2，也就是直接分为HFO类和非HFO类，这样的方法对聚类之前的数据预处理要求较高。</p>
+<p>而对于聚类算法时间复杂度较高这样的问题，一般采用的方法都是使用预筛选以及多次聚类来解决。预筛选一般是使用经典检测方法比如均方根法、瞬时能量法、希尔伯特变换等阈值方法来缩小数据规模，已解决聚类算法时间复杂度较高的问题，而多次聚类则是通过多次聚类中的前面的聚类来初始参数并降低计算复杂度，比如我们可以在EM-GMM聚类之前先使用FCM聚类来初始化EM-GMM模型中高斯分布的均值与方差。</p>
+<p>我们小组根据调研和总结，初步认为未来的小组研究方向大致可以从两方面入手：一是提高无监督学习自动检测器的检测精度，可以通过与迭代启发式算法的结合如退火算法、蚁群算法、遗传算法等来实现，之前的工作中已经有FCM与退火算法以及遗传算法的结合；还可以选择其他的聚类方法如􏰎􏰋􏰌􏰉􏰊􏰇􏰈􏰅􏰆􏰃􏰄􏰁􏰂􏰎􏰋􏰌􏰉􏰊􏰇􏰈􏰅􏰆􏰃􏰄􏰁􏰂X-means、DBScan、Co-clustering等方法来实现。另外一方面就是可以与无监督学习中的降维结合，进行特征的提取，比如PCA、SVD等，之前领域也有SVD提取特征方面的工作。</p>
 
       
     </div>
@@ -243,7 +226,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/02/24/Latent-Semantic-Analysis/" target="_blank" title="Latent Semantic Analysis">http://example.com/2021/02/24/Latent-Semantic-Analysis/</a>
+          <a href="/2021/02/25/3月1日组会报告/" target="_blank" title="3月1日组会报告">http://example.com/2021/02/25/3月1日组会报告/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -283,7 +266,7 @@
       
       
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unsupervised-learning/" rel="tag">unsupervised learning</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HFOs/" rel="tag">HFOs</a></li></ul>
 
       
 
@@ -293,19 +276,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/02/24/Calculus/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Calculus
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/02/22/Principal-Component-Analysis/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/02/25/Probabilistic-Latent-Semantic-Analysis/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Principal Component Analysis</div>
+      <div class="article-nav-title">Probabilistic Latent Semantic Analysis</div>
     </a>
   
 </nav>
@@ -319,7 +293,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Word-vector-space-and-topic-vector-space"><span class="nav-number">1.</span> <span class="nav-text">Word vector space and topic vector space</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#word-vector-space"><span class="nav-number">1.1.</span> <span class="nav-text">word vector space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#topic-vector-space"><span class="nav-number">1.2.</span> <span class="nav-text">topic vector space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linear-transform-from-word-vector-space-to-topic-vector-space"><span class="nav-number">1.3.</span> <span class="nav-text">Linear transform from word vector space to topic vector space</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSA-algorithm"><span class="nav-number">2.</span> <span class="nav-text">LSA algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-negative-matrix-factorization"><span class="nav-number">3.</span> <span class="nav-text">Non-negative matrix factorization</span></a></li></ol>
+        <ol class="nav">None</ol>
     
     </div>
   </aside>

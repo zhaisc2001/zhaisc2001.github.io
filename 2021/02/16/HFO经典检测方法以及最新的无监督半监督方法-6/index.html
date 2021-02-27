@@ -19,7 +19,7 @@
 <meta property="og:description" content="SGM: a novel time-frequency algorithm based on unsupervised learning improves high-frequency oscillation detection in epilepsyIntroduction难治性癫痫、HFO自动检测简介，不同的是提了一嘴非侵入式EEG和MEG的检测的可行性。 在文章的写作时间（2019），有很多">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-16T07:53:09.000Z">
-<meta property="article:modified_time" content="2021-02-16T09:59:53.522Z">
+<meta property="article:modified_time" content="2021-02-27T10:48:20.701Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="HFOs">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
 <p>三阶段：高斯混合模型</p>
 <p>高斯分布数设为两个，一个为HFO组，另一个为非HFO组，使用了如下特征：</p>
 <p>面积：隔离度的衡量标准，即事件是否在时间和频率上是孤立的，如HFO应该是这样；或者是否覆盖了更大的区域，如伪影和尖峰的情况。<br>熵：衡量二元时频估计的不规则性。虽然与面积相似，但它可以测量一些非线性，而面积可能无法捕捉到。<br>FW：任何HFO都应该有一个窄的频率宽度，而尖峰和伪影应该有更宽的频率宽度。分析了FW，看看这是否足以将HFO和非HFO聚在一起。<br>FW与TW：虽然这些特征与面积高度相关，但它们可以有用地排除频率宽度窄但时间持续时间长的情况。这些情况可以产生低的面积值，但不能认为是HFO。这种配置需要二维聚类，而之前所有的配置都只用了一个特征（一维聚类）。</p>
-<p>对于检测器的评估使用了精确率和召回率以及F1度量</p>
+<p>对于检测器的评估使用了精确率和召回率以及F1度量。</p>
 <h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3><p>一阶段结果当然是EOI的分离情况很好，二阶段特征提取也很成功，三阶段使用的是全方差法GMM，模拟信号方面随着信噪比增加算法表现更好（SNR主要影响的是一阶段），真实数据方面，精度相较于模拟信号有所下降，计算了所有受试者的自动检测(SGM算法)和人工选择(专家的视觉检查)之间的Spearman秩相关度，只计算了4个特征中表现最好的熵，结果是显著相关。</p>
 <h3 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h3><p>作者团队认为自己的算法无需阈值，同时创新地使用了时间和频域跨度的结合，同时SGM表现比STE、SLL、HIL、MNI性能都要好，低SNR下性能低于Delphos,高SNR下高于Delphos，然后猜测了一下低SNR下性能低的原因；之后踩了一脚领域的有监督方法，吹了一下无监督学习；说了下未来的工作，并说明自己的工作是模块化的，三个模块都可以拿出来独立地进行进一步研究。</p>
 <p>一个算法公式都没有的二区，嘿嘿嘿，只能说期待文中说的”publicly available in the near future”的code了。</p>

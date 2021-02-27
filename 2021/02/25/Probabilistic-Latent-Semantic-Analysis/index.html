@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>latent semantic analysis | Sisicca</title>
+  <title>probabilistic latent semantic analysis | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keywords" content="unsupervised learning" />
@@ -11,15 +11,15 @@
   
   
   
-  <meta name="description" content="Word vector space and topic vector spaceword vector spaceA strict definition of word vector space model: given a text set D&#x3D;{d1,d2,…,dn}, and a word set W&#x3D;{w1,w2,…,wm}. We can get a matrix X, its size">
+  <meta name="description" content="probabilistic latent semantic analysis, also called probabilistic latent semantic indexing is a kind of unsupervised learning method of topic analysis to document set by using probabilistic generated">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Latent Semantic Analysis">
-<meta property="og:url" content="http://example.com/2021/02/24/Latent-Semantic-Analysis/index.html">
+<meta property="og:title" content="Probabilistic Latent Semantic Analysis">
+<meta property="og:url" content="http://example.com/2021/02/25/Probabilistic-Latent-Semantic-Analysis/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Word vector space and topic vector spaceword vector spaceA strict definition of word vector space model: given a text set D&#x3D;{d1,d2,…,dn}, and a word set W&#x3D;{w1,w2,…,wm}. We can get a matrix X, its size">
+<meta property="og:description" content="probabilistic latent semantic analysis, also called probabilistic latent semantic indexing is a kind of unsupervised learning method of topic analysis to document set by using probabilistic generated">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-02-24T01:48:12.000Z">
-<meta property="article:modified_time" content="2021-02-25T01:47:08.192Z">
+<meta property="article:published_time" content="2021-02-25T01:53:25.000Z">
+<meta property="article:modified_time" content="2021-02-25T02:06:24.130Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="unsupervised learning">
 <meta name="twitter:card" content="summary">
@@ -172,7 +172,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Latent-Semantic-Analysis" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-Probabilistic-Latent-Semantic-Analysis" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +180,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Latent Semantic Analysis
+      Probabilistic Latent Semantic Analysis
     </h1>
   
 
@@ -188,8 +188,8 @@
     
     <div class="article-meta">
       
-	<a href="/2021/02/24/Latent-Semantic-Analysis/" class="article-date">
-	  <time datetime="2021-02-24T01:48:12.000Z" itemprop="datePublished">2021-02-24</time>
+	<a href="/2021/02/25/Probabilistic-Latent-Semantic-Analysis/" class="article-date">
+	  <time datetime="2021-02-25T01:53:25.000Z" itemprop="datePublished">2021-02-25</time>
 	</a>
 
       
@@ -207,30 +207,8 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Word-vector-space-and-topic-vector-space"><a href="#Word-vector-space-and-topic-vector-space" class="headerlink" title="Word vector space and topic vector space"></a>Word vector space and topic vector space</h2><h3 id="word-vector-space"><a href="#word-vector-space" class="headerlink" title="word vector space"></a>word vector space</h3><p>A strict definition of word vector space model: given a text set D={d<sub>1</sub>,d<sub>2</sub>,…,d<sub>n</sub>}, and a word set W={w<sub>1</sub>,w<sub>2</sub>,…,w<sub>m</sub>}. We can get a matrix X, its size is m*n, x<sub>ij</sub> means the times or the weight of word w<sub>i</sub> occurs in the text d<sub>j</sub>.</p>
-<p>We often presents the weight as TF-IDF(term frequency-inverse document frequency) :<br>$$<br>TF-IDF_{ij}=\frac{tf_{ij}}{tf_{\bullet j}}log\frac{df}{df_i},i=1,2,…,m;j=1,2,…,n.<br>$$<br>where tf<sub>ij</sub> means the frequency that w<sub>i</sub> occurs in d<sub>j</sub>, tf<sub>.j </sub>means the sum of the frequency that all terms occurs in document d<sub>j</sub>, df is the number of all documents of set D, df<sub>i</sub> means the documents that contains term w<sub>i</sub>.</p>
-<p>The inner multiply or cosine of two term vectors is the similarity of two documents :<br>$$<br>x_i\bullet x_j,\frac{x_i\bullet x_j}{||x_i||\ ||x_j||}<br>$$<br>The downsides about word vector space model are the polysemy and the synonymy of natural language.</p>
-<h3 id="topic-vector-space"><a href="#topic-vector-space" class="headerlink" title="topic vector space"></a>topic vector space</h3><p>Given a document set D={d<sub>1</sub>,d<sub>2</sub>,…,d<sub>n</sub>} and a corresponding word set W={w<sub>1</sub>,w<sub>2</sub>,…,w<sub>3</sub>}. We can get a term-document matrix matrix X. Suppose all documents have k topics, each topic is presented as a m-dimension vector on set W :<br>$$<br>t_l=[t_{1l},t_{2l},…,t_{ml}]^T,l=1,2,…,k<br>$$<br>where t<sub>il</sub> is the weight of w<sub>i</sub> in topic t<sub>l</sub>, k topic vectors t<sub>1</sub>,t<sub>2</sub>,…,t<sub>k</sub> consist of a topic vector space,  its dimension is k. We can get a word-topic matrix, notates :<br>$$<br>T=[t_1,t_2,…,t_k]<br>$$<br>The document d<sub>j</sub> in set D, is a vector x<sub>j</sub> in word vector space, project it into topic vector space T, we can get a vector y<sub>j</sub> :<br>$$<br>y_j=[y_{1j},y_{2j},…,y_{kj}]^T,j=1,2,…,n<br>$$<br>where y<sub>lj</sub> is the weight of document d<sub>j</sub> in topic t<sub>l</sub>. We can get a topic-document matrix Y :<br>$$<br>Y=[y_1,y_2,…,y_n]<br>$$</p>
-<h3 id="Linear-transform-from-word-vector-space-to-topic-vector-space"><a href="#Linear-transform-from-word-vector-space-to-topic-vector-space" class="headerlink" title="Linear transform from word vector space to topic vector space"></a>Linear transform from word vector space to topic vector space</h3><p>Now we can present x<sub>j</sub> approximately using y<sub>j</sub> :<br>$$<br>x_j\approx y_{1j}t_1+y_{2j}t_2+…+y_{kj}t_k<br>\X\approx TY<br>$$</p>
-<h2 id="LSA-algorithm"><a href="#LSA-algorithm" class="headerlink" title="LSA algorithm"></a>LSA algorithm</h2><p>Given the number of topics k, word-document matrix X, we use truncated matrix :<br>$$<br>X \approx U_k\sum\ _kV_k^T<br>$$<br>We use u<sub>k</sub> as topic vector space, and (∑<sub>k</sub>V<sub>k</sub><sup>T</sup>) as the presentation of document in topic vector space.</p>
-<h2 id="Non-negative-matrix-factorization"><a href="#Non-negative-matrix-factorization" class="headerlink" title="Non-negative matrix factorization"></a>Non-negative matrix factorization</h2><p>Given a non-negative matrix X≥0, find two matrixes W≥0 and H≥0, we have :<br>$$<br>X\approx WH<br>$$<br>If X is m<em>n, W is m\</em>k, H is k*n, k&lt;min(m,n), NMF is a compressing method for former data.W is a topic vector space, H is document in topic vector space</p>
-<p>NMF can be presented as an optimal question, we definite the loss function or the cost function first :</p>
-<p>(1)square loss, non-negative matrix A=[a<sub>ij</sub>]<sub>m<em>n</sub>, B=[b<sub>ij</sub>]<sub>m\</em>n</sub> :<br>$$<br>||A-B||^2=\sum_{i,j}(a_{ij}-b_{ij})^2<br>$$<br>its lower boundary is 0 when A = B.</p>
-<p>(2)divergence, non-negative matrix A=[a<sub>ij</sub>]<sub>m<em>n</sub>, B=[b<sub>ij</sub>]<sub>m\</em>n</sub> :<br>$$<br>D(A||B)=\sum_{i,j}(a_{ij}log\frac{a_{ij}}{b_{ij}}-a_{ij}+b_{ij})<br>$$<br>its lower boundary is also 0 when A = B.D(A||B)≠D(B||A).Then we get the optimal problem as follows :<br>$$<br>\mathop{min}\limits_{W,H}||X-WH||^2\s.t.\ W,H≥0<br>$$<br>or<br>$$<br>\mathop{min}\limits_{W,H}D(X||WH)\s.t.\ W,H≥0<br>$$<br>For square loss function, we have update rule:<br>$$<br>H_{lj}&lt;=H_{lj}\frac{(W^TX)<em>{lj}}{(W^TWH)</em>{lj}}\W_{il}&lt;=W_{il}\frac{(XH^T)<em>{il}}{(WHH^T)</em>{il}}<br>$$<br>for divergence loss function, we have :<br>$$<br>H_{lj}&lt;=H_{lj}\frac{\sum_i[W_{il}X_{ij}/(WH)<em>{ij}]}{\sum_iW_{il}}\W</em>{il}&lt;=W_{il}{\frac{\sum_j[H_{lj}X_{ij}/(WH)_{ij}]}{\sum_jH_{lj}}}<br>$$<br>The update rule is based on gradient descent method. We use the rules in iterative algorithm for NMF, before each iteration, we normalize the line vector of W matrix :</p>
-<p>Input :term-document matrix X ≥0, topics k, max iterations t;</p>
-<p>Output :topic matrix W, document matrix H;</p>
-<p>(1)initialization, W≥0, and normalize the every line vector; H≥0;</p>
-<p>(2)iteration :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(t):</span><br><span class="line">  <span class="keyword">for</span> l <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">      Update W_il <span class="keyword">with</span> W_Update_Rule</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">      Update H_il <span class="keyword">with</span> H_Update_Rule</span><br></pre></td></tr></table></figure>
-
-
-<p>For further study :</p>
-<p><strong>[1]Deerwester S , Dumais S T , Furnas G W , et al. Indexing by latent semantic analysis[J]. Journal of the American Society for Information Science, 1990, 41(6).</strong></p>
-<p><strong>[2]Lee D D . Algorithm for Non-negative Matrix Factorization[J]. Proc Nips, 2001.</strong></p>
-<p><strong>[3]Lee D D , Seung H S . Learning the parts of objects by non-negative matrix factorization.[J]. Nature, 1999, 401(6755):788-791.</strong></p>
-<p><strong>[4]Wang Q , Xu J , Li H , et al. Regularized Latent Semantic Indexing[J]. Acm Transactions on Information Systems, 2013, 31(1):1-44.</strong></p>
-<p><strong>[5]Xu, Wei, Liu, et al. Document clustering based on non-negative matrix factorization[J]. Proc Acm Sigir, 2003:267-273.</strong></p>
-
+        <p>probabilistic latent semantic analysis, also called probabilistic latent semantic indexing is a kind of unsupervised learning method of topic analysis to document set by using probabilistic generated model.</p>
+<h2 id="PLSA-model"><a href="#PLSA-model" class="headerlink" title="PLSA model"></a>PLSA model</h2>
       
     </div>
     <footer class="article-footer">
@@ -243,7 +221,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/02/24/Latent-Semantic-Analysis/" target="_blank" title="Latent Semantic Analysis">http://example.com/2021/02/24/Latent-Semantic-Analysis/</a>
+          <a href="/2021/02/25/Probabilistic-Latent-Semantic-Analysis/" target="_blank" title="Probabilistic Latent Semantic Analysis">http://example.com/2021/02/25/Probabilistic-Latent-Semantic-Analysis/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -293,19 +271,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/02/24/Calculus/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/02/25/3%E6%9C%881%E6%97%A5%E7%BB%84%E4%BC%9A%E6%8A%A5%E5%91%8A/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Calculus
+          3月1日组会报告
         
       </div>
     </a>
   
   
-    <a href="/2021/02/22/Principal-Component-Analysis/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/02/24/Calculus/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Principal Component Analysis</div>
+      <div class="article-nav-title">Calculus</div>
     </a>
   
 </nav>
@@ -319,7 +297,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Word-vector-space-and-topic-vector-space"><span class="nav-number">1.</span> <span class="nav-text">Word vector space and topic vector space</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#word-vector-space"><span class="nav-number">1.1.</span> <span class="nav-text">word vector space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#topic-vector-space"><span class="nav-number">1.2.</span> <span class="nav-text">topic vector space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linear-transform-from-word-vector-space-to-topic-vector-space"><span class="nav-number">1.3.</span> <span class="nav-text">Linear transform from word vector space to topic vector space</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSA-algorithm"><span class="nav-number">2.</span> <span class="nav-text">LSA algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-negative-matrix-factorization"><span class="nav-number">3.</span> <span class="nav-text">Non-negative matrix factorization</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PLSA-model"><span class="nav-number">1.</span> <span class="nav-text">PLSA model</span></a></li></ol>
     
     </div>
   </aside>
