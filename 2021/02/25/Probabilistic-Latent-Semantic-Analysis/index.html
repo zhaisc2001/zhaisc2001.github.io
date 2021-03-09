@@ -18,13 +18,13 @@
 <meta property="og:site_name" content="Sisicca">
 <meta property="og:description" content="probabilistic latent semantic analysis, also called probabilistic latent semantic indexing is a kind of unsupervised learning method of topic analysis to document set by using probabilistic generated">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/.com//violet/Documents/hexo/blog/source/_posts/Probabilistic-Latent-Semantic-Analysis/1.png">
+<meta property="og:image" content="http://blog.tomtung.com/images/2011-10-19-plsa_graph.png">
 <meta property="article:published_time" content="2021-02-25T01:53:25.000Z">
-<meta property="article:modified_time" content="2021-03-08T09:02:43.198Z">
+<meta property="article:modified_time" content="2021-03-09T03:24:01.489Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="unsupervised learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//violet/Documents/hexo/blog/source/_posts/Probabilistic-Latent-Semantic-Analysis/1.png">
+<meta name="twitter:image" content="http://blog.tomtung.com/images/2011-10-19-plsa_graph.png">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
   
@@ -210,7 +210,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>probabilistic latent semantic analysis, also called probabilistic latent semantic indexing is a kind of unsupervised learning method of topic analysis to document set by using probabilistic generated model.</p>
-<h2 id="PLSA-model"><a href="#PLSA-model" class="headerlink" title="PLSA model"></a>PLSA model</h2><p><img src="/.com//violet/Documents/hexo/blog/source/_posts/Probabilistic-Latent-Semantic-Analysis/1.png" alt="1"></p>
+<h2 id="PLSA-model"><a href="#PLSA-model" class="headerlink" title="PLSA model"></a>PLSA model</h2><h3 id="basic-idea"><a href="#basic-idea" class="headerlink" title="basic idea"></a>basic idea</h3><p>Given a document set, each document contains some topics and each topic is represented by some words. The topics of the document cannot be observed directly, we  can use PLSA to get topics of each document. Translate document set to word-document matrix so we can get topics by using PLSA model.</p>
+<h3 id="generated-model"><a href="#generated-model" class="headerlink" title="generated model"></a>generated model</h3><p>Word set W={w<sub>1</sub>,w<sub>2</sub>,…,w<sub>M</sub>}, document set D = {d<sub>1</sub>,d<sub>2</sub>,…,d<sub>N</sub>}, topic set Z = {z<sub>1</sub>,z<sub>2</sub>,…,z<sub>K</sub>}, we have :</p>
+<p>1.get N documents randomly from document set D with P(d);</p>
+<p>2.get L topics from topic set Z with P(z|d);</p>
+<p>3.get words from word set W with P(w|z);</p>
+<p>we get a tripple tuple (w,z,d) set, however z is a latent variable, notate document-word co-occurence data as T, we present the result as (w,d) set, we get two generated formulas :<br>$$<br>P(T)=\prod_{(w,d)} P(w,d)^{n(w,d)}\P(w,d)=P(d)\sum_{L}P(z|d)P(w|z)<br>$$<br><img src="http://blog.tomtung.com/images/2011-10-19-plsa_graph.png" alt="image0"></p>
+<p>Generated model suppose that w and z are conditional independent with given d :<br>$$<br>P(w,z|d)=P(w|d)P(z|d)<br>$$<br>the N and M in this directed graph should be L and N using our formulas.</p>
+<h3 id="co-occurence-model"><a href="#co-occurence-model" class="headerlink" title="co-occurence model"></a>co-occurence model</h3><p>we can get another formula from P(T) :<br>$$<br>P(w,d)=\sum_{z\in Z}P(z)P(d|z)P(w|z)<br>$$<br>Co-occurence model suppose that w and d are conditional independent with given z :<br>$$<br>P(w,d|z)=P(w|z)P(d|z)<br>$$</p>
+<h3 id="the-relationship-between-PLSA-and-LSA"><a href="#the-relationship-between-PLSA-and-LSA" class="headerlink" title="the relationship between PLSA and LSA"></a>the relationship between PLSA and LSA</h3><p>PLSA model can be described under LSA model, use SVD to decompose the word-document matrix, we get X = U∑V<sup>T</sup>, PLSA model can be presented in the same form :<br>$$<br>X’=U’\sum’V’^T\X’=P(w,d)<em>{M*N}\U’=P(w|z)</em>{M<em>K}<br>\\sum’=P(z)_{K</em>K}\V’=P(d|z)_{N*K}<br>$$<br>U’ and V’ in PLSA model are non-negative and standardized, they express conditional probabilistic ditributions, however in LSA model U and V are orthogonal and don’t express probabilistic distribution.</p>
+<h2 id="The-algorithm-of-PLSA"><a href="#The-algorithm-of-PLSA" class="headerlink" title="The algorithm of PLSA"></a>The algorithm of PLSA</h2><p>Input :  word set W={w<sub>1</sub>,w<sub>2</sub>,…,w<sub>M</sub>}, document set D = {d<sub>1</sub>,d<sub>2</sub>,…,d<sub>N</sub>}, topic set Z = {z<sub>1</sub>,z<sub>2</sub>,…,z<sub>K</sub>}, co-occurence data {n(w<sub>i</sub>,d<sub>j</sub>)},i=1,2,…,M,j=1,2,…,N;</p>
+<p>Output : P(w<sub>i</sub>|z<sub>k</sub>) and P(z<sub>k</sub>|d<sub>j</sub>)</p>
+<p>step 1 : initialize P(w<sub>i</sub>|z<sub>k</sub>) and P(z<sub>k</sub>|d<sub>j</sub>);</p>
+<p>step 2 : E:<br>$$<br>P(z_k|w_i,d_j)=\frac{P(w_i|z_k)P(z_k|d_j)}{\sum_{k=1}^K P(w_i|z_k)P(z_k|d_j)}<br>$$<br>M:<br>$$<br>P(w_i|z_k)=\frac{\sum_{j=1}^N n(w_i,d_j)P(z_k|w_i,d_j)}{\sum_{m=1}^M\sum_{j=1}^N n(w_m,d_j)P(z_k|w_m,d_j)}\P(z_k|d_j)=\frac{\sum_{i=1}^M n(w_i,d_j)P(z_k|w_i,d_j)}{n(d_j)}<br>$$</p>
 
       
     </div>
@@ -300,7 +312,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PLSA-model"><span class="nav-number">1.</span> <span class="nav-text">PLSA model</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PLSA-model"><span class="nav-number">1.</span> <span class="nav-text">PLSA model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#basic-idea"><span class="nav-number">1.1.</span> <span class="nav-text">basic idea</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generated-model"><span class="nav-number">1.2.</span> <span class="nav-text">generated model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#co-occurence-model"><span class="nav-number">1.3.</span> <span class="nav-text">co-occurence model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-relationship-between-PLSA-and-LSA"><span class="nav-number">1.4.</span> <span class="nav-text">the relationship between PLSA and LSA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-algorithm-of-PLSA"><span class="nav-number">2.</span> <span class="nav-text">The algorithm of PLSA</span></a></li></ol>
     
     </div>
   </aside>
