@@ -3,29 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>markov chain monte carlo | Sisicca</title>
+  <title>scrapy tutorial | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="unsupervised learning" />
+  <meta name="keywords" content="scrapy" />
   
   
   
   
-  <meta name="description" content="Monte Carlo methodrandom samplingThe point of Monte Carlo method is random sampling, one of Monte Carlo method is accept-reject sampling method. algorithm is as follow : Input : probabilistic density">
+  <meta name="description" content="Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historic">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Markov Chain Monte Carlo">
-<meta property="og:url" content="http://example.com/2021/03/09/Markov-Chain-Monte-Carlo/index.html">
+<meta property="og:title" content="Scrapy Tutorial">
+<meta property="og:url" content="http://example.com/2021/03/11/Scrapy-Tutorial/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Monte Carlo methodrandom samplingThe point of Monte Carlo method is random sampling, one of Monte Carlo method is accept-reject sampling method. algorithm is as follow : Input : probabilistic density">
+<meta property="og:description" content="Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historic">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://www.researchgate.net/profile/Zhe_Chen21/publication/238689222/figure/fig3/AS:668987486662656@1536510454004/Illustration-of-importance-sampling-left-and-acceptance-rejection-sampling-right.png">
-<meta property="og:image" content="https://www.researchgate.net/profile/Nidhal_Bouaynaya/publication/256501425/figure/fig1/AS:297986300104709@1448056878911/a-The-graph-of-a-reducible-Markov-chain-b-The-graph-of-an-irreducible-but-periodic.png">
-<meta property="article:published_time" content="2021-03-09T09:15:48.000Z">
-<meta property="article:modified_time" content="2021-03-11T06:27:39.064Z">
+<meta property="article:published_time" content="2021-03-11T07:01:05.000Z">
+<meta property="article:modified_time" content="2021-03-13T04:33:08.032Z">
 <meta property="article:author" content="Uestc_Sicca">
-<meta property="article:tag" content="unsupervised learning">
+<meta property="article:tag" content="scrapy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.researchgate.net/profile/Zhe_Chen21/publication/238689222/figure/fig3/AS:668987486662656@1536510454004/Illustration-of-importance-sampling-left-and-acceptance-rejection-sampling-right.png">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
   
@@ -175,7 +172,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Markov-Chain-Monte-Carlo" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-Scrapy-Tutorial" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -183,7 +180,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Markov Chain Monte Carlo
+      Scrapy Tutorial
     </h1>
   
 
@@ -191,12 +188,12 @@
     
     <div class="article-meta">
       
-	<a href="/2021/03/09/Markov-Chain-Monte-Carlo/" class="article-date">
-	  <time datetime="2021-03-09T09:15:48.000Z" itemprop="datePublished">2021-03-09</time>
+	<a href="/2021/03/11/Scrapy-Tutorial/" class="article-date">
+	  <time datetime="2021-03-11T07:01:05.000Z" itemprop="datePublished">2021-03-11</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/technology/">technology</a>
+    <a class="article-category-link" href="/categories/techonology/">techonology</a>
 
       
 	<a class="article-views">
@@ -210,35 +207,25 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Monte-Carlo-method"><a href="#Monte-Carlo-method" class="headerlink" title="Monte Carlo method"></a>Monte Carlo method</h2><h3 id="random-sampling"><a href="#random-sampling" class="headerlink" title="random sampling"></a>random sampling</h3><p>The point of Monte Carlo method is random sampling, one of Monte Carlo method is accept-reject sampling method.<img src="https://www.researchgate.net/profile/Zhe_Chen21/publication/238689222/figure/fig3/AS:668987486662656@1536510454004/Illustration-of-importance-sampling-left-and-acceptance-rejection-sampling-right.png" alt="See the source image"></p>
-<p>algorithm is as follow :</p>
-<p>Input : probabilistic density function p(x) of sampling target,</p>
-<p>Output : random samples x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub> of probabilistic distribution,</p>
-<p>Parameter : the number of samples n,</p>
-<p>step 1: choose probabilistic density function q(x) as  advised distribution, make it satisfy cq(x)≥p(x) for all x, where c&gt;0,</p>
-<p>step 2 : random sampling from q(x) get sample x*, then sampling from uniform distribution (0,1) get sample u,</p>
-<p>step 3 : if u satisfy :<br>$$<br>u≤\frac{p(x*)}{cq(x*)}<br>$$<br>then x* is the result of sampling, or go back to step 2,</p>
-<p>step 4 : over it when we get n random samples.</p>
-<p>The upside of the method is it is easy, the downside of the method is it is not efficient enough.</p>
-<h3 id="estimation-of-mathematical-expectation"><a href="#estimation-of-mathematical-expectation" class="headerlink" title="estimation of mathematical expectation"></a>estimation of mathematical expectation</h3><p>To calculate the mathematical expectation E<sub>p(x)</sub>[f(x)] of f(x) about probabilistic function p(x) :<br>$$<br>E_{p(x)}[f(x)]\approx \frac{1}{n}\sum_{i=1}^nf(x_i)<br>$$</p>
-<h3 id="Monte-Carlo-integration"><a href="#Monte-Carlo-integration" class="headerlink" title="Monte Carlo integration"></a>Monte Carlo integration</h3><p>Decompose h(x) to f(x) and density function p(x), we have :<br>$$<br>\int_{\chi}h(x)dx=\int_{\chi}f(x)p(x)dx=E_{p(x)}[f(x)]<br>$$<br>The samples of Organized Monte Carlo are independent, but the samples of Markov Chain Monte Carlo method are independent.</p>
-<h2 id="Markov-chain"><a href="#Markov-chain" class="headerlink" title="Markov chain"></a>Markov chain</h2><h3 id="basic-definition"><a href="#basic-definition" class="headerlink" title="basic definition"></a>basic definition</h3><p>The direct definition of Markov property is “The future only depend on the present and has nothing to do with the past”. If state movement distribution P(X<sub>t</sub>|X<sub>t-1</sub>) doesn’t rely on t, then<br>$$<br>P(X_{t+s}|X_{t+s-1})=P(X_t|X_{t-1})<br>$$<br>this markov chain is time homogenous Markov chain.</p>
-<h3 id="discrete-state-markov-chain"><a href="#discrete-state-markov-chain" class="headerlink" title="discrete state markov chain"></a>discrete state markov chain</h3><p>Markov chain is in state j in time (t-1), move to state i in time t, notate probability of movement as :<br>$$<br>p_{ij}=(X_t=i|X_{t-1}=j),i=1,2,…;j=1,2,…<br>$$<br>satisfy<br>$$<br>p_{ij}≥0,\sum_{i}p_{ij}=1<br>$$<br>We can use markov chain in NLP and speech processing and so on, we consider a sentence as a sequence of word w<sub>1</sub>w<sub>2</sub>…w<sub>s</sub>, then we can get :<br>$$<br>P(w_1w_2…w_s)=P(w_1)P(w_2|w_1)…P(w_i|w_1w_2…w_{i-1})…P(w_s|w_1w_2…w_{s-1})\=P(w_1)P(w_2|w_1)P(w_3|w_2)…P(w_i|w_{i-1})…P(w_s|w_{s-1})<br>$$<br>Have learned smooth distribution before, so the only thing I wanna say here is that markov chain can have one smooth distribution or ifinite smooth distribution or no smooth distribution.</p>
-<h3 id="continuous-state-markov-chain"><a href="#continuous-state-markov-chain" class="headerlink" title="continuous state markov chain"></a>continuous state markov chain</h3><p>we have<br>$$<br>P(X_t=A|X_{t-1}=x)=P(x,A)=\int_Ap(x,y)dy<br>$$<br>where p(x,y) is a probabilistic density function and it satisfies<br>$$<br>p(x,y)≥0,P(x,S)=\int_Sp(x,y)dy=1.<br>$$</p>
-<h3 id="properties-of-Markov-chain"><a href="#properties-of-Markov-chain" class="headerlink" title="properties of Markov chain"></a>properties of Markov chain</h3><p>1.irreducible<br>$$<br>P(X_t=i|X_0=j)&gt;0<br>$$<br>an irreducible markov chain can achieve any state from random state if time is enough.</p>
-<p><img src="https://www.researchgate.net/profile/Nidhal_Bouaynaya/publication/256501425/figure/fig1/AS:297986300104709@1448056878911/a-The-graph-of-a-reducible-Markov-chain-b-The-graph-of-an-irreducible-but-periodic.png" alt="See the source image"></p>
-<p>2.aperiodic</p>
-<p>the GCD of {t:P(X<sub>t</sub>=i|X<sub>0</sub>=i)&gt;0} is 1, then this markov chain is aperiodic.</p>
-<p>An irreducible and aperiodic limited state markov chain has an only smooth distribuiton.</p>
-<p>3.positive recurrent</p>
-<p>p<sup>t</sup><sub>ij</sub> is probability of move to i the frist time in time t from j in time 0, if we have<br>$$<br>\mathop{lim}\limits_{t\rightarrow \infin}p^t_{ij}&gt;0<br>$$<br>for any state i,j, then the markov chain is positive recurrent.</p>
-<p>A irreducible, aperiodic and positive recurrent markov chain has an onl smooth distribution</p>
-<p>4.reversible Markov chain</p>
-<p>for an time t, we have<br>$$<br>p_{ji}\pi_j=p_{ij}\pi_i,i,j=1,2,…<br>$$<br>it is called detailed balance equation.</p>
-<h2 id="Markov-Chain-Monte-Carlo-method"><a href="#Markov-Chain-Monte-Carlo-method" class="headerlink" title="Markov Chain Monte Carlo method"></a>Markov Chain Monte Carlo method</h2><p>This method is more suitable for random variable is multiple, the density funciton is non-standard and so on.</p>
-<h3 id="basic-steps"><a href="#basic-steps" class="headerlink" title="basic steps"></a>basic steps</h3><p>step 1 : contruct a traversal markov chain on state zone S, make its smooth distribution be target distribution p(x),</p>
-<p>step 2 : from some point x<sub>0</sub> of state zone, taking random walk by using constructed markov chain, get samples x<sub>0</sub>,x<sub>1</sub>,…,x<sub>t</sub>,…,</p>
-<p>step 3 : using traversal theorem, configure positive integers m and n, (m&lt;n), get a sample set {x<sub>m+1</sub>,x<sub>m+2</sub>,…,x<sub>n</sub>}, get the average value of f(x) :<br>$$<br>\hat{E}f=\frac{1}{n-m}\sum_{i=m+1}^nf(x_i)<br>$$<br>some problems here : how to definite markov chain to make the conditions be ture, how to definite m and n to ensure the no-variance of sampling and the precision of average value.</p>
+        <p>Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.</p>
+<h2 id="Creating-a-project"><a href="#Creating-a-project" class="headerlink" title="Creating a project"></a>Creating a project</h2><p>run this line in your command line tool : </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject tutorial</span><br></pre></td></tr></table></figure>
+<p>you can get a tutorial dirctory contains follows :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">tutorial/</span><br><span class="line">    scrapy.cfg            <span class="comment"># deploy configuration file</span></span><br><span class="line"></span><br><span class="line">    tutorial/             <span class="comment"># project&#x27;s Python module, you&#x27;ll import your code from here</span></span><br><span class="line">        __init__.py</span><br><span class="line"></span><br><span class="line">        items.py          <span class="comment"># project items definition file</span></span><br><span class="line"></span><br><span class="line">        middlewares.py    <span class="comment"># project middlewares file</span></span><br><span class="line"></span><br><span class="line">        pipelines.py      <span class="comment"># project pipelines file</span></span><br><span class="line"></span><br><span class="line">        settings.py       <span class="comment"># project settings file</span></span><br><span class="line"></span><br><span class="line">        spiders/          <span class="comment"># a directory where you&#x27;ll later put your spiders</span></span><br><span class="line">            __init__.py</span><br></pre></td></tr></table></figure>
+<h2 id="first-spider"><a href="#first-spider" class="headerlink" title="first spider"></a>first spider</h2><p>The website we are going to crawl is <a target="_blank" rel="noopener" href="http://quotes.toscrape.com/">http://quotes.toscrape.com</a>, we have :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuotesSpider</span>(<span class="params">scrapy.Spider</span>):</span></span><br><span class="line">    name = <span class="string">&quot;quotes&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_requests</span>(<span class="params">self</span>):</span></span><br><span class="line">        urls = [</span><br><span class="line">            <span class="string">&#x27;http://quotes.toscrape.com/page/1/&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;http://quotes.toscrape.com/page/2/&#x27;</span>,</span><br><span class="line">        ]</span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">            <span class="keyword">yield</span> scrapy.Request(url=url, callback=self.parse)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self, response</span>):</span></span><br><span class="line">        page = response.url.split(<span class="string">&quot;/&quot;</span>)[-<span class="number">2</span>]</span><br><span class="line">        filename = <span class="string">f&#x27;quotes-<span class="subst">&#123;page&#125;</span>.html&#x27;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(response.body)</span><br><span class="line">        self.log(<span class="string">f&#x27;Saved file <span class="subst">&#123;filename&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>name it as quotes_spider.py under directory tutorial/spiders in your project.</p>
+<p>As the code above, scrapy.Spider should define some attributes and methods :</p>
+<p>name, start_requests() and parse, where start_requests() must return an iterable of Requests, parse() method usually parses the response, extracts the scraped data as dics and find new URLs to create new requests from them.</p>
+<h2 id="run-spider"><a href="#run-spider" class="headerlink" title="run spider"></a>run spider</h2><p>run this line in command line tool : </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl quotes</span><br></pre></td></tr></table></figure>
+<p>we can shortcut to the start_requests method, just make it a list;</p>
+<h2 id="Extracting-data"><a href="#Extracting-data" class="headerlink" title="Extracting data"></a>Extracting data</h2><p>using the Scrapy shell</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy shell <span class="string">&#x27;http://quotes.toscrape.com/page/1/&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>you can use CSS or XPath expressions, Scrapy selectors. </p>
+<h2 id="Storing-the-scraped-data"><a href="#Storing-the-scraped-data" class="headerlink" title="Storing the scraped data"></a>Storing the scraped data</h2><p>using following command:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl quotes -o quotes.json</span><br></pre></td></tr></table></figure>
+<h2 id="Following-links"><a href="#Following-links" class="headerlink" title="Following links"></a>Following links</h2><p>If you wanna quote from all the pages in the website, using the sentence you learned in extracting data.</p>
 
       
     </div>
@@ -252,7 +239,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/03/09/Markov-Chain-Monte-Carlo/" target="_blank" title="Markov Chain Monte Carlo">http://example.com/2021/03/09/Markov-Chain-Monte-Carlo/</a>
+          <a href="/2021/03/11/Scrapy-Tutorial/" target="_blank" title="Scrapy Tutorial">http://example.com/2021/03/11/Scrapy-Tutorial/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -292,7 +279,7 @@
       
       
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unsupervised-learning/" rel="tag">unsupervised learning</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/" rel="tag">scrapy</a></li></ul>
 
       
 
@@ -302,19 +289,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/03/11/Scrapy-Tutorial/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Scrapy Tutorial
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/03/02/Intelligent-scheduling-application-for-integrated-urban-morning-and-evening-peak-hours/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/03/09/Markov-Chain-Monte-Carlo/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Intelligent scheduling application for integrated urban morning and evening peak hours</div>
+      <div class="article-nav-title">Markov Chain Monte Carlo</div>
     </a>
   
 </nav>
@@ -328,7 +306,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Monte-Carlo-method"><span class="nav-number">1.</span> <span class="nav-text">Monte Carlo method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#random-sampling"><span class="nav-number">1.1.</span> <span class="nav-text">random sampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#estimation-of-mathematical-expectation"><span class="nav-number">1.2.</span> <span class="nav-text">estimation of mathematical expectation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monte-Carlo-integration"><span class="nav-number">1.3.</span> <span class="nav-text">Monte Carlo integration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Markov-chain"><span class="nav-number">2.</span> <span class="nav-text">Markov chain</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#basic-definition"><span class="nav-number">2.1.</span> <span class="nav-text">basic definition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#discrete-state-markov-chain"><span class="nav-number">2.2.</span> <span class="nav-text">discrete state markov chain</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#continuous-state-markov-chain"><span class="nav-number">2.3.</span> <span class="nav-text">continuous state markov chain</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#properties-of-Markov-chain"><span class="nav-number">2.4.</span> <span class="nav-text">properties of Markov chain</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Markov-Chain-Monte-Carlo-method"><span class="nav-number">3.</span> <span class="nav-text">Markov Chain Monte Carlo method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#basic-steps"><span class="nav-number">3.1.</span> <span class="nav-text">basic steps</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-a-project"><span class="nav-number">1.</span> <span class="nav-text">Creating a project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#first-spider"><span class="nav-number">2.</span> <span class="nav-text">first spider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#run-spider"><span class="nav-number">3.</span> <span class="nav-text">run spider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extracting-data"><span class="nav-number">4.</span> <span class="nav-text">Extracting data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storing-the-scraped-data"><span class="nav-number">5.</span> <span class="nav-text">Storing the scraped data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Following-links"><span class="nav-number">6.</span> <span class="nav-text">Following links</span></a></li></ol>
     
     </div>
   </aside>
