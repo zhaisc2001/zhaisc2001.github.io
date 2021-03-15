@@ -3,26 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>scrapy tutorial | Sisicca</title>
+  <title>电子花🌹 | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="scrapy" />
   
   
   
-  
-  <meta name="description" content="Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historic">
+  <meta name="description" content="昨日表姐向我咨询她男友工资中期权和现金的取舍问题，一番调查后，我才注意到互联网校招的薪水已经高成这样了：  温柔乡触手可及，但我只想要那一束电子花。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Scrapy Tutorial">
-<meta property="og:url" content="http://example.com/2021/03/11/Scrapy-Tutorial/index.html">
+<meta property="og:title" content="电子花🌹">
+<meta property="og:url" content="http://example.com/2021/03/15/%E7%94%B5%E5%AD%90%E8%8A%B1%F0%9F%8C%B9/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historic">
+<meta property="og:description" content="昨日表姐向我咨询她男友工资中期权和现金的取舍问题，一番调查后，我才注意到互联网校招的薪水已经高成这样了：  温柔乡触手可及，但我只想要那一束电子花。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-11T07:01:05.000Z">
-<meta property="article:modified_time" content="2021-03-13T04:33:08.032Z">
+<meta property="og:image" content="https://uploadfiles.nowcoder.com/images/20201208/317179663_1607413722383/319BEB841BD599DA2A6E3F6841EC3E4F">
+<meta property="article:published_time" content="2021-03-15T11:25:14.000Z">
+<meta property="article:modified_time" content="2021-03-15T11:54:04.002Z">
 <meta property="article:author" content="Uestc_Sicca">
-<meta property="article:tag" content="scrapy">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://uploadfiles.nowcoder.com/images/20201208/317179663_1607413722383/319BEB841BD599DA2A6E3F6841EC3E4F">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
   
@@ -172,7 +171,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Scrapy-Tutorial" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-电子花🌹" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +179,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Scrapy Tutorial
+      电子花🌹
     </h1>
   
 
@@ -188,12 +187,12 @@
     
     <div class="article-meta">
       
-	<a href="/2021/03/11/Scrapy-Tutorial/" class="article-date">
-	  <time datetime="2021-03-11T07:01:05.000Z" itemprop="datePublished">2021-03-11</time>
+	<a href="/2021/03/15/%E7%94%B5%E5%AD%90%E8%8A%B1%F0%9F%8C%B9/" class="article-date">
+	  <time datetime="2021-03-15T11:25:14.000Z" itemprop="datePublished">2021-03-15</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/techonology/">techonology</a>
+    <a class="article-category-link" href="/categories/how-s-life/">how's life</a>
 
       
 	<a class="article-views">
@@ -207,25 +206,9 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.</p>
-<h2 id="Creating-a-project"><a href="#Creating-a-project" class="headerlink" title="Creating a project"></a>Creating a project</h2><p>run this line in your command line tool : </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject tutorial</span><br></pre></td></tr></table></figure>
-<p>you can get a tutorial dirctory contains follows :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">tutorial/</span><br><span class="line">    scrapy.cfg            <span class="comment"># deploy configuration file</span></span><br><span class="line"></span><br><span class="line">    tutorial/             <span class="comment"># project&#x27;s Python module, you&#x27;ll import your code from here</span></span><br><span class="line">        __init__.py</span><br><span class="line"></span><br><span class="line">        items.py          <span class="comment"># project items definition file</span></span><br><span class="line"></span><br><span class="line">        middlewares.py    <span class="comment"># project middlewares file</span></span><br><span class="line"></span><br><span class="line">        pipelines.py      <span class="comment"># project pipelines file</span></span><br><span class="line"></span><br><span class="line">        settings.py       <span class="comment"># project settings file</span></span><br><span class="line"></span><br><span class="line">        spiders/          <span class="comment"># a directory where you&#x27;ll later put your spiders</span></span><br><span class="line">            __init__.py</span><br></pre></td></tr></table></figure>
-<h2 id="first-spider"><a href="#first-spider" class="headerlink" title="first spider"></a>first spider</h2><p>The website we are going to crawl is <a target="_blank" rel="noopener" href="http://quotes.toscrape.com/">http://quotes.toscrape.com</a>, we have :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuotesSpider</span>(<span class="params">scrapy.Spider</span>):</span></span><br><span class="line">    name = <span class="string">&quot;quotes&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_requests</span>(<span class="params">self</span>):</span></span><br><span class="line">        urls = [</span><br><span class="line">            <span class="string">&#x27;http://quotes.toscrape.com/page/1/&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;http://quotes.toscrape.com/page/2/&#x27;</span>,</span><br><span class="line">        ]</span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">            <span class="keyword">yield</span> scrapy.Request(url=url, callback=self.parse)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self, response</span>):</span></span><br><span class="line">        page = response.url.split(<span class="string">&quot;/&quot;</span>)[-<span class="number">2</span>]</span><br><span class="line">        filename = <span class="string">f&#x27;quotes-<span class="subst">&#123;page&#125;</span>.html&#x27;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(response.body)</span><br><span class="line">        self.log(<span class="string">f&#x27;Saved file <span class="subst">&#123;filename&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>name it as quotes_spider.py under directory tutorial/spiders in your project.</p>
-<p>As the code above, scrapy.Spider should define some attributes and methods :</p>
-<p>name, start_requests() and parse, where start_requests() must return an iterable of Requests, parse() method usually parses the response, extracts the scraped data as dics and find new URLs to create new requests from them.</p>
-<h2 id="run-spider"><a href="#run-spider" class="headerlink" title="run spider"></a>run spider</h2><p>run this line in command line tool : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl quotes</span><br></pre></td></tr></table></figure>
-<p>we can shortcut to the start_requests method, just make it a list;</p>
-<h2 id="Extracting-data"><a href="#Extracting-data" class="headerlink" title="Extracting data"></a>Extracting data</h2><p>using the Scrapy shell</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy shell <span class="string">&#x27;http://quotes.toscrape.com/page/1/&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>you can use CSS or XPath expressions, Scrapy selectors. </p>
-<h2 id="Storing-the-scraped-data"><a href="#Storing-the-scraped-data" class="headerlink" title="Storing the scraped data"></a>Storing the scraped data</h2><p>using following command:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl quotes -o quotes.json</span><br></pre></td></tr></table></figure>
-<h2 id="Following-links"><a href="#Following-links" class="headerlink" title="Following links"></a>Following links</h2><p>If you wanna quote from all the pages in the website, using the sentence you learned in extracting data.</p>
+        <p>昨日表姐向我咨询她男友工资中期权和现金的取舍问题，一番调查后，我才注意到互联网校招的薪水已经高成这样了：</p>
+<p><img src="https://uploadfiles.nowcoder.com/images/20201208/317179663_1607413722383/319BEB841BD599DA2A6E3F6841EC3E4F" alt="img"></p>
+<p>温柔乡触手可及，但我只想要那一束电子花。</p>
 
       
     </div>
@@ -239,7 +222,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/03/11/Scrapy-Tutorial/" target="_blank" title="Scrapy Tutorial">http://example.com/2021/03/11/Scrapy-Tutorial/</a>
+          <a href="/2021/03/15/电子花🌹/" target="_blank" title="电子花🌹">http://example.com/2021/03/15/电子花🌹/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -279,8 +262,6 @@
       
       
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/" rel="tag">scrapy</a></li></ul>
-
       
 
     </footer>
@@ -289,19 +270,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/03/15/%E7%94%B5%E5%AD%90%E8%8A%B1%F0%9F%8C%B9/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          电子花🌹
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/03/09/Markov-Chain-Monte-Carlo/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/03/11/Scrapy-Tutorial/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Markov Chain Monte Carlo</div>
+      <div class="article-nav-title">Scrapy Tutorial</div>
     </a>
   
 </nav>
@@ -315,7 +287,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-a-project"><span class="nav-number">1.</span> <span class="nav-text">Creating a project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#first-spider"><span class="nav-number">2.</span> <span class="nav-text">first spider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#run-spider"><span class="nav-number">3.</span> <span class="nav-text">run spider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extracting-data"><span class="nav-number">4.</span> <span class="nav-text">Extracting data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storing-the-scraped-data"><span class="nav-number">5.</span> <span class="nav-text">Storing the scraped data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Following-links"><span class="nav-number">6.</span> <span class="nav-text">Following links</span></a></li></ol>
+        <ol class="nav">None</ol>
     
     </div>
   </aside>
