@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>scrapy tutorial | Sisicca</title>
+  <title>再谈高斯混合模型 | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="scrapy" />
+  <meta name="keywords" content="unsupervised learning" />
   
   
   
   
-  <meta name="description" content="Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historic">
+  <meta name="description" content="关于EM-GMM之前有一篇囫囵吞枣的blog，但自己做的工作始终不能让自己满意，于是决定用母语再写一篇，并且用些编码实现吧。 EM中E指的是Expectation，M指的是Maximization，这个算法的主要步骤已经体现在它的名字当中：分为两步，一步是E步，后一步是M步。它是一种迭代算法，之所以它和高斯混合模型（Gaussian mixture model）经常一起出现，是因为它是学习高斯混合">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Scrapy Tutorial">
-<meta property="og:url" content="http://example.com/2021/03/11/Scrapy-Tutorial/index.html">
+<meta property="og:title" content="再谈高斯混合模型">
+<meta property="og:url" content="http://example.com/2021/03/22/%E5%86%8D%E8%B0%88%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historic">
+<meta property="og:description" content="关于EM-GMM之前有一篇囫囵吞枣的blog，但自己做的工作始终不能让自己满意，于是决定用母语再写一篇，并且用些编码实现吧。 EM中E指的是Expectation，M指的是Maximization，这个算法的主要步骤已经体现在它的名字当中：分为两步，一步是E步，后一步是M步。它是一种迭代算法，之所以它和高斯混合模型（Gaussian mixture model）经常一起出现，是因为它是学习高斯混合">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-11T07:01:05.000Z">
-<meta property="article:modified_time" content="2021-03-13T04:33:08.032Z">
+<meta property="article:published_time" content="2021-03-22T11:58:09.000Z">
+<meta property="article:modified_time" content="2021-03-24T02:21:58.876Z">
 <meta property="article:author" content="Uestc_Sicca">
-<meta property="article:tag" content="scrapy">
+<meta property="article:tag" content="unsupervised learning">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
@@ -172,7 +172,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-Scrapy-Tutorial" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-再谈高斯混合模型" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +180,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Scrapy Tutorial
+      再谈高斯混合模型
     </h1>
   
 
@@ -188,12 +188,12 @@
     
     <div class="article-meta">
       
-	<a href="/2021/03/11/Scrapy-Tutorial/" class="article-date">
-	  <time datetime="2021-03-11T07:01:05.000Z" itemprop="datePublished">2021-03-11</time>
+	<a href="/2021/03/22/%E5%86%8D%E8%B0%88%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B/" class="article-date">
+	  <time datetime="2021-03-22T11:58:09.000Z" itemprop="datePublished">2021-03-22</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/techonology/">techonology</a>
+    <a class="article-category-link" href="/categories/technology/">technology</a>
 
       
 	<a class="article-views">
@@ -207,25 +207,29 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Scrapy is an application framework for crawling web sites and extracting structured data which can be used for a wide range of useful applications, like data mining, information processing or historical archival.</p>
-<h2 id="Creating-a-project"><a href="#Creating-a-project" class="headerlink" title="Creating a project"></a>Creating a project</h2><p>run this line in your command line tool : </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject tutorial</span><br></pre></td></tr></table></figure>
-<p>you can get a tutorial dirctory contains follows :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">tutorial/</span><br><span class="line">    scrapy.cfg            <span class="comment"># deploy configuration file</span></span><br><span class="line"></span><br><span class="line">    tutorial/             <span class="comment"># project&#x27;s Python module, you&#x27;ll import your code from here</span></span><br><span class="line">        __init__.py</span><br><span class="line"></span><br><span class="line">        items.py          <span class="comment"># project items definition file</span></span><br><span class="line"></span><br><span class="line">        middlewares.py    <span class="comment"># project middlewares file</span></span><br><span class="line"></span><br><span class="line">        pipelines.py      <span class="comment"># project pipelines file</span></span><br><span class="line"></span><br><span class="line">        settings.py       <span class="comment"># project settings file</span></span><br><span class="line"></span><br><span class="line">        spiders/          <span class="comment"># a directory where you&#x27;ll later put your spiders</span></span><br><span class="line">            __init__.py</span><br></pre></td></tr></table></figure>
-<h2 id="first-spider"><a href="#first-spider" class="headerlink" title="first spider"></a>first spider</h2><p>The website we are going to crawl is <a target="_blank" rel="noopener" href="http://quotes.toscrape.com/">http://quotes.toscrape.com</a>, we have :</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuotesSpider</span>(<span class="params">scrapy.Spider</span>):</span></span><br><span class="line">    name = <span class="string">&quot;quotes&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_requests</span>(<span class="params">self</span>):</span></span><br><span class="line">        urls = [</span><br><span class="line">            <span class="string">&#x27;http://quotes.toscrape.com/page/1/&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;http://quotes.toscrape.com/page/2/&#x27;</span>,</span><br><span class="line">        ]</span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">            <span class="keyword">yield</span> scrapy.Request(url=url, callback=self.parse)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self, response</span>):</span></span><br><span class="line">        page = response.url.split(<span class="string">&quot;/&quot;</span>)[-<span class="number">2</span>]</span><br><span class="line">        filename = <span class="string">f&#x27;quotes-<span class="subst">&#123;page&#125;</span>.html&#x27;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(response.body)</span><br><span class="line">        self.log(<span class="string">f&#x27;Saved file <span class="subst">&#123;filename&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>name it as quotes_spider.py under directory tutorial/spiders in your project.</p>
-<p>As the code above, scrapy.Spider should define some attributes and methods :</p>
-<p>name, start_requests() and parse, where start_requests() must return an iterable of Requests, parse() method usually parses the response, extracts the scraped data as dics and find new URLs to create new requests from them.</p>
-<h2 id="run-spider"><a href="#run-spider" class="headerlink" title="run spider"></a>run spider</h2><p>run this line in command line tool : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl quotes</span><br></pre></td></tr></table></figure>
-<p>we can shortcut to the start_requests method, just make it a list;</p>
-<h2 id="Extracting-data"><a href="#Extracting-data" class="headerlink" title="Extracting data"></a>Extracting data</h2><p>using the Scrapy shell</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy shell <span class="string">&#x27;http://quotes.toscrape.com/page/1/&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>you can use CSS or XPath expressions, Scrapy selectors. </p>
-<h2 id="Storing-the-scraped-data"><a href="#Storing-the-scraped-data" class="headerlink" title="Storing the scraped data"></a>Storing the scraped data</h2><p>using following command:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl quotes -o quotes.json</span><br></pre></td></tr></table></figure>
-<h2 id="Following-links"><a href="#Following-links" class="headerlink" title="Following links"></a>Following links</h2><p>If you wanna quote from all the pages in the website, using the sentence you learned in extracting data.</p>
+        <p>关于EM-GMM之前有一篇囫囵吞枣的blog，但自己做的工作始终不能让自己满意，于是决定用母语再写一篇，并且用些编码实现吧。</p>
+<p>EM中E指的是Expectation，M指的是Maximization，这个算法的主要步骤已经体现在它的名字当中：分为两步，一步是E步，后一步是M步。它是一种迭代算法，之所以它和高斯混合模型（Gaussian mixture model）经常一起出现，是因为它是学习高斯混合模型的常用方法。EM算法通常用于含有隐变量的模型，对于只含有可观测变量的模型，它们的参数估计方法有极大似然估计法和贝叶斯估计法，对这两种概率模型的参数估计方法我也是只知道个大概，（实际上对于极大似然估计在「概率论与数理统计」这门课中是学习过的，但我已经忘得七七八八了）因此放在这里仔细讲一讲。</p>
+<h2 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h2><p>在周志华老师的巨著《机器学习》中，将极大似然估计放在了贝叶斯分类器章节里进行阐述，他认为概率模型的训练过程实际上就是模型的参数估计的过程，而统计学界在这个问题上主要有两派：主张参数是未知但固定的值的频率主义学派，他们使用优化方法来确定参数，极大似然估计方法就是频率主义学派的通过数据采样估计参数的经典方法，另一派则是贝叶斯学派，他们的主张是参数属于未知的随机变量，本身也有分布，而不是确定的值；因此提出的估计方法是预先假设参数服从一个先验分布，然后再通过观测到的数据进行参数后验分布的计算。</p>
+<p>极大似然估计法主要步骤</p>
+<p>1.构造似然函数：实际上就是对于概率的连乘形式，对于样本集D中的c类样本有<br>$$<br>L(\theta)=\prod_{x\in D_c}P(x|\theta_c)<br>$$<br>2.为了防止概率连乘造成的下溢，（周志华老师使用这个词，计算机科学中的下溢是一种解释，我的看法是概率连乘就是一系列[0,1]的数连乘，当这个连乘进行到一定阶段时，会导致后续的连乘操作对似然函数的值影响减弱）我们对似然函数取对数，这就是所谓的对数似然函数(log-likelihood)<br>$$<br>LL(\theta)=\sum_{x \in D_c}logP(x|\theta_c)<br>$$<br>3.这种情况下的极大似然估计便是<br>$$<br>\hat{\theta_c}=\mathop{argmax}\limits_{\theta}LL(\theta)<br>$$<br>在对数据的分布进行假设后，一般通过令对数函数导数等于0来得到极大似然估计，假如这样的方程无解那就说明这个模型的训练不适合使用极大似然估计方法。</p>
+<p>周志华老师特别点出，这个方法的风险就在于对于数据分布的假设，假如假设的分布与数据的实际分布相去甚远，那么得到的概率模型也会差强人意。</p>
+<h2 id="贝叶斯估计法"><a href="#贝叶斯估计法" class="headerlink" title="贝叶斯估计法"></a>贝叶斯估计法</h2><p>在《机器学习》书中，指出了频率主义学派和贝叶斯学派对于“概率”的不同理解：频率主义学派认为它是一个可以用事件大量重复频率逼近的稳定值，而贝叶斯学派认为它是主观的，是认识主体对事件发生可能的置信度。</p>
+<p>而贝叶斯估计实际上是对最大后验估计（Maximum a posteriori estimation，MAP）的拓展，那我们不妨先学一学最大后验估计。</p>
+<p>最大后验估计是贝叶斯学派常用的一种参数估计方法，它预估参数服从某个特定先验分布<br>$$<br>\hat{\theta}<em>{MAP}=\mathop{argmax}\limits</em>{\theta}P(\theta|X)\=\mathop{argmax}\limits_{\theta}logP(\theta|X)\=\mathop{argmax}\limits_{\theta}logP(X|\theta)+logP(\theta)-logP(X)\<br>$$<br>在实际的优化中我们不需要考虑P(X)，先验分布的存在可以达到防止过拟合的目的，比如当我们假设参数的先验分布服从高斯分布时，logP(𝛉)就是正则项L2（此时视最大似然估计的目标函数为优化函数）。</p>
+<p>贝叶斯估计法也预估参数服从某个特定先验分布，所以最终得到的是数据生成参数的最大后验值，还有被当作另一个参数估计值的期望值，以及被用来表示估计的质量的方差。</p>
+<p>它的步骤为：</p>
+<p>1.确定参数𝛉的先验分布p(𝛉)；</p>
+<p>2.求联合分布<br>$$<br>P(X|\theta)=\prod_{x\in D_c}p(x_c|\theta)<br>$$<br>3.利用bayesian公式，求参数的后验分布<br>$$<br>P(\theta|X)=\frac{P(X|\theta)P(\theta)}{\int_\theta P(X|\theta)P(\theta)d\theta}<br>$$<br>4.求出贝叶斯估计值<br>$$<br>\hat{\theta}=E[P(\theta|X)]=\int_\theta \theta P(\theta|X)d\theta<br>$$</p>
+<h3 id="最大期望算法"><a href="#最大期望算法" class="headerlink" title="最大期望算法"></a>最大期望算法</h3><p>频率主义学派与贝叶斯学派、最大似然估计与最大后验估计、最大后验估计与贝叶斯估计……终于我们来到了正题：EM算法；就像开头介绍的那样，它与上述的参数估计方法的区别在于它是用来估计含有隐变量的模型参数。实际上在我多次使用多的k-means聚类中使用的迭代训练算法便是最大期望算法，而我现在尽管不能说是对它一无所知，但也相差无几，这不禁让我感到汗颜。</p>
+<p>简要来说，EM算法就是反复的使用E步与M步：利用期望E步，根据当前的估计参数值来计算对数似然的期望；然后利用最大化M步，寻找能使E步产生的似然期望最大化的参数值，再返回E步……如此循环直到获得局部最优解。</p>
+<p>输入：观测变量数据Y，隐变量数据Z，联合分布P(Y,Z|𝛉)，条件分布P(Z|Y,𝛉)；</p>
+<p>输出：模型参数𝛉</p>
+<p>(1)初始化参数𝛉<sup>(0)</sup>；</p>
+<p>(2)假设第i次迭代得到的参数为𝛉<sup>(i)</sup>，那么第i+1次迭代，满足：<br>$$<br>Q(\theta,\theta^{(i)})=E_Z[logP(Y,Z|\theta)|Y,\theta^{(i)}]\=\sum_Z [logP(Y,Z|\theta)][P(Z|Y,\theta^{(i)})]<br>$$<br>(3)极大化Q(𝛉,𝛉<sup>(i)</sup>)，得到𝛉<sup>(i+1)</sup>:<br>$$<br>\theta^{(i+1)}=\mathop{argmax}\limits_{\theta}Q(\theta,\theta^{(i)})<br>$$<br>(4)重复(2)(3)步，直到收敛。</p>
+<p>(2)中的两个中括号是我自己添加的，这样更能区分求和的的因子是一个概率的对数与另一个概率的乘积，而不是两个概率之积的对数。</p>
+<p>对于高斯混合模型之前一篇博文讲得也算是比较清楚了，此处不再赘述。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.mixture <span class="keyword">import</span> GaussianMixture</span><br><span class="line"></span><br><span class="line">X = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">10</span>, <span class="number">2</span>], [<span class="number">10</span>, <span class="number">4</span>], [<span class="number">10</span>, <span class="number">0</span>]])</span><br><span class="line">gm = GaussianMixture(n_components=<span class="number">3</span>).fit(X)</span><br></pre></td></tr></table></figure>
+<p>scikit-learn中的高斯混合模型是用EM算法进行训练的，最后会得到权重、各成分均值、各成分协方差矩阵等参数，使用predict得到的是各数据的分类。</p>
 
       
     </div>
@@ -239,7 +243,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/03/11/Scrapy-Tutorial/" target="_blank" title="Scrapy Tutorial">http://example.com/2021/03/11/Scrapy-Tutorial/</a>
+          <a href="/2021/03/22/再谈高斯混合模型/" target="_blank" title="再谈高斯混合模型">http://example.com/2021/03/22/再谈高斯混合模型/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -279,7 +283,7 @@
       
       
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/" rel="tag">scrapy</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unsupervised-learning/" rel="tag">unsupervised learning</a></li></ul>
 
       
 
@@ -289,19 +293,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/03/22/%E5%86%8D%E8%B0%88%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          再谈高斯混合模型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/03/09/Markov-Chain-Monte-Carlo/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/03/11/Scrapy-Tutorial/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Markov Chain Monte Carlo</div>
+      <div class="article-nav-title">Scrapy Tutorial</div>
     </a>
   
 </nav>
@@ -315,7 +310,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-a-project"><span class="nav-number">1.</span> <span class="nav-text">Creating a project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#first-spider"><span class="nav-number">2.</span> <span class="nav-text">first spider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#run-spider"><span class="nav-number">3.</span> <span class="nav-text">run spider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extracting-data"><span class="nav-number">4.</span> <span class="nav-text">Extracting data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storing-the-scraped-data"><span class="nav-number">5.</span> <span class="nav-text">Storing the scraped data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Following-links"><span class="nav-number">6.</span> <span class="nav-text">Following links</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯估计法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E6%9C%9F%E6%9C%9B%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">最大期望算法</span></a></li></ol></li></ol>
     
     </div>
   </aside>
