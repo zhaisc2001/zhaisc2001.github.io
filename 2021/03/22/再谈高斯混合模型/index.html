@@ -19,7 +19,7 @@
 <meta property="og:description" content="关于EM-GMM之前有一篇囫囵吞枣的blog，但自己做的工作始终不能让自己满意，于是决定用母语再写一篇，并且用些编码实现吧。 EM中E指的是Expectation，M指的是Maximization，这个算法的主要步骤已经体现在它的名字当中：分为两步，一步是E步，后一步是M步。它是一种迭代算法，之所以它和高斯混合模型（Gaussian mixture model）经常一起出现，是因为它是学习高斯混合">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-22T11:58:09.000Z">
-<meta property="article:modified_time" content="2021-03-24T02:21:58.876Z">
+<meta property="article:modified_time" content="2021-03-24T11:42:44.489Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="unsupervised learning">
 <meta name="twitter:card" content="summary">
@@ -230,6 +230,10 @@
 <p>对于高斯混合模型之前一篇博文讲得也算是比较清楚了，此处不再赘述。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.mixture <span class="keyword">import</span> GaussianMixture</span><br><span class="line"></span><br><span class="line">X = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">10</span>, <span class="number">2</span>], [<span class="number">10</span>, <span class="number">4</span>], [<span class="number">10</span>, <span class="number">0</span>]])</span><br><span class="line">gm = GaussianMixture(n_components=<span class="number">3</span>).fit(X)</span><br></pre></td></tr></table></figure>
 <p>scikit-learn中的高斯混合模型是用EM算法进行训练的，最后会得到权重、各成分均值、各成分协方差矩阵等参数，使用predict得到的是各数据的分类。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]李航. 统计学习方法[M]. 清华大学出版社, 2012.</p>
+<p>[2]周志华. 机器学习[M]. 清华大学出版社, 2016.</p>
+<p>[3]诸葛越. 百面机器学习[M]. 人民邮电出版社, 2018.</p>
+<p>此外还参考了知乎以及CSDN上的部分文章。</p>
 
       
     </div>
@@ -310,7 +314,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯估计法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E6%9C%9F%E6%9C%9B%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">最大期望算法</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯估计法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E6%9C%9F%E6%9C%9B%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">最大期望算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol>
     
     </div>
   </aside>
