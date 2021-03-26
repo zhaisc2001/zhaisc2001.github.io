@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>再谈高斯混合模型 | Sisicca</title>
+  <title>再谈奇异值分解和主成分分析 | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keywords" content="unsupervised learning" />
@@ -11,18 +11,20 @@
   
   
   
-  <meta name="description" content="关于EM-GMM之前有一篇囫囵吞枣的blog，但自己做的工作始终不能让自己满意，于是决定用母语再写一篇，并且调个包用一下吧。 EM中E指的是Expectation，M指的是Maximization，这个算法的主要步骤已经体现在它的名字当中：分为两步，一步是E步，后一步是M步。它是一种迭代算法，之所以它和高斯混合模型（Gaussian mixture model）经常一起出现，是因为它是学习高斯混合">
+  <meta name="description" content="奇异值分解属于是线性代数中的基本知识，而主成分分析可以使用奇异值分解来省略复杂的特征分解。奇异值分解其实是一种线性代数中的矩阵因子分解方法，它可以把任意一个实矩阵分解为三个矩阵相乘的形式，比如对于一个mn大小的矩阵来说，它可以把该矩阵分解为m\m的正交矩阵、非负对角元素降序排列的m*n矩形对角矩阵以及n*n的正交矩阵。《统计学习方法》中，认为奇异值分解可以看作是数据压缩的一种方法，压缩的损失是平方">
 <meta property="og:type" content="article">
-<meta property="og:title" content="再谈高斯混合模型">
-<meta property="og:url" content="http://example.com/2021/03/22/%E5%86%8D%E8%B0%88%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:title" content="再谈奇异值分解和主成分分析">
+<meta property="og:url" content="http://example.com/2021/03/24/%E5%86%8D%E8%B0%88%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E5%92%8C%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="关于EM-GMM之前有一篇囫囵吞枣的blog，但自己做的工作始终不能让自己满意，于是决定用母语再写一篇，并且调个包用一下吧。 EM中E指的是Expectation，M指的是Maximization，这个算法的主要步骤已经体现在它的名字当中：分为两步，一步是E步，后一步是M步。它是一种迭代算法，之所以它和高斯混合模型（Gaussian mixture model）经常一起出现，是因为它是学习高斯混合">
+<meta property="og:description" content="奇异值分解属于是线性代数中的基本知识，而主成分分析可以使用奇异值分解来省略复杂的特征分解。奇异值分解其实是一种线性代数中的矩阵因子分解方法，它可以把任意一个实矩阵分解为三个矩阵相乘的形式，比如对于一个mn大小的矩阵来说，它可以把该矩阵分解为m\m的正交矩阵、非负对角元素降序排列的m*n矩形对角矩阵以及n*n的正交矩阵。《统计学习方法》中，认为奇异值分解可以看作是数据压缩的一种方法，压缩的损失是平方">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-22T11:58:09.000Z">
-<meta property="article:modified_time" content="2021-03-24T12:13:20.913Z">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-5ee98f8f3426b845bc1c5038ecd29593_b.jpg">
+<meta property="article:published_time" content="2021-03-24T12:14:27.000Z">
+<meta property="article:modified_time" content="2021-03-26T09:19:25.257Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="unsupervised learning">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic4.zhimg.com/v2-5ee98f8f3426b845bc1c5038ecd29593_b.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
   
@@ -172,7 +174,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-再谈高斯混合模型" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-再谈奇异值分解和主成分分析" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -180,7 +182,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      再谈高斯混合模型
+      再谈奇异值分解和主成分分析
     </h1>
   
 
@@ -188,8 +190,8 @@
     
     <div class="article-meta">
       
-	<a href="/2021/03/22/%E5%86%8D%E8%B0%88%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B/" class="article-date">
-	  <time datetime="2021-03-22T11:58:09.000Z" itemprop="datePublished">2021-03-22</time>
+	<a href="/2021/03/24/%E5%86%8D%E8%B0%88%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E5%92%8C%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" class="article-date">
+	  <time datetime="2021-03-24T12:14:27.000Z" itemprop="datePublished">2021-03-24</time>
 	</a>
 
       
@@ -207,33 +209,25 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>关于EM-GMM之前有一篇囫囵吞枣的blog，但自己做的工作始终不能让自己满意，于是决定用母语再写一篇，并且调个包用一下吧。</p>
-<p>EM中E指的是Expectation，M指的是Maximization，这个算法的主要步骤已经体现在它的名字当中：分为两步，一步是E步，后一步是M步。它是一种迭代算法，之所以它和高斯混合模型（Gaussian mixture model）经常一起出现，是因为它是学习高斯混合模型的常用方法。EM算法通常用于含有隐变量的模型，对于只含有可观测变量的模型，它们的参数估计方法有极大似然估计法和贝叶斯估计法，对这两种概率模型的参数估计方法我也是只知道个大概，（实际上对于极大似然估计在「概率论与数理统计」这门课中是学习过的，但我已经忘得七七八八了）因此放在这里仔细讲一讲。</p>
-<h2 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h2><p>在周志华老师的巨著《机器学习》中，将极大似然估计放在了贝叶斯分类器章节里进行阐述，他认为概率模型的训练过程实际上就是模型的参数估计的过程，而统计学界在这个问题上主要有两派：主张参数是未知但固定的值的频率主义学派，他们使用优化方法来确定参数，极大似然估计方法就是频率主义学派的通过数据采样估计参数的经典方法，另一派则是贝叶斯学派，他们的主张是参数属于未知的随机变量，本身也有分布，而不是确定的值；因此提出的估计方法是预先假设参数服从一个先验分布，然后再通过观测到的数据进行参数后验分布的计算。</p>
-<p>极大似然估计法主要步骤</p>
-<p>1.构造似然函数：实际上就是对于概率的连乘形式，对于样本集D中的c类样本有<br>$$<br>L(\theta)=\prod_{x\in D_c}P(x|\theta_c)<br>$$<br>2.为了防止概率连乘造成的下溢，（周志华老师使用这个词，计算机科学中的下溢是一种解释，我的看法是概率连乘就是一系列[0,1]的数连乘，当这个连乘进行到一定阶段时，会导致后续的连乘操作对似然函数的值影响减弱）我们对似然函数取对数，这就是所谓的对数似然函数(log-likelihood)<br>$$<br>LL(\theta)=\sum_{x \in D_c}logP(x|\theta_c)<br>$$<br>3.这种情况下的极大似然估计便是<br>$$<br>\hat{\theta_c}=\mathop{argmax}\limits_{\theta}LL(\theta)<br>$$<br>在对数据的分布进行假设后，一般通过令对数函数导数等于0来得到极大似然估计，假如这样的方程无解那就说明这个模型的训练不适合使用极大似然估计方法。</p>
-<p>周志华老师特别点出，这个方法的风险就在于对于数据分布的假设，假如假设的分布与数据的实际分布相去甚远，那么得到的概率模型也会差强人意。</p>
-<h2 id="贝叶斯估计法"><a href="#贝叶斯估计法" class="headerlink" title="贝叶斯估计法"></a>贝叶斯估计法</h2><p>在《机器学习》书中，指出了频率主义学派和贝叶斯学派对于“概率”的不同理解：频率主义学派认为它是一个可以用事件大量重复频率逼近的稳定值，而贝叶斯学派认为它是主观的，是认识主体对事件发生可能的置信度。</p>
-<p>而贝叶斯估计实际上是对最大后验估计（Maximum a posteriori estimation，MAP）的拓展，那我们不妨先学一学最大后验估计。</p>
-<p>最大后验估计是贝叶斯学派常用的一种参数估计方法，它预估参数服从某个特定先验分布<br>$$<br>\hat{\theta}<em>{MAP}=\mathop{argmax}\limits</em>{\theta}P(\theta|X)\=\mathop{argmax}\limits_{\theta}logP(\theta|X)\=\mathop{argmax}\limits_{\theta}logP(X|\theta)+logP(\theta)-logP(X)<br>$$<br>在实际的优化中我们不需要考虑P(X)，先验分布的存在可以达到防止过拟合的目的，比如当我们假设参数的先验分布服从高斯分布时，logP(𝛉)就是正则项L2（此时视最大似然估计的目标函数为优化函数）。</p>
-<p>贝叶斯估计法也预估参数服从某个特定先验分布，所以最终得到的是数据生成参数的最大后验值，还有被当作另一个参数估计值的期望值，以及被用来表示估计的质量的方差。</p>
-<p>它的步骤为：</p>
-<p>1.确定参数𝛉的先验分布p(𝛉)；</p>
-<p>2.求联合分布<br>$$<br>P(X|\theta)=\prod_{x\in D_c}p(x_c|\theta)<br>$$<br>3.利用bayesian公式，求参数的后验分布<br>$$<br>P(\theta|X)=\frac{P(X|\theta)P(\theta)}{\int_\theta P(X|\theta)P(\theta)d\theta}<br>$$<br>4.求出贝叶斯估计值<br>$$<br>\hat{\theta}=E[P(\theta|X)]=\int_\theta \theta P(\theta|X)d\theta<br>$$</p>
-<h3 id="最大期望算法"><a href="#最大期望算法" class="headerlink" title="最大期望算法"></a>最大期望算法</h3><p>频率主义学派与贝叶斯学派、最大似然估计与最大后验估计、最大后验估计与贝叶斯估计……终于我们来到了正题：EM算法；就像开头介绍的那样，它与上述的参数估计方法的区别在于它是用来估计含有隐变量的模型参数。实际上在我多次使用多的k-means聚类中使用的迭代训练算法便是最大期望算法，而我现在尽管不能说是对它一无所知，但也相差无几，这不禁让我感到汗颜。</p>
-<p>简要来说，EM算法就是反复的使用E步与M步：利用期望E步，根据当前的估计参数值来计算对数似然的期望；然后利用最大化M步，寻找能使E步产生的似然期望最大化的参数值，再返回E步……如此循环直到获得局部最优解。</p>
-<p>输入：观测变量数据Y，隐变量数据Z，联合分布P(Y,Z|𝛉)，条件分布P(Z|Y,𝛉)；</p>
-<p>输出：模型参数𝛉</p>
-<p>(1)初始化参数𝛉<sup>(0)</sup>；</p>
-<p>(2)假设第i次迭代得到的参数为𝛉<sup>(i)</sup>，那么第i+1次迭代，满足：<br>$$<br>Q(\theta,\theta^{(i)})=E_Z[logP(Y,Z|\theta)|Y,\theta^{(i)}]=\sum_Z [logP(Y,Z|\theta)][P(Z|Y,\theta^{(i)})]<br>$$<br>(3)极大化Q(𝛉,𝛉<sup>(i)</sup>)，得到𝛉<sup>(i+1)</sup>:<br>$$<br>\theta^{(i+1)}=\mathop{argmax}\limits_{\theta}Q(\theta,\theta^{(i)})<br>$$<br>(4)重复(2)(3)步，直到收敛。</p>
-<p>(2)中的两个中括号是我自己添加的，这样更能区分求和的的因子是一个概率的对数与另一个概率的乘积，而不是两个概率之积的对数。</p>
-<p>对于高斯混合模型之前一篇博文讲得也算是比较清楚了，此处不再赘述。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.mixture <span class="keyword">import</span> GaussianMixture</span><br><span class="line"></span><br><span class="line">X = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">10</span>, <span class="number">2</span>], [<span class="number">10</span>, <span class="number">4</span>], [<span class="number">10</span>, <span class="number">0</span>]])</span><br><span class="line">gm = GaussianMixture(n_components=<span class="number">3</span>).fit(X)</span><br></pre></td></tr></table></figure>
-<p>scikit-learn中的高斯混合模型是用EM算法进行训练的，最后会得到权重、各成分均值、各成分协方差矩阵等参数，使用predict得到的是各数据的分类。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]李航. 统计学习方法[M]. 清华大学出版社, 2012.</p>
-<p>[2]周志华. 机器学习[M]. 清华大学出版社, 2016.</p>
-<p>[3]诸葛越. 百面机器学习[M]. 人民邮电出版社, 2018.</p>
-<p>此外还参考了知乎以及CSDN上的部分文章。</p>
+        <p>奇异值分解属于是线性代数中的基本知识，而主成分分析可以使用奇异值分解来省略复杂的特征分解。奇异值分解其实是一种线性代数中的矩阵因子分解方法，它可以把任意一个实矩阵分解为三个矩阵相乘的形式，比如对于一个m<em>n大小的矩阵来说，它可以把该矩阵分解为m\</em>m的正交矩阵、非负对角元素降序排列的m*n矩形对角矩阵以及n*n的正交矩阵。《统计学习方法》中，认为奇异值分解可以看作是数据压缩的一种方法，压缩的损失是平方损失。</p>
+<h2 id="特征值与特征向量"><a href="#特征值与特征向量" class="headerlink" title="特征值与特征向量"></a>特征值与特征向量</h2><p> 对于n阶矩阵A，特征值与特征向量定义如下：<br>$$<br>Ax=\lambda x<br>$$<br>λ就是我们所说的特征值，x是一个n维的向量，他就是λ对应的特征向量；矩阵A的特征分解，需要我们求出所有的特征值以及它们对应的特征向量，此时将矩阵A进行特征分解，有：<br>$$<br>A=W\sum W^{-1}<br>$$<br>W是n个特征向量组成的n<em>n矩阵，∑是由n个特征值组成对角元素的对角n\</em>n矩阵。W中的所有特征向量都已经被我们做了标准化处理，是一个酋矩阵（幺正矩阵），即W<sub>T</sub>=W<sub>-1</sub>。</p>
+<p>这里特征分解的是一个方阵，假如不是方针，我们就要使用奇异值分解了。</p>
+<h2 id="奇异值分解"><a href="#奇异值分解" class="headerlink" title="奇异值分解"></a>奇异值分解</h2><p>由于之前一篇博文中将奇异值分解很多东西已经阐述过了，这里就不再啰嗦，放个图：</p>
+<p><img src="https://pic4.zhimg.com/v2-5ee98f8f3426b845bc1c5038ecd29593_b.jpg" alt="img"></p>
+<p>如何求得这三个矩阵呢？</p>
+<p>网上有先确定右奇异值向量和左奇异值向量，然后再计算对角矩阵的方法，但我们以《统计学习方法》中的方法为准，它首先有<br>$$<br>||Ax||^2=x^TA^TAx=\lambda x^Tx=\lambda ||x||^2<br>$$<br>即对于矩阵A的奇异值𝛔有<br>$$<br>\sigma=\sqrt{\lambda}=\sqrt{\frac{||Ax||^2}{||x||^2}}<br>$$<br>∑的对角由𝛔降序排列，其他元素使用0进行填充；而V<sub>1</sub>作为正特征值对应的特征向量组成的n<em>r矩阵（r为矩阵的秩），V<sub>2</sub>作为零特征值对应的特征向量组成的n\</em>(n-r)矩阵，它们共同组成了矩阵V，即<br>$$<br>V=[V_1,V_2]\\sum=\begin{pmatrix} \sigma &amp; 0 \ 0 &amp; 0 \end{pmatrix}<br>$$<br>接下来确定U矩阵，我们可以使用对矩阵的乘积AA<sup>T</sup>进行特征分解的方法，这里我们使用李航老师书中的方法：<br>$$<br>u_j=\frac{1}{\sigma_j}Av_j,j=1,2,…,r\U_1=[u_1,u_2,…,u_r]<br>$$<br>这里我们先引入一个正交补的概念，即<br>$$<br>Y^\perp={x\in R^n|x^Ty=0,\forall y\in Y }<br>$$<br>此时Y是R<sup>n</sup>的子空间；此时前面的u<sub>1</sub>到u<sub>j</sub>组成了U<sub>1</sub>，我们令U<sub>2</sub>为A的值域R(A)的正交补，有<br>$$<br>U_2={u_{r+1},u_{r+2},…,u_m}\U=[U_1,U_2]<br>$$<br>numpy实现奇异值分解：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">A=np.array([[<span class="number">1</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">2</span>],[<span class="number">0</span>,<span class="number">0</span>]])</span><br><span class="line">U,s,V=np.linalg.svd(A)</span><br></pre></td></tr></table></figure>
+<h2 id="主成分分析"><a href="#主成分分析" class="headerlink" title="主成分分析"></a>主成分分析</h2><p>我们先对奇异值分解做一个性质的了解，对于奇异值分解后得到的降序对角奇异值矩阵，我们需要注意到的是奇异值的见效速度是相当快的，前10%甚至前1%的奇异值就已经占所有奇异值之和99%以上的比例，于是我们可以选用前k个奇异值以及它们对应的左右奇异值向量来近似表达矩阵，这就是《统计学习方法》书中所说的截断奇异值分解，即<br>$$<br>A_{m<em>n}=U_{m</em>k}∑<em>{k*k}V^T</em>{k<em>n}<br>$$<br>在《百面机器学习》中，作者使用了从最大方差和最小平方误差两方面来解释主成分分析的原理、目标函数以及求解方法，其实它们分别对应的是《机器学习》中所提到的最大可分性和最近重构性。我们先从最近重构性入手，最近重构性要求的是样本点到这个超平面的距离都足够近，假设数据都进行了中心化，有m</em>n矩阵为[x<sup>(1)</sup>,x<sup>(2)</sup>,…,x<sup>(m)</sup>]<sup>T</sup>,x<sup>(i)</sup>是1*n的向量，原坐标系经过投影变换之后得到的新坐标系为{w<sub>1</sub>,w<sub>2</sub>,…,w<sub>n</sub>}，w是标准正交基向量，即||w||<sub>2</sub>=1，同时w<sub>i</sub><sup>T</sup>w<sub>j</sub>=0(i≠j)，此时我们使用PCA要达到的目的是将数据从n维降到n’维，于是我们需要丢弃新坐标系中的某些标准正交基向量，使新的坐标系为{w<sub>1</sub>,w<sub>2</sub>,…,w<sub>n’</sub>}，假设x<sup>(i)</sup>投影到新坐标系中变为z<sup>(i)</sup>=(z<sup>(i)</sup><sub>1</sub>,z<sup>(i)</sup><sub>2</sub>,…,z<sup>(i)</sup><sub>n’</sub>),即x<sup>(i)</sup>在新坐标系中第j维的坐标为z<sup>(i)</sup><sub>j</sub>=w<sub>j</sub><sup>T</sup>x<sup>(i)</sup>，此时我们需要度量降维导致的信息损失，于是我们从z<sup>(i)</sup>还原到原来坐标系有<br>$$<br>\hat{x}^{(i)}=\sum_{j=1}^{n’}z^{(i)}<em>{j}\omega_j<br>$$<br>于是可以得到平方损失为<br>$$<br>\sum_{i=1}^m||\hat{x}^{(i)}-x^{(i)}||<em>2^2=-tr(W^TXX^TW)+const<br>$$<br>优化目标为<br>$$<br>\mathop{argmin}\limits</em>{W}\ -tr(W^TXX^TW)\s.t.W^TW=I<br>$$<br>这是由最近重构性得到的优化目标，而从最大可分性(最大方差)可以得到优化目标<br>$$<br>\mathop{argmax}\limits</em>{W}\ tr(W^TXX^TW)\s.t.W^TW=I<br>$$<br>PCA的正常流程如下：</p>
+<p>输入：数据集X，降维维数n’</p>
+<p>输出：新坐标系W</p>
+<p>1.对数据进行规范化处理<br>$$<br>x^{(i)}\leftarrow x^{(i)}-\frac{1}{m}\sum_{i=1}^mx^{(i)}<br>$$<br>2.求矩阵的协方差矩阵X<sup>T</sup>X</p>
+<p>3.对矩阵的协方差矩阵做特征分解，选取最大的n’个特征值对应的特征向量</p>
+<p>4.将这些特征向量组成新坐标系W输出</p>
+<p>当step3中特征分解比较复杂时，我们选择对X进行奇异值分解，选择前n’个特征值，以及对应的n’个右奇异值向量，得到n*n’矩阵V，新的坐标为满足Y=XV。</p>
+<p>scikit-learn中的主成分分析就是使用的奇异值分解的方法，由于n’作为降维维数需要提前给出，我们可以选择重构阈值法得出n’的值。</p>
+<p>调包实现PCA：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"></span><br><span class="line">A=np.array([[<span class="number">1</span>,<span class="number">1</span>,<span class="number">7</span>],[<span class="number">2</span>,<span class="number">2</span>,-<span class="number">5</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">11</span>]])</span><br><span class="line">pca = PCA(n_components=<span class="number">0.95</span>)</span><br><span class="line">pca.fit(A)</span><br><span class="line">new_A = pca.fit_transform(A)</span><br><span class="line">print(pca.explained_variance_ratio_)</span><br></pre></td></tr></table></figure>
+<p>最后一行代码可以查看选取的特征值之和占所有特征值之和的百分比。</p>
 
       
     </div>
@@ -247,7 +241,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2021/03/22/再谈高斯混合模型/" target="_blank" title="再谈高斯混合模型">http://example.com/2021/03/22/再谈高斯混合模型/</a>
+          <a href="/2021/03/24/再谈奇异值分解和主成分分析/" target="_blank" title="再谈奇异值分解和主成分分析">http://example.com/2021/03/24/再谈奇异值分解和主成分分析/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -297,19 +291,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/03/24/%E5%86%8D%E8%B0%88%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E5%92%8C%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          再谈奇异值分解和主成分分析
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/03/11/Scrapy-Tutorial/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/03/22/%E5%86%8D%E8%B0%88%E9%AB%98%E6%96%AF%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Scrapy Tutorial</div>
+      <div class="article-nav-title">再谈高斯混合模型</div>
     </a>
   
 </nav>
@@ -323,7 +308,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">极大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%B0%E8%AE%A1%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯估计法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E6%9C%9F%E6%9C%9B%E7%AE%97%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">最大期望算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%80%BC%E4%B8%8E%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">特征值与特征向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">奇异值分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">主成分分析</span></a></li></ol>
     
     </div>
   </aside>
