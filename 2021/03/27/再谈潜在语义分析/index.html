@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>再谈潜在语义分析 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="unsupervised learning" />
+  
+  
+  
+  
+  <meta name="description" content="潜在语义分析，Latent Semantic Analysis，它是一种能够通过矩阵分解来发现文本与单词之间基于话题的语义关系的无监督学习方法。主要通过两种矩阵分解方法：奇异值分解（singular value decomposition）以及非负矩阵分解（non-negative matrix factorization）。 文本表示模型尽管潜在语义分析仅需要使用非概率话题分析模型，这里我们将所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再谈潜在语义分析">
+<meta property="og:url" content="http://example.com/2021/03/27/%E5%86%8D%E8%B0%88%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="潜在语义分析，Latent Semantic Analysis，它是一种能够通过矩阵分解来发现文本与单词之间基于话题的语义关系的无监督学习方法。主要通过两种矩阵分解方法：奇异值分解（singular value decomposition）以及非负矩阵分解（non-negative matrix factorization）。 文本表示模型尽管潜在语义分析仅需要使用非概率话题分析模型，这里我们将所">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-27T12:29:28.000Z">
+<meta property="article:modified_time" content="2021-03-28T06:49:35.663Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="unsupervised learning">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-再谈潜在语义分析" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      再谈潜在语义分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/03/27/%E5%86%8D%E8%B0%88%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" class="article-date">
+	  <time datetime="2021-03-27T12:29:28.000Z" itemprop="datePublished">2021-03-27</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>潜在语义分析，Latent Semantic Analysis，它是一种能够通过矩阵分解来发现文本与单词之间基于话题的语义关系的无监督学习方法。主要通过两种矩阵分解方法：奇异值分解（singular value decomposition）以及非负矩阵分解（non-negative matrix factorization）。</p>
+<h2 id="文本表示模型"><a href="#文本表示模型" class="headerlink" title="文本表示模型"></a>文本表示模型</h2><p>尽管潜在语义分析仅需要使用非概率话题分析模型，这里我们将所有的文本表示模型介绍一遍。</p>
+<h3 id="词袋模型与N-gram模型"><a href="#词袋模型与N-gram模型" class="headerlink" title="词袋模型与N-gram模型"></a>词袋模型与N-gram模型</h3><p>词袋模型将每一篇文本当作一个袋子，同时忽略单词顺序，通常只统计单词的权值，如TF-IDF权值：<br>$$<br>TFIDF_{ij}=\frac{tf_{ij}}{tf_{.j}}log\frac{df}{df_i}<br>$$<br>只将一个个单词抽出容易导致语义丢失，N-gram模型就是将n个连续的单词提取出来作为一个单独特征。而同一单词的不同词性变化在实际处理中一般会进行词干抽取(word stemming)操作以将不同单词词处理为同一词干形式。</p>
+<h3 id="主题模型"><a href="#主题模型" class="headerlink" title="主题模型"></a>主题模型</h3><p>关于这部分主要的两个模型是概率潜在语义分析（PLSA）以及潜在狄利克雷分配（LDA），我们在下一篇再讲。（PLSA其实是学过的，不过又是经典的囫囵吞枣）</p>
+<h3 id="词嵌入与深度学习模型"><a href="#词嵌入与深度学习模型" class="headerlink" title="词嵌入与深度学习模型"></a>词嵌入与深度学习模型</h3><p>词嵌入指的是所有将词进行向量化表示的模型，它的做法是将词映射成为低维空间上的一个稠密向量（dense vector）。<br>假设我们把每一个词都映射成为k维的向量，n个词就能得到n*k矩阵，这样的模型过于麻烦，在传统的机器学习方法中我们需要进行一些特征工程以获得更高层的特征，但在深度学习模型中，输入层到中间隐藏层特征的变化都可以看作是进行了特征工程，因此CNN与RNN进行文本表示能够得到较好结果的原因就不难得出了：一是它们能够得到高层语义特征，二是与全连接网络结构相比，它们减少了待学习参数，能够降低计算复杂度并且防止过拟合。</p>
+<h2 id="潜在语义分析"><a href="#潜在语义分析" class="headerlink" title="潜在语义分析"></a>潜在语义分析</h2><p>假设有n个文本有m个单词以及k个话题，我们可以得到单词-文本矩阵可以被单词-话题矩阵与话题-文本矩阵的乘积所近似表示，即<br>$$<br>X\approx TY<br>$$<br>我们有两种方法进行潜在语义分析。</p>
+<h3 id="矩阵的奇异值分解"><a href="#矩阵的奇异值分解" class="headerlink" title="矩阵的奇异值分解"></a>矩阵的奇异值分解</h3><p>由上面的近似相等公式，可以想到对单词-文本矩阵进行矩阵因子分解以得到话题，这里可以使用之前阐述的截断奇异值分解，由单词-话题矩阵以及话题-文本矩阵的维度我们推断出，截断奇异值分解后左奇异值矩阵作为单词-话题矩阵，对角方阵和右奇异值矩阵的乘积作为话题-文本矩阵。</p>
+<h3 id="非负矩阵分解算法"><a href="#非负矩阵分解算法" class="headerlink" title="非负矩阵分解算法"></a>非负矩阵分解算法</h3><p>这里不对NMF做过多阐述（之前有一篇博文已经详细讲述过），只需要知道它也是一种矩阵的分解方法，是将最小化平方损失函数作为优化目标的迭代算法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> TruncatedSVD</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docs = [<span class="string">&#x27;The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective&#x27;</span>,<span class="string">&#x27;and by a large margin. The ultimate reason for this is Moore\&#x27;s law&#x27;</span>,<span class="string">&#x27;or rather its generalization of continued exponentially falling cost per unit of computation&#x27;</span>,<span class="string">&#x27; Most AI research has been conducted as if the computation available to the agent were constant (in which case leveraging human knowledge would be one of the only ways to improve performance) but&#x27;</span>,<span class="string">&#x27; over a slightly longer time than a typical research project, massively more computation inevitably becomes available&#x27;</span>,<span class="string">&#x27; Seeking an improvement that makes a difference in the shorter term, researchers seek to leverage their human knowledge of the domain&#x27;</span>,<span class="string">&#x27; but the only thing that matters in the long run is the leveraging of computation&#x27;</span>,<span class="string">&#x27;These two need not run counter to each other, but in practice they tend to. Time spent on one is time not spent on the other. There are psychological commitments to investment in one approach or the other. And the human-knowledge approach tends to complicate methods in ways that make them less suited to taking advantage of general methods leveraging computation.  There were many examples of AI researchers&#x27;</span>,<span class="string">&#x27;belated learning of this bitter lesson, and it is instructive to review some of the most prominent&#x27;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tfidf= TfidfVectorizer()</span><br><span class="line">X = tfidf.fit_transform(docs)</span><br><span class="line">words = tfidf.get_feature_names()</span><br><span class="line"></span><br><span class="line">topics = <span class="number">3</span></span><br><span class="line">LSA = TruncatedSVD(n_components=topics)</span><br><span class="line">Y = LSA.fit_transform(X)</span><br><span class="line"></span><br><span class="line">pick_docs = <span class="number">2</span></span><br><span class="line">topic_docid = [Y[:, t].argsort()[:-(pick_docs + <span class="number">1</span>):-<span class="number">1</span>] <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(topics)]</span><br><span class="line"></span><br><span class="line">pick_keywords = <span class="number">2</span></span><br><span class="line">topic_keyid = [LSA.components_[t].argsort()[:-(pick_keywords + <span class="number">1</span>):-<span class="number">1</span>] <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(topics)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(topics):</span><br><span class="line">    print(<span class="string">&quot;话题 &#123;&#125;&quot;</span>.<span class="built_in">format</span>(t))</span><br><span class="line">    print(<span class="string">&quot;\t 关键词：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="string">&quot;, &quot;</span>.join(words[topic_keyid[t][j]] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(pick_keywords))))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(pick_docs):</span><br><span class="line">        print(<span class="string">&quot;\t\t 文档&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i))</span><br><span class="line">        print(<span class="string">&quot;\t\t&quot;</span>, docs[topic_docid[t][i]])</span><br></pre></td></tr></table></figure>
+<p>这里使用的是截断奇异值分解方法，基于sklearn调包实现，文本是Sutton的一篇blog，讲述了AI方面算力开发与算法开发的关系，蛮有意思的。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]李航. 统计学习方法[M]. 清华大学出版社, 2012.<br>[2]诸葛越. 百面机器学习[M]. 人民邮电出版社, 2018.<br>此外还参考了CSDN上的某些文章和代码。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/03/27/再谈潜在语义分析/" target="_blank" title="再谈潜在语义分析">http://example.com/2021/03/27/再谈潜在语义分析/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unsupervised-learning/" rel="tag">unsupervised learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/03/27/%E6%AD%BB%E4%BA%A1%E3%80%81%E8%87%AA%E7%94%B1%E3%80%81%E5%AD%A4%E7%8B%AC%E4%B8%8E%E6%97%A0%E6%84%8F%E4%B9%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">死亡、自由、孤独与无意义</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">文本表示模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B%E4%B8%8EN-gram%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">词袋模型与N-gram模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">主题模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E5%B5%8C%E5%85%A5%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">词嵌入与深度学习模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">潜在语义分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E7%9A%84%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3"><span class="nav-number">2.1.</span> <span class="nav-text">矩阵的奇异值分解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E8%B4%9F%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">非负矩阵分解算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
