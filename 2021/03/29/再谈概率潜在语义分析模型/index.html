@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>再谈概率潜在语义分析模型 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="unsupervised learning" />
+  
+  
+  
+  
+  <meta name="description" content="主题模型基于之前的话题模型来表示文本容易导致词义相近的词被识别成为表达不同主题，我们需要使用主题模型来将这些词或词组映射到同一维度上去。《百面机器学习》中，它被划分在概率图模型类别中，它的思想是如果两个词属于一个主题，那么给定那个主题，生成这两个词的概率都应该是比较高的。主题模型干的事情，就是从文本库中发现主题，并计算出每篇文章对应的主题。我们主要介绍概率潜在语义分析(pLSA)以及潜在狄利克雷分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再谈概率潜在语义分析模型">
+<meta property="og:url" content="http://example.com/2021/03/29/%E5%86%8D%E8%B0%88%E6%A6%82%E7%8E%87%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="主题模型基于之前的话题模型来表示文本容易导致词义相近的词被识别成为表达不同主题，我们需要使用主题模型来将这些词或词组映射到同一维度上去。《百面机器学习》中，它被划分在概率图模型类别中，它的思想是如果两个词属于一个主题，那么给定那个主题，生成这两个词的概率都应该是比较高的。主题模型干的事情，就是从文本库中发现主题，并计算出每篇文章对应的主题。我们主要介绍概率潜在语义分析(pLSA)以及潜在狄利克雷分">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://blog.tomtung.com/images/2011-10-19-plsa_graph.png">
+<meta property="article:published_time" content="2021-03-29T12:40:04.000Z">
+<meta property="article:modified_time" content="2021-03-30T12:47:12.556Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="unsupervised learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.tomtung.com/images/2011-10-19-plsa_graph.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-再谈概率潜在语义分析模型" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      再谈概率潜在语义分析模型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/03/29/%E5%86%8D%E8%B0%88%E6%A6%82%E7%8E%87%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B/" class="article-date">
+	  <time datetime="2021-03-29T12:40:04.000Z" itemprop="datePublished">2021-03-29</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="主题模型"><a href="#主题模型" class="headerlink" title="主题模型"></a>主题模型</h2><p>基于之前的话题模型来表示文本容易导致词义相近的词被识别成为表达不同主题，我们需要使用主题模型来将这些词或词组映射到同一维度上去。《百面机器学习》中，它被划分在概率图模型类别中，它的思想是如果两个词属于一个主题，那么给定那个主题，生成这两个词的概率都应该是比较高的。主题模型干的事情，就是从文本库中发现主题，并计算出每篇文章对应的主题。<br>我们主要介绍概率潜在语义分析(pLSA)以及潜在狄利克雷分布(Latent Dirichlet Allocation)</p>
+<h2 id="概率潜在语义分析"><a href="#概率潜在语义分析" class="headerlink" title="概率潜在语义分析"></a>概率潜在语义分析</h2><p>概率潜在语义分析将文本表示为文本-单词共现数据，模型中将话题作为隐藏变量，将文本和单词作为可观测变量，它的具体表现为两种子模型，生成模型和共现模型。</p>
+<h3 id="生成模型"><a href="#生成模型" class="headerlink" title="生成模型"></a>生成模型</h3><p>单词集合W有M个单词，文本集合D有N个文本，话题集合Z有K个话题，于是生成模型为从文本生成话题再生成单词的形式，即：<br>$$<br>P(T)=\mathop{\prod}\limits_{(w,d)}P(w,d)^{n(w,d)}<br>$$<br>n(w,d)表示的是单词-文本对(w,d)出现的次数，每个单词-文本对的生成概率为：<br>$$<br>P(w,d)=P(d)P(w|d)<br>$$<br>$$<br>=P(d)\sum_z P(w,z|d)<br>$$<br>$$<br>=P(d)\sum_z P(z|d)P(w|z)<br>$$</p>
+<p>生成模型是一个概率有向图模型。</p>
+<p><img src="http://blog.tomtung.com/images/2011-10-19-plsa_graph.png" alt="image0"></p>
+<h3 id="共现模型"><a href="#共现模型" class="headerlink" title="共现模型"></a>共现模型</h3><p>共现模型在概率公式上是等价的：<br>$$<br>P(w,d)=\sum_{z\in Z}P(z)P(w|z)P(d|z)<br>$$<br>但是它们的模式不同，这也导致它们的学习算法形式不同。我们可以将共现模型表述为潜在语义分析中截断奇异值分解的形式，从左到右的矩阵表示的概率分别为P(w|z),P(z),P(d|z)。</p>
+<p>由于模型中包含了隐藏变量，我们使用EM算法进行训练。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PLSA</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,text_list,k</span>):</span></span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        :param text_list:以列表形式表示的文本</span></span><br><span class="line"><span class="string">        :param k:话题数量</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        self.k = k</span><br><span class="line">        self.text_list = text_list</span><br><span class="line">        self.text_num = <span class="built_in">len</span>(text_list)</span><br><span class="line">        self.get_X()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_X</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.cuted_text = [jieba.lcut(text,cut_all=<span class="literal">True</span>) <span class="keyword">for</span> text <span class="keyword">in</span> self.text_list]</span><br><span class="line">        self.word_all = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> self.cuted_text:</span><br><span class="line">            self.word_all.extend(i)</span><br><span class="line">        self.word_set = <span class="built_in">list</span>(<span class="built_in">set</span>(self.word_all))</span><br><span class="line">        self.word_num = <span class="built_in">len</span>(self.word_set)</span><br><span class="line">        self.word_dict = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> index,word <span class="keyword">in</span> <span class="built_in">enumerate</span>(self.word_set):</span><br><span class="line">            self.word_dict[word] = index</span><br><span class="line">        self.X = np.zeros((self.word_num,self.text_num))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.text_num):</span><br><span class="line">            count_ = collections.Counter(self.cuted_text[i])</span><br><span class="line">            <span class="keyword">for</span> k, v <span class="keyword">in</span> count_.items():</span><br><span class="line">                self.X[self.word_dict[k],i] = v</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_p_z_wd</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.z_wd  = np.zeros((self.word_num,self.text_num,self.k))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.word_num):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(self.text_num):</span><br><span class="line">                self.z_wd[i,j] = np.array([self.w_z[i]*self.z_d[:,j]]) / np.<span class="built_in">sum</span>([self.w_z[i]*self.z_d[:,j]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span>(<span class="params">self,max_iter</span>):</span></span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        :param max_iter:EM算法迭代次数</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br><span class="line">        self.w_z  = np.random.random((self.word_num,self.k))</span><br><span class="line">        self.z_d = np.random.random((self.k,self.text_num))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">iter</span> <span class="keyword">in</span> <span class="built_in">range</span>(max_iter):</span><br><span class="line">            self.update_p_z_wd()</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(self.k):</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.word_num):</span><br><span class="line">                    self.w_z[i,k] = np.<span class="built_in">sum</span>(self.X[i]*self.z_wd[i,:,k])/np.<span class="built_in">sum</span>(self.X*self.z_wd[:,:,k])</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(self.text_num):</span><br><span class="line">                    self.z_d[k,j] = np.<span class="built_in">sum</span>(self.X[:,j]*self.z_wd[:,j,k])/np.<span class="built_in">sum</span>(self.X[:,j])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    text_list = [</span><br><span class="line">    <span class="string">&#x27;一个月前，足协杯十六进八的比赛，辽足费尽周折对调主客场，目的只是为了葫芦岛体育场的启用仪式。那场球辽足5比0痛宰“主力休息”的天津泰达。几天后中超联赛辽足客场对天津，轮到辽足“全替补”，\</span></span><br><span class="line"><span class="string">    1比3输球，甘为天津泰达保级的祭品。那时，辽足以“联赛保级问题不大，足协杯拼一拼”作为主力和外援联赛全部缺阵的理由。&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;被一脚踹进“忘恩负义”坑里的孙杨，刚刚爬出来，又有手伸出来，要把孙杨再往坑里推。即使是陪伴孙杨参加世锦赛的张亚东(微博)教练，\</span></span><br><span class="line"><span class="string">    也没敢大义凛然地伸出援手，“孙杨愿意回去我不拦”，球又踢给了孙杨。张亚东教练怕什么呢？&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;孙杨成绩的利益分配，以及荣誉的分享，圈里人都知道，拿了世界冠军和全运冠军，运动员都会有相应的高额奖金，那么主管教练也会得到与之对应的丰厚奖励，\</span></span><br><span class="line"><span class="string">    所以孙杨获得的荣誉，也会惠及主管教练。&#x27;</span>]</span><br><span class="line">    lsa = PLSA(text_list,k=<span class="number">2</span>)</span><br><span class="line">    lsa.fit(<span class="number">10</span>)</span><br><span class="line">    <span class="comment"># print(lsa.w_z)</span></span><br><span class="line">    <span class="comment"># print(lsa.z_d)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="潜在狄利克雷分布"><a href="#潜在狄利克雷分布" class="headerlink" title="潜在狄利克雷分布"></a>潜在狄利克雷分布</h2><p>《百面机器学习》中，将LDA评价为pLSA的贝叶斯版本，从这里你也可以得到pLSA采用的是频率学派的思想，从之前我们学习的内容也体现出了频率学派对于概率的看法：将文章的主题分布P(z|d)以及主题对应的词分布P(w|z)都作为未知的常数进行求解；而LDA的思想则是贝叶斯学派对概率的观点：一个服从先验概率分布的随机变量。在LDA中，模型的先验分布和后验分布都被预设为服从狄利克雷分布。其中有两个超参数用于修正先验与后验中的狄利克雷分布。说了这么多，先来谈谈最基本的分布定义。</p>
+<h3 id="分布定义"><a href="#分布定义" class="headerlink" title="分布定义"></a>分布定义</h3><p>先说多项分布（multinomial distribution），它是一种多元离散随机变量的概率分布，属于之前学习的二项分布的扩展；假设进行n词独立随机试验，每次试验都有可能出现k种结果，p<sub>i</sub>为第i个结果出现的概率，n<sub>i</sub>为第i种结果出现的次数，X代表的是所有可能结果出现的次数，X<sub>i</sub>表示第i种结果出现的次数，这就说随机变量X服从多项分布，记作X~Multi(n,p)。<br>概率质量函数为<br>$$<br>P(X)=P(X_1=n_1,X_2=n_2,…,X_k=n_k)=\frac{n!}{n_1!n_2!…n_k!}p_1^{n_1}p_2^{n_2}…p_k^{n_k}<br>$$<br>$$<br>=\frac{n!}{\mathop{\prod}\limits_{i=1}^{k}n!}\mathop{\prod}\limits_{i=1}^{k}p_i^{n_i}<br>$$<br>$$<br>\sum_{i=1}^k p_i=1,\sum_{i=1}^k n_i=n.<br>$$<br>接下来就是狄利克雷分布，它是一种多元连续型随机变量的概率分布，也被称为多元贝塔分布，从这个名字就能知道它是贝塔分布的拓展。在机器学习的贝叶斯相关方法中，狄利克雷分布常被作为多项分布的先验分布使用，它的密度函数可以被表示为：<br>$$<br>p(\theta|\alpha)=\frac{\Gamma(\sum_{i=1}^k\alpha_i)}{\prod_{i=1}^{k}\Gamma(\alpha_i)}\prod_{i=1}^k \theta_i^{\alpha_i-1}<br>$$</p>
+<p>$$<br>\sum_{i=1}^k \theta_i=1,\theta_i≥0,\alpha={\alpha_1,\alpha_2,…,\alpha_k},\alpha_i&gt;0.<br>$$</p>
+<p>$$<br>\Gamma(s)=\int_0^\infin x^{s-1}e^{-x}dx,s&gt;0<br>$$</p>
+<p>记作𝛉~Dir(𝝰)。令<br>$$<br>B(\alpha)=\frac{\prod_{i=1}^{k}\Gamma(\alpha_i)}{\Gamma(\sum_{i=1}^k\alpha_i)}<br>$$<br>这就是我们所说的拓展的贝塔函数，也叫多元贝塔函数。</p>
+<p>最后我们定义二项分布和贝塔分布，二项分布没啥多说的，定义为<br>$$<br>P(X=m)=C_n^mp^m(1-p)^{n-m}<br>$$<br>而贝塔分布指的是当X为连续随机变量，取值范围为[0,1]，概率密度函数为</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/03/29/再谈概率潜在语义分析模型/" target="_blank" title="再谈概率潜在语义分析模型">http://example.com/2021/03/29/再谈概率潜在语义分析模型/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unsupervised-learning/" rel="tag">unsupervised learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/03/27/%E5%86%8D%E8%B0%88%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">再谈潜在语义分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">主题模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">概率潜在语义分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">生成模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E7%8E%B0%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">共现模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BD%9C%E5%9C%A8%E7%8B%84%E5%88%A9%E5%85%8B%E9%9B%B7%E5%88%86%E5%B8%83"><span class="nav-number">3.</span> <span class="nav-text">潜在狄利克雷分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">分布定义</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
