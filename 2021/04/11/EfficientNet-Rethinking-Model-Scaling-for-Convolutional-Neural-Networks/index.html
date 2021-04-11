@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://www.paperswithcode.com/media/methods/Screen_Shot_2020-06-06_at_10.45.54_PM.png">
 <meta property="og:image" content="https://www.learnopencv.com/wp-content/uploads/2019/06/EfficientNet-B0-architecture-1024x511.png">
 <meta property="article:published_time" content="2021-04-11T03:00:16.000Z">
-<meta property="article:modified_time" content="2021-04-11T06:46:35.099Z">
+<meta property="article:modified_time" content="2021-04-11T08:45:56.881Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="deep learning">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
 <p>大致来说就是对于以往的CNN，业界对于其架构的关注点都在与depth,width,以及输入图像的resolution这三方面，但是人们只知道对这三方面各自进行调参，没有考虑过对三方面集体调参的结果。Brain团队设计了这个EfficientNet可以用更高的效率达到SOAT（包括ImageNet和CIFAR-100等），模型基于MobileNetV2。它想要最终说明的就是，在CNN放缩过程中，平衡了width,depth以及resolution的网络，可以用更高的效率达到更好的精度。</p>
 <p><img src="https://www.paperswithcode.com/media/methods/Screen_Shot_2020-06-06_at_10.45.54_PM.png" alt="img"></p>
 <p>由这个idea引申出本文的复合扩张法，depth,width,resolution三个参数的最优参数求解，得到如下最优化模型：<br>$$<br>\mathop{max}\limits_{d,w,r}\ Accuracy(N(d,w,r))<br>$$</p>
-<p>$$<br>s.t.\ N(d,w,r)=\bigodot_{i=1,2,…,s} \hat{F}_{i}^{d.\hat{L}<em>i}(X</em>{(r.\hat{H}_i,r.\hat{W}_i,r.\hat{C}_i)})<br>$$</p>
+<p>$$<br>s.t.\ N(d,w,r)=\bigodot_{i=1,2,…,s}\hat{F}<em>{i}^{d.\hat{L}_i}(X\</em>{(r.\hat{H}_i,r.\hat{W}_i,r.\hat{C}_i)})<br>$$</p>
 <p>$$<br>Memory(N)≤target_memory,FLOPS(N)≤target_flops<br>$$</p>
 <p>$$<br>where\ d=\alpha^\phi,w=\beta^\phi,r=\gamma^\phi<br>$$</p>
 <p>$$<br>s.t.\alpha.\beta^2.\gamma^2=2,\alpha≥1,\beta≥1,\gamma≥1<br>$$</p>
