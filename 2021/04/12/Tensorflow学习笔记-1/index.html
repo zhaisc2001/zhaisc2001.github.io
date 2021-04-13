@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>tensorflow学习笔记(1) | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="tensorflow" />
+  
+  
+  
+  
+  <meta name="description" content="Learning how to use package seriously. Customizationtensors and ndarrayA Tensor is a multi-dimensional array. Similar to NumPy ndarray objects, tf.Tensor objects have a data type and a shape. Addition">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow学习笔记(1)">
+<meta property="og:url" content="http://xiangweixi.cn/2021/04/12/Tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="Learning how to use package seriously. Customizationtensors and ndarrayA Tensor is a multi-dimensional array. Similar to NumPy ndarray objects, tf.Tensor objects have a data type and a shape. Addition">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-12T06:52:14.000Z">
+<meta property="article:modified_time" content="2021-04-13T06:32:07.192Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="tensorflow">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Tensorflow学习笔记-1" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Tensorflow学习笔记(1)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/04/12/Tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="article-date">
+	  <time datetime="2021-04-12T06:52:14.000Z" itemprop="datePublished">2021-04-12</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Learning how to use package seriously.</p>
+<h2 id="Customization"><a href="#Customization" class="headerlink" title="Customization"></a>Customization</h2><h3 id="tensors-and-ndarray"><a href="#tensors-and-ndarray" class="headerlink" title="tensors and ndarray"></a>tensors and ndarray</h3><p>A Tensor is a multi-dimensional array. Similar to NumPy <code>ndarray</code> objects, <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/Tensor"><code>tf.Tensor</code></a> objects have a data type and a shape. Additionally, <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/Tensor"><code>tf.Tensor</code></a>s can reside in accelerator memory (like a GPU). TensorFlow offers a rich library of operations (<a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/add">tf.add</a>, <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/matmul">tf.matmul</a>, <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/linalg/inv">tf.linalg.inv</a> etc.) that consume and produce <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/Tensor"><code>tf.Tensor</code></a>s. These operations automatically convert native Python types.</p>
+<p>Two big diffenrences between tensors and numpy arrays : 1. tensors can be backed by accelerator. 2. tensors are immutable.</p>
+<p>TensorFlow operations automatically convert NumPy ndarrays to Tensors, numPy operations automatically convert Tensors to NumPy ndarrays.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">ndarray = np.ones([<span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;TensorFlow operations convert numpy arrays to Tensors automatically&quot;</span>)</span><br><span class="line">tensor = tf.multiply(ndarray, <span class="number">42</span>)</span><br><span class="line">print(tensor)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;And NumPy operations convert Tensors to numpy arrays automatically&quot;</span>)</span><br><span class="line">print(np.add(tensor, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;The .numpy() method explicitly converts a Tensor to a numpy array&quot;</span>)</span><br><span class="line">print(tensor.numpy())</span><br></pre></td></tr></table></figure>
+<h3 id="GPU-acceleration"><a href="#GPU-acceleration" class="headerlink" title="GPU acceleration"></a>GPU acceleration</h3><p>Many TensorFlow operations are accelerated using the GPU for computation. Without any annotations, TensorFlow automatically decides whether to use the GPU or CPU for an operation—copying the tensor between CPU and GPU memory, if necessary. Tensors produced by an operation are typically backed by the memory of the device on which the operation executed.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = tf.random.uniform([<span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Is there a GPU available: &quot;</span>),</span><br><span class="line">print(tf.config.list_physical_devices(<span class="string">&quot;GPU&quot;</span>))</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Is the Tensor on GPU #0:  &quot;</span>),</span><br><span class="line">print(x.device.endswith(<span class="string">&#x27;GPU:0&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h3><p>This section uses the <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/guide/datasets"><code>tf.data.Dataset</code> API</a> to build a pipeline for feeding data to your model. The <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/data/Dataset"><code>tf.data.Dataset</code></a> API is used to build performant, complex input pipelines from simple, re-usable pieces that will feed your model’s training or evaluation loops.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ds_tensors = tf.data.Dataset.from_tensor_slices([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a CSV file</span></span><br><span class="line"><span class="keyword">import</span> tempfile</span><br><span class="line">_, filename = tempfile.mkstemp()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;/Users/violet/Downloads/1.csv&quot;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(<span class="string">&quot;&quot;&quot;Line 1</span></span><br><span class="line"><span class="string">Line 2</span></span><br><span class="line"><span class="string">Line 3</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">ds_file = tf.data.TextLineDataset(<span class="string">&quot;/Users/violet/Downloads/1.csv&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Layers"><a href="#Layers" class="headerlink" title="Layers"></a>Layers</h3><p>Most of the time when writing code for machine learning models you want to operate at a higher level of abstraction than individual operations and manipulation of individual variables.</p>
+<p>Many machine learning models are expressible as the composition and stacking of relatively simple layers, and TensorFlow provides both a set of many common layers as a well as easy ways for you to write your own application-specific layers either from scratch or as the composition of existing layers.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">layer = tf.keras.layers.Dense(<span class="number">100</span>)</span><br><span class="line">layer = tf.keras.layers.Dense(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">layer(tf.zeros([<span class="number">10</span>,<span class="number">5</span>]))</span><br></pre></td></tr></table></figure>
+<h3 id="Implementing-custom-layer"><a href="#Implementing-custom-layer" class="headerlink" title="Implementing custom layer"></a>Implementing custom layer</h3><p>The best way to implement your own layer is extending the tf.keras.Layer class and implementing:</p>
+<ol>
+<li><code>__init__</code> , where you can do all input-independent initialization</li>
+<li><code>build</code>, where you know the shapes of the input tensors and can do the rest of the initialization</li>
+<li><code>call</code>, where you do the forward computation</li>
+</ol>
+<p>Note that you don’t have to wait until <code>build</code> is called to create your variables, you can also create them in <code>__init__</code>. However, the advantage of creating them in <code>build</code> is that it enables late variable creation based on the shape of the inputs the layer will operate on. On the other hand, creating variables in <code>__init__</code> would mean that shapes required to create the variables will need to be explicitly specified.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyDenseLayer</span>(<span class="params">tf.keras.layers.Layer</span>):</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, num_outputs</span>):</span></span><br><span class="line">    <span class="built_in">super</span>(MyDenseLayer, self).__init__()</span><br><span class="line">    self.num_outputs = num_outputs</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">build</span>(<span class="params">self, input_shape</span>):</span></span><br><span class="line">    self.kernel = self.add_weight(<span class="string">&quot;kernel&quot;</span>,</span><br><span class="line">                                  shape=[<span class="built_in">int</span>(input_shape[-<span class="number">1</span>]),</span><br><span class="line">                                         self.num_outputs])</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">call</span>(<span class="params">self, <span class="built_in">input</span></span>):</span></span><br><span class="line">    <span class="keyword">return</span> tf.matmul(<span class="built_in">input</span>, self.kernel)</span><br><span class="line"></span><br><span class="line">layer = MyDenseLayer(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Models-Composing-layers"><a href="#Models-Composing-layers" class="headerlink" title="Models: Composing layers"></a>Models: Composing layers</h3><p>Many interesting layer-like things in machine learning models are implemented by composing existing layers. For example, each residual block in a resnet is a composition of convolutions, batch normalizations, and a shortcut. Layers can be nested inside other layers.</p>
+<p>Typically you inherit from <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/Model"><code>keras.Model</code></a> when you need the model methods like: <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/Model#fit"><code>Model.fit</code></a>,<a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/Model#evaluate"><code>Model.evaluate</code></a>, and <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/Model#save"><code>Model.save</code></a> (see <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/guide/keras/custom_layers_and_models">Custom Keras layers and models</a> for details).</p>
+<p>One other feature provided by <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/Model"><code>keras.Model</code></a> (instead of <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Layer"><code>keras.layers.Layer</code></a>) is that in addition to tracking variables, a <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/Model"><code>keras.Model</code></a> also tracks its internal layers, making them easier to inspect.</p>
+<p>For example here is a ResNet block:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResnetIdentityBlock</span>(<span class="params">tf.keras.Model</span>):</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, kernel_size, filters</span>):</span></span><br><span class="line">    <span class="built_in">super</span>(ResnetIdentityBlock, self).__init__(name=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    filters1, filters2, filters3 = filters</span><br><span class="line"></span><br><span class="line">    self.conv2a = tf.keras.layers.Conv2D(filters1, (<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">    self.bn2a = tf.keras.layers.BatchNormalization()</span><br><span class="line"></span><br><span class="line">    self.conv2b = tf.keras.layers.Conv2D(filters2, kernel_size, padding=<span class="string">&#x27;same&#x27;</span>)</span><br><span class="line">    self.bn2b = tf.keras.layers.BatchNormalization()</span><br><span class="line"></span><br><span class="line">    self.conv2c = tf.keras.layers.Conv2D(filters3, (<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">    self.bn2c = tf.keras.layers.BatchNormalization()</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">call</span>(<span class="params">self, input_tensor, training=<span class="literal">False</span></span>):</span></span><br><span class="line">    x = self.conv2a(input_tensor)</span><br><span class="line">    x = self.bn2a(x, training=training)</span><br><span class="line">    x = tf.nn.relu(x)</span><br><span class="line"></span><br><span class="line">    x = self.conv2b(x)</span><br><span class="line">    x = self.bn2b(x, training=training)</span><br><span class="line">    x = tf.nn.relu(x)</span><br><span class="line"></span><br><span class="line">    x = self.conv2c(x)</span><br><span class="line">    x = self.bn2c(x, training=training)</span><br><span class="line"></span><br><span class="line">    x += input_tensor</span><br><span class="line">    <span class="keyword">return</span> tf.nn.relu(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">block = ResnetIdentityBlock(<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<p>Much of the time, however, models which compose many layers simply call one layer after the other. This can be done in very little code using <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/Sequential"><code>tf.keras.Sequential</code></a>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">my_seq = tf.keras.Sequential([tf.keras.layers.Conv2D(<span class="number">1</span>, (<span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">                                                    input_shape=(</span><br><span class="line">                                                        <span class="literal">None</span>, <span class="literal">None</span>, <span class="number">3</span>)),</span><br><span class="line">                             tf.keras.layers.BatchNormalization(),</span><br><span class="line">                             tf.keras.layers.Conv2D(<span class="number">2</span>, <span class="number">1</span>,</span><br><span class="line">                                                    padding=<span class="string">&#x27;same&#x27;</span>),</span><br><span class="line">                             tf.keras.layers.BatchNormalization(),</span><br><span class="line">                             tf.keras.layers.Conv2D(<span class="number">3</span>, (<span class="number">1</span>, <span class="number">1</span>)),</span><br><span class="line">                             tf.keras.layers.BatchNormalization()])</span><br><span class="line">my_seq(tf.zeros([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]))</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://tensorflow.google.cn/tutorials/customization/custom_layers">https://tensorflow.google.cn/tutorials/customization/custom_layers</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/04/12/Tensorflow学习笔记-1/" target="_blank" title="Tensorflow学习笔记(1)">http://xiangweixi.cn/2021/04/12/Tensorflow学习笔记-1/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/11/EfficientNet-Rethinking-Model-Scaling-for-Convolutional-Neural-Networks/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Customization"><span class="nav-number">1.</span> <span class="nav-text">Customization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tensors-and-ndarray"><span class="nav-number">1.1.</span> <span class="nav-text">tensors and ndarray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU-acceleration"><span class="nav-number">1.2.</span> <span class="nav-text">GPU acceleration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Datasets"><span class="nav-number">1.3.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Layers"><span class="nav-number">1.4.</span> <span class="nav-text">Layers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementing-custom-layer"><span class="nav-number">1.5.</span> <span class="nav-text">Implementing custom layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Models-Composing-layers"><span class="nav-number">1.6.</span> <span class="nav-text">Models: Composing layers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
