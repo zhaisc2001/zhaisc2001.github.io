@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>tensorflow学习笔记-3 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="tensorflow" />
+  
+  
+  
+  
+  <meta name="description" content="Word embeddingsWord embeddings give us a way to use an efficient, dense representation in which similar words have a similar encoding. Importantly, you do not have to specify this encoding by hand. An">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow学习笔记-3">
+<meta property="og:url" content="http://xiangweixi.cn/2021/04/15/Tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="Word embeddingsWord embeddings give us a way to use an efficient, dense representation in which similar words have a similar encoding. Importantly, you do not have to specify this encoding by hand. An">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/tensorflow/docs/blob/master/site/en/tutorials/text/images/embedding2.png?raw=1">
+<meta property="og:image" content="https://tensorflow.google.cn/tutorials/text/images/word2vec_skipgram.png">
+<meta property="og:image" content="https://tensorflow.google.cn/tutorials/text/images/word2vec_negative_sampling.png">
+<meta property="article:published_time" content="2021-04-15T00:47:59.000Z">
+<meta property="article:modified_time" content="2021-04-15T03:28:12.427Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="tensorflow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/tensorflow/docs/blob/master/site/en/tutorials/text/images/embedding2.png?raw=1">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Tensorflow学习笔记-3" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Tensorflow学习笔记-3
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/04/15/Tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/" class="article-date">
+	  <time datetime="2021-04-15T00:47:59.000Z" itemprop="datePublished">2021-04-15</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Word-embeddings"><a href="#Word-embeddings" class="headerlink" title="Word embeddings"></a>Word embeddings</h2><p>Word embeddings give us a way to use an efficient, dense representation in which similar words have a similar encoding. Importantly, you do not have to specify this encoding by hand. An embedding is a dense vector of floating point values (the length of the vector is a parameter you specify). Instead of specifying the values for the embedding manually, they are trainable parameters (weights learned by the model during training, in the same way a model learns weights for a dense layer). It is common to see word embeddings that are 8-dimensional (for small datasets), up to 1024-dimensions when working with large datasets. A higher dimensional embedding can capture fine-grained relationships between words, but takes more data to learn.</p>
+<p><img src="https://github.com/tensorflow/docs/blob/master/site/en/tutorials/text/images/embedding2.png?raw=1" alt="Diagram of an embedding"></p>
+<p>Above is a diagram for a word embedding. Each word is represented as a 4-dimensional vector of floating point values. Another way to think of an embedding is as “lookup table”. After these weights have been learned, you can encode each word by looking up the dense vector it corresponds to in the table.</p>
+<h3 id="Using-the-Embedding-layer"><a href="#Using-the-Embedding-layer" class="headerlink" title="Using the Embedding layer"></a>Using the Embedding layer</h3><p>Keras makes it easy to use word embeddings. Take a look at the <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Embedding">Embedding</a> layer.</p>
+<p>The Embedding layer can be understood as a lookup table that maps from integer indices (which stand for specific words) to dense vectors (their embeddings). The dimensionality (or width) of the embedding is a parameter you can experiment with to see what works well for your problem, much in the same way you would experiment with the number of neurons in a Dense layer.</p>
+<p>When you create an Embedding layer, the weights for the embedding are randomly initialized (just like any other layer). During training, they are gradually adjusted via backpropagation. Once trained, the learned word embeddings will roughly encode similarities between words (as they were learned for the specific problem your model is trained on).</p>
+<p>If you pass an integer to an embedding layer, the result replaces each integer with the vector from the embedding table:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Dense, Embedding, GlobalAveragePooling1D</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers.experimental.preprocessing <span class="keyword">import</span> TextVectorization</span><br><span class="line"></span><br><span class="line"><span class="comment"># Embed a 1,000 word vocabulary into 5 dimension.</span></span><br><span class="line">embedding_layer = tf.keras.layers.Embedding(<span class="number">1000</span>,<span class="number">5</span>)</span><br><span class="line">result = embedding_layer(tf.constant([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]))</span><br></pre></td></tr></table></figure>
+<p>For text or sequence problems, the Embedding layer takes a 2D tensor of integers, of shape <code>(samples, sequence_length)</code>, where each entry is a sequence of integers. It can embed sequences of variable lengths. You could feed into the embedding layer above batches with shapes <code>(32, 10)</code> (batch of 32 sequences of length 10) or <code>(64, 15)</code> (batch of 64 sequences of length 15).</p>
+<p>The returned tensor has one more axis than the input, the embedding vectors are aligned along the new last axis. Pass it a <code>(2, 3)</code> input batch and the output is <code>(2, 3, N)</code></p>
+<h3 id="Text-preprocessing"><a href="#Text-preprocessing" class="headerlink" title="Text preprocessing"></a>Text preprocessing</h3><p>Next, define the dataset preprocessing steps required for your sentiment classification model. Initialize a TextVectorization layer with the desired parameters to vectorize movie reviews.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a custom standardization function to strip HTML break tags &#x27;&lt;br /&gt;&#x27;.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">custom_standardization</span>(<span class="params">input_data</span>):</span></span><br><span class="line">  lowercase = tf.strings.lower(input_data)</span><br><span class="line">  stripped_html = tf.strings.regex_replace(lowercase, <span class="string">&#x27;&lt;br /&gt;&#x27;</span>, <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">  <span class="keyword">return</span> tf.strings.regex_replace(stripped_html,</span><br><span class="line">                                  <span class="string">&#x27;[%s]&#x27;</span> % re.escape(string.punctuation), <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Vocabulary size and number of words in a sequence.</span></span><br><span class="line">vocab_size = <span class="number">10000</span></span><br><span class="line">sequence_length = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Use the text vectorization layer to normalize, split, and map strings to</span></span><br><span class="line"><span class="comment"># integers. Note that the layer uses the custom standardization defined above.</span></span><br><span class="line"><span class="comment"># Set maximum_sequence length as all samples are not of the same length.</span></span><br><span class="line">vectorize_layer = TextVectorization(</span><br><span class="line">    standardize=custom_standardization,</span><br><span class="line">    max_tokens=vocab_size,</span><br><span class="line">    output_mode=<span class="string">&#x27;int&#x27;</span>,</span><br><span class="line">    output_sequence_length=sequence_length)</span><br></pre></td></tr></table></figure>
+<h3 id="Create-a-classification-model"><a href="#Create-a-classification-model" class="headerlink" title="Create a classification model"></a>Create a classification model</h3><p>Use the <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/guide/keras/sequential_model">Keras Sequential API</a> to define the sentiment classification model. In this case it is a “Continuous bag of words” style model.</p>
+<ul>
+<li><p>The <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/experimental/preprocessing/TextVectorization"><code>TextVectorization</code></a> layer transforms strings into vocabulary indices. You have already initialized <code>vectorize_layer</code> as a TextVectorization layer and built it’s vocabulary by calling <code>adapt</code> on <code>text_ds</code>. Now vectorize_layer can be used as the first layer of your end-to-end classification model, feeding transformed strings into the Embedding layer.</p>
+</li>
+<li><p>The <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Embedding"><code>Embedding</code></a> layer takes the integer-encoded vocabulary and looks up the embedding vector for each word-index. These vectors are learned as the model trains. The vectors add a dimension to the output array. The resulting dimensions are: <code>(batch, sequence, embedding)</code>.</p>
+</li>
+<li><p>The <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/GlobalAveragePooling1D"><code>GlobalAveragePooling1D</code></a> layer returns a fixed-length output vector for each example by averaging over the sequence dimension. This allows the model to handle input of variable length, in the simplest way possible.</p>
+</li>
+<li><p>The fixed-length output vector is piped through a fully-connected (<a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Dense"><code>Dense</code></a>) layer with 16 hidden units.</p>
+</li>
+<li><p>The last layer is densely connected with a single output node.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">embedding_dim=<span class="number">16</span></span><br><span class="line"></span><br><span class="line">model = Sequential([</span><br><span class="line">  vectorize_layer,</span><br><span class="line">  Embedding(vocab_size, embedding_dim, name=<span class="string">&quot;embedding&quot;</span>),</span><br><span class="line">  GlobalAveragePooling1D(),</span><br><span class="line">  Dense(<span class="number">16</span>, activation=<span class="string">&#x27;relu&#x27;</span>),</span><br><span class="line">  Dense(<span class="number">1</span>)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<h3 id="Retrieve-the-trained-word-embeddings-and-save-the-weights"><a href="#Retrieve-the-trained-word-embeddings-and-save-the-weights" class="headerlink" title="Retrieve the trained word embeddings and save the weights"></a>Retrieve the trained word embeddings and save the weights</h3><p>Next, retrieve the word embeddings learned during training. The embeddings are weights of the Embedding layer in the model. The weights matrix is of shape <code>(vocab_size, embedding_dimension)</code>.</p>
+<p>Obtain the weights from the model using <code>get_layer()</code> and <code>get_weights()</code>. The <code>get_vocabulary()</code> function provides the vocabulary to build a metadata file with one token per line.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">weights = model.get_layer(<span class="string">&#x27;embedding&#x27;</span>).get_weights()[<span class="number">0</span>]</span><br><span class="line">vocab = vectorize_layer.get_vocabulary()</span><br></pre></td></tr></table></figure>
+<h2 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h2><p>Word2Vec is not a singular algorithm, rather, it is a family of model architectures and optimizations that can be used to learn word embeddings from large datasets. Embeddings learned through Word2Vec have proven to be successful on a variety of downstream natural language processing tasks.</p>
+<h3 id="Skip-gram-and-Negative-Sampling"><a href="#Skip-gram-and-Negative-Sampling" class="headerlink" title="Skip-gram and Negative Sampling"></a>Skip-gram and Negative Sampling</h3><p>While a bag-of-words model predicts a word given the neighboring context, a skip-gram model predicts the context (or neighbors) of a word, given the word itself. The model is trained on skip-grams, which are n-grams that allow tokens to be skipped (see the diagram below for an example). The context of a word can be represented through a set of skip-gram pairs of <code>(target_word, context_word)</code> where <code>context_word</code> appears in the neighboring context of <code>target_word</code>.</p>
+<p>Consider the following sentence of 8 words.</p>
+<blockquote>
+<p>The wide road shimmered in the hot sun.</p>
+</blockquote>
+<p>The context words for each of the 8 words of this sentence are defined by a window size. The window size determines the span of words on either side of a <code>target_word</code> that can be considered <code>context word</code>. Take a look at this table of skip-grams for target words based on different window sizes.</p>
+<p><img src="https://tensorflow.google.cn/tutorials/text/images/word2vec_skipgram.png" alt="word2vec_skipgram"></p>
+<p>The training objective of the skip-gram model is to maximize the probability of predicting context words given the target word. For a sequence of words w<sub>1</sub>, w<sub>2</sub>, … w<sub>T</sub>, the objective can be written as the average log probability.<br>$$<br>\frac{1}{T}\sum_{t=1}^T\sum_{-c≤j≤c,j≠0}logp(w_{t+j}|w_t)<br>$$<br>where <code>c</code> is the size of the training context. The basic skip-gram formulation defines this probability using the softmax function.<br>$$<br>p(w_O|w_I)=\frac{exp(v’^T_{w_O}v_{w_I})}{\sum_{w=1}^Wexp(v’^T_{w_O}v_{w_I})}<br>$$<br>where <em>v</em> and <em>v’</em> are target and context vector representations of words and <em>W</em> is vocabulary size.</p>
+<h3 id="build-skip-gram-model"><a href="#build-skip-gram-model" class="headerlink" title="build skip-gram model"></a>build skip-gram model</h3><p>Tokenize the sentence:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Dot, Embedding, Flatten</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers.experimental.preprocessing <span class="keyword">import</span> TextVectorization</span><br><span class="line"></span><br><span class="line">SEED = <span class="number">42</span></span><br><span class="line">AUTOTUNE = tf.data.AUTOTUNE</span><br><span class="line"></span><br><span class="line">sentence = <span class="string">&quot;The wide road shimmered in the hot sun&quot;</span></span><br><span class="line">tokens = <span class="built_in">list</span>(sentence.lower().split())</span><br></pre></td></tr></table></figure>
+<p>Create a vocabulary to save mappings from tokens to integer indices.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vocab, index = &#123;&#125;, <span class="number">1</span></span><br><span class="line">vocab[<span class="string">&#x27;&lt;pad&gt;&#x27;</span>] = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> token <span class="keyword">in</span> tokens:</span><br><span class="line">    <span class="keyword">if</span> token <span class="keyword">not</span> <span class="keyword">in</span> vocab:</span><br><span class="line">        vocab[token] = index</span><br><span class="line">        index += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>Create an inverse vocabulary to save mappings from integer indices to tokens.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inverse_vocab = &#123;index: token <span class="keyword">for</span> token,index <span class="keyword">in</span> vocab.items()&#125;</span><br></pre></td></tr></table></figure>
+<p>Vectorize the sentence.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example_sequence = [vocab[word] <span class="keyword">for</span> word <span class="keyword">in</span> tokens]</span><br></pre></td></tr></table></figure>
+<h4 id="Generate-skip-grams-from-one-sentence"><a href="#Generate-skip-grams-from-one-sentence" class="headerlink" title="Generate skip-grams from one sentence"></a>Generate skip-grams from one sentence</h4><p>The <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/preprocessing/sequence"><code>tf.keras.preprocessing.sequence</code></a> module provides useful functions that simplify data preparation for Word2Vec. You can use the <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/preprocessing/sequence/skipgrams"><code>tf.keras.preprocessing.sequence.skipgrams</code></a> to generate skip-gram pairs from the <code>example_sequence</code> with a given <code>window_size</code> from tokens in the range <code>[0, vocab_size)</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">window_size = <span class="number">2</span></span><br><span class="line">positive_skip_grams, _ = tf.keras.preprocessing.sequence.skipgrams(</span><br><span class="line">      example_sequence,</span><br><span class="line">      vocabulary_size=vocab_size,</span><br><span class="line">      window_size=window_size,</span><br><span class="line">      negative_samples=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="Negative-sampling-for-one-skip-gram"><a href="#Negative-sampling-for-one-skip-gram" class="headerlink" title="Negative sampling for one skip-gram"></a>Negative sampling for one skip-gram</h4><p>The <code>skipgrams</code> function returns all positive skip-gram pairs by sliding over a given window span. To produce additional skip-gram pairs that would serve as negative samples for training, you need to sample random words from the vocabulary. Use the <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/random/log_uniform_candidate_sampler"><code>tf.random.log_uniform_candidate_sampler</code></a> function to sample <code>num_ns</code> number of negative samples for a given target word in a window. You can call the function on one skip-grams’s target word and pass the context word as true class to exclude it from being sampled.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get target and context words for one positive skip-gram.</span></span><br><span class="line">target_word, context_word = positive_skip_grams[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set the number of negative samples per positive context.</span></span><br><span class="line">num_ns = <span class="number">4</span></span><br><span class="line"></span><br><span class="line">context_class = tf.reshape(tf.constant(context_word, dtype=<span class="string">&quot;int64&quot;</span>), (<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">negative_sampling_candidates, _, _ = tf.random.log_uniform_candidate_sampler(</span><br><span class="line">    true_classes=context_class,  <span class="comment"># class that should be sampled as &#x27;positive&#x27;</span></span><br><span class="line">    num_true=<span class="number">1</span>,  <span class="comment"># each positive skip-gram has 1 positive context class</span></span><br><span class="line">    num_sampled=num_ns,  <span class="comment"># number of negative context words to sample</span></span><br><span class="line">    unique=<span class="literal">True</span>,  <span class="comment"># all the negative samples should be unique</span></span><br><span class="line">    range_max=vocab_size,  <span class="comment"># pick index of the samples from [0, vocab_size]</span></span><br><span class="line">    seed=SEED,  <span class="comment"># seed for reproducibility</span></span><br><span class="line">    name=<span class="string">&quot;negative_sampling&quot;</span>  <span class="comment"># name of this operation</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h4 id="Construct-one-training-example"><a href="#Construct-one-training-example" class="headerlink" title="Construct one training example"></a>Construct one training example</h4><p>For a given positive <code>(target_word, context_word)</code> skip-gram, you now also have <code>num_ns</code> negative sampled context words that do not appear in the window size neighborhood of <code>target_word</code>. Batch the <code>1</code> positive <code>context_word</code> and <code>num_ns</code> negative context words into one tensor. This produces a set of positive skip-grams (labelled as <code>1</code>) and negative samples (labelled as <code>0</code>) for each target word.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Add a dimension so you can use concatenation (on the next step).</span></span><br><span class="line">negative_sampling_candidates = tf.expand_dims(negative_sampling_candidates, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Concat positive context word with negative sampled words.</span></span><br><span class="line">context = tf.concat([context_class, negative_sampling_candidates], <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Label first context word as 1 (positive) followed by num_ns 0s (negative).</span></span><br><span class="line">label = tf.constant([<span class="number">1</span>] + [<span class="number">0</span>]*num_ns, dtype=<span class="string">&quot;int64&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Reshape target to shape (1,) and context and label to (num_ns+1,).</span></span><br><span class="line">target = tf.squeeze(target_word)</span><br><span class="line">context = tf.squeeze(context)</span><br><span class="line">label = tf.squeeze(label)</span><br></pre></td></tr></table></figure>
+<p>This picture summarizes the procedure of generating training example from a sentence.</p>
+<p><img src="https://tensorflow.google.cn/tutorials/text/images/word2vec_negative_sampling.png" alt="word2vec_negative_sampling"></p>
+<h3 id="Compile-all-steps-into-one-function"><a href="#Compile-all-steps-into-one-function" class="headerlink" title="Compile all steps into one function"></a>Compile all steps into one function</h3><p>A large dataset means larger vocabulary with higher number of more frequent words such as stopwords. Training examples obtained from sampling commonly occurring words (such as <code>the</code>, <code>is</code>, <code>on</code>) don’t add much useful information for the model to learn from. <a target="_blank" rel="noopener" href="https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf">Mikolov et al.</a> suggest subsampling of frequent words as a helpful practice to improve embedding quality.</p>
+<p>The <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/preprocessing/sequence/skipgrams"><code>tf.keras.preprocessing.sequence.skipgrams</code></a> function accepts a sampling table argument to encode probabilities of sampling any token. You can use the <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/preprocessing/sequence/make_sampling_table"><code>tf.keras.preprocessing.sequence.make_sampling_table</code></a> to generate a word-frequency rank based probabilistic sampling table and pass it to <code>skipgrams</code> function. Take a look at the sampling probabilities for a <code>vocab_size</code> of 10.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Generates skip-gram pairs with negative sampling for a list of sequences</span></span><br><span class="line"><span class="comment"># (int-encoded sentences) based on window size, number of negative samples</span></span><br><span class="line"><span class="comment"># and vocabulary size.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_training_data</span>(<span class="params">sequences, window_size, num_ns, vocab_size, seed</span>):</span></span><br><span class="line">  <span class="comment"># Elements of each training example are appended to these lists.</span></span><br><span class="line">  targets, contexts, labels = [], [], []</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Build the sampling table for vocab_size tokens.</span></span><br><span class="line">  sampling_table = tf.keras.preprocessing.sequence.make_sampling_table(vocab_size)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Iterate over all sequences (sentences) in dataset.</span></span><br><span class="line">  <span class="keyword">for</span> sequence <span class="keyword">in</span> tqdm.tqdm(sequences):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Generate positive skip-gram pairs for a sequence (sentence).</span></span><br><span class="line">    positive_skip_grams, _ = tf.keras.preprocessing.sequence.skipgrams(</span><br><span class="line">          sequence,</span><br><span class="line">          vocabulary_size=vocab_size,</span><br><span class="line">          sampling_table=sampling_table,</span><br><span class="line">          window_size=window_size,</span><br><span class="line">          negative_samples=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Iterate over each positive skip-gram pair to produce training examples</span></span><br><span class="line">    <span class="comment"># with positive context word and negative samples.</span></span><br><span class="line">    <span class="keyword">for</span> target_word, context_word <span class="keyword">in</span> positive_skip_grams:</span><br><span class="line">      context_class = tf.expand_dims(</span><br><span class="line">          tf.constant([context_word], dtype=<span class="string">&quot;int64&quot;</span>), <span class="number">1</span>)</span><br><span class="line">      negative_sampling_candidates, _, _ = tf.random.log_uniform_candidate_sampler(</span><br><span class="line">          true_classes=context_class,</span><br><span class="line">          num_true=<span class="number">1</span>,</span><br><span class="line">          num_sampled=num_ns,</span><br><span class="line">          unique=<span class="literal">True</span>,</span><br><span class="line">          range_max=vocab_size,</span><br><span class="line">          seed=SEED,</span><br><span class="line">          name=<span class="string">&quot;negative_sampling&quot;</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Build context and label vectors (for one target word)</span></span><br><span class="line">      negative_sampling_candidates = tf.expand_dims(</span><br><span class="line">          negative_sampling_candidates, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">      context = tf.concat([context_class, negative_sampling_candidates], <span class="number">0</span>)</span><br><span class="line">      label = tf.constant([<span class="number">1</span>] + [<span class="number">0</span>]*num_ns, dtype=<span class="string">&quot;int64&quot;</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Append each element from the training example to global lists.</span></span><br><span class="line">      targets.append(target_word)</span><br><span class="line">      contexts.append(context)</span><br><span class="line">      labels.append(label)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> targets, contexts, labels</span><br></pre></td></tr></table></figure>
+<h3 id="Model-and-Training"><a href="#Model-and-Training" class="headerlink" title="Model and Training"></a>Model and Training</h3><p>The Word2Vec model can be implemented as a classifier to distinguish between true context words from skip-grams and false context words obtained through negative sampling. You can perform a dot product between the embeddings of target and context words to obtain predictions for labels and compute loss against true labels in the dataset.</p>
+<h3 id="Subclassed-Word2Vec-Model"><a href="#Subclassed-Word2Vec-Model" class="headerlink" title="Subclassed Word2Vec Model"></a>Subclassed Word2Vec Model</h3><p>Use the <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/guide/keras/custom_layers_and_models">Keras Subclassing API</a> to define your Word2Vec model with the following layers:</p>
+<ul>
+<li><code>target_embedding</code>: A <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Embedding"><code>tf.keras.layers.Embedding</code></a> layer which looks up the embedding of a word when it appears as a target word. The number of parameters in this layer are <code>(vocab_size * embedding_dim)</code>.</li>
+<li><code>context_embedding</code>: Another <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Embedding"><code>tf.keras.layers.Embedding</code></a> layer which looks up the embedding of a word when it appears as a context word. The number of parameters in this layer are the same as those in <code>target_embedding</code>, i.e. <code>(vocab_size * embedding_dim)</code>.</li>
+<li><code>dots</code>: A <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Dot"><code>tf.keras.layers.Dot</code></a> layer that computes the dot product of target and context embeddings from a training pair.</li>
+<li><code>flatten</code>: A <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Flatten"><code>tf.keras.layers.Flatten</code></a> layer to flatten the results of <code>dots</code> layer into logits.</li>
+</ul>
+<p>With the subclassed model, you can define the <code>call()</code> function that accepts <code>(target, context)</code> pairs which can then be passed into their corresponding embedding layer. Reshape the <code>context_embedding</code> to perform a dot product with <code>target_embedding</code> and return the flattened result.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Word2Vec</span>(<span class="params">Model</span>):</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, vocab_size, embedding_dim</span>):</span></span><br><span class="line">    <span class="built_in">super</span>(Word2Vec, self).__init__()</span><br><span class="line">    self.target_embedding = Embedding(vocab_size,</span><br><span class="line">                                      embedding_dim,</span><br><span class="line">                                      input_length=<span class="number">1</span>,</span><br><span class="line">                                      name=<span class="string">&quot;w2v_embedding&quot;</span>)</span><br><span class="line">    self.context_embedding = Embedding(vocab_size,</span><br><span class="line">                                       embedding_dim,</span><br><span class="line">                                       input_length=num_ns+<span class="number">1</span>)</span><br><span class="line">    self.dots = Dot(axes=(<span class="number">3</span>, <span class="number">2</span>))</span><br><span class="line">    self.flatten = Flatten()</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">call</span>(<span class="params">self, pair</span>):</span></span><br><span class="line">    target, context = pair</span><br><span class="line">    word_emb = self.target_embedding(target)</span><br><span class="line">    context_emb = self.context_embedding(context)</span><br><span class="line">    dots = self.dots([context_emb, word_emb])</span><br><span class="line">    <span class="keyword">return</span> self.flatten(dots)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/04/15/Tensorflow学习笔记-3/" target="_blank" title="Tensorflow学习笔记-3">http://xiangweixi.cn/2021/04/15/Tensorflow学习笔记-3/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/" rel="tag">tensorflow</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/13/Tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Tensorflow学习笔记-2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Word-embeddings"><span class="nav-number">1.</span> <span class="nav-text">Word embeddings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-the-Embedding-layer"><span class="nav-number">1.1.</span> <span class="nav-text">Using the Embedding layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Text-preprocessing"><span class="nav-number">1.2.</span> <span class="nav-text">Text preprocessing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-classification-model"><span class="nav-number">1.3.</span> <span class="nav-text">Create a classification model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retrieve-the-trained-word-embeddings-and-save-the-weights"><span class="nav-number">1.4.</span> <span class="nav-text">Retrieve the trained word embeddings and save the weights</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word2Vec"><span class="nav-number">2.</span> <span class="nav-text">Word2Vec</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Skip-gram-and-Negative-Sampling"><span class="nav-number">2.1.</span> <span class="nav-text">Skip-gram and Negative Sampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build-skip-gram-model"><span class="nav-number">2.2.</span> <span class="nav-text">build skip-gram model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Generate-skip-grams-from-one-sentence"><span class="nav-number">2.2.1.</span> <span class="nav-text">Generate skip-grams from one sentence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Negative-sampling-for-one-skip-gram"><span class="nav-number">2.2.2.</span> <span class="nav-text">Negative sampling for one skip-gram</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Construct-one-training-example"><span class="nav-number">2.2.3.</span> <span class="nav-text">Construct one training example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compile-all-steps-into-one-function"><span class="nav-number">2.3.</span> <span class="nav-text">Compile all steps into one function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-and-Training"><span class="nav-number">2.4.</span> <span class="nav-text">Model and Training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subclassed-Word2Vec-Model"><span class="nav-number">2.5.</span> <span class="nav-text">Subclassed Word2Vec Model</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
