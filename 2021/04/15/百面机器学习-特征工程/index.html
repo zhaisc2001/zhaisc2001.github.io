@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百面机器学习-特征工程 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="machine learning" />
+  
+  
+  
+  
+  <meta name="description" content="对于一个机器学习问题，数据和特征决定了结果的上限，我们的模型、算法的选择以及优化只能逼近这个上线。   特征归一化(Normalization)  为什么要对数值型特征进行归一化？(容易)  1.消除量纲对数据的影响，使各特征处于同一数量级，以便进行分析；2.使不同类型的数值型特征对应的参数学习速度趋于一致，让梯度下降算法更容易找到最优解；  需要注意的是，特征归一化在许多传统机器学习和深度学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-特征工程">
+<meta property="og:url" content="http://xiangweixi.cn/2021/04/15/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="对于一个机器学习问题，数据和特征决定了结果的上限，我们的模型、算法的选择以及优化只能逼近这个上线。   特征归一化(Normalization)  为什么要对数值型特征进行归一化？(容易)  1.消除量纲对数据的影响，使各特征处于同一数量级，以便进行分析；2.使不同类型的数值型特征对应的参数学习速度趋于一致，让梯度下降算法更容易找到最优解；  需要注意的是，特征归一化在许多传统机器学习和深度学">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image.slidesharecdn.com/slidepracticallessonsfrompredictingclicksonadsatfacebook-150126115417-conversion-gate02/95/practical-lessons-from-predicting-clicks-on-ads-at-facebook-6-638.jpg?cb=1422273310">
+<meta property="article:published_time" content="2021-04-15T11:08:52.000Z">
+<meta property="article:modified_time" content="2021-04-17T00:36:18.283Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.slidesharecdn.com/slidepracticallessonsfrompredictingclicksonadsatfacebook-150126115417-conversion-gate02/95/practical-lessons-from-predicting-clicks-on-ads-at-facebook-6-638.jpg?cb=1422273310">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-百面机器学习-特征工程" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-特征工程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/04/15/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" class="article-date">
+	  <time datetime="2021-04-15T11:08:52.000Z" itemprop="datePublished">2021-04-15</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<ul>
+<li>对于一个机器学习问题，数据和特征决定了结果的上限，我们的模型、算法的选择以及优化只能逼近这个上线。</li>
+</ul>
+</blockquote>
+<h2 id="特征归一化-Normalization"><a href="#特征归一化-Normalization" class="headerlink" title="特征归一化(Normalization)"></a>特征归一化(Normalization)</h2><blockquote>
+<ul>
+<li>为什么要对数值型特征进行归一化？(容易)</li>
+</ul>
+<p>1.消除量纲对数据的影响，使各特征处于同一数量级，以便进行分析；<br>2.使不同类型的数值型特征对应的参数学习速度趋于一致，让梯度下降算法更容易找到最优解；</p>
+</blockquote>
+<p>需要注意的是，特征归一化在许多传统机器学习和深度学习模型中都是不能缺少的一步（这些模型都能通过梯度下降法进行学习）。但在决策树模型中并不需要特征归一化，这是因为决策树模型迭代依据的是特征的信息增益比，信息增益比本身已经消除了量纲的影响。</p>
+<p>最常用的特征归一化，一是把数据归一化到[0,1]区间上，二是把数据归一化到均值为0，标准差为1区间上；前者被称为线性函数归一化(Min-Max normalization)，后者被称为零均值归一化(Z-score Normalization)，即<br>$$<br>X_{norm}=\frac{X-Xmin}{X_{max}-X_{min}}以及z=\frac{x-\mu}{\sigma}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler,StandardScaler</span><br><span class="line">x = [[<span class="number">10001</span>,<span class="number">2</span>],[<span class="number">16020</span>,<span class="number">4</span>],[<span class="number">12008</span>,<span class="number">6</span>],[<span class="number">13131</span>,<span class="number">8</span>]]</span><br><span class="line">min_max_scaler = MinMaxScaler()</span><br><span class="line">X_train_minmax = min_max_scaler.fit_transform(x)</span><br><span class="line"></span><br><span class="line">x=[[<span class="number">10001</span>,<span class="number">2</span>],[<span class="number">16020</span>,<span class="number">4</span>],[<span class="number">12008</span>,<span class="number">6</span>],[<span class="number">13131</span>,<span class="number">8</span>]]</span><br><span class="line">X_scaler = StandardScaler()</span><br><span class="line">X_train = X_scaler.fit_transform(x)</span><br></pre></td></tr></table></figure>
+<h2 id="类别型特征-Categorical-Feature"><a href="#类别型特征-Categorical-Feature" class="headerlink" title="类别型特征(Categorical Feature)"></a>类别型特征(Categorical Feature)</h2><blockquote>
+<ul>
+<li><p>在对数据进行预处理时，应该怎样处理类别型特征？(较容易)</p>
+<p>1.序号编码(Ordinal encoding)：若处理的类型特征本身就存在大小关系，比如可以分为高、中、低三档，那么使用序号编码将它们分别转化为3、2、1，这样的转换使得大小关系依旧保留。</p>
+<p>2.独热编码(One-hot encoding)：它可以将类别特征处理成不具有大小关系的数据，比如血型；但需要注意当数据的类别较多时，有以下问题：a.为了防止维度灾难等问题，我们应对向量使用稀疏表示方法，例如向量[0,1,0,0,0,4]，其稀疏向量为[6,[1,5],[1,4]]，依次为向量大小，非零元素下标，非零元素的值；b.注意降维：高维度特征容易导致距离难以有效度量(KNN算法)、逻辑回归模型过拟合、部分冗余特征影响模型性能。</p>
+<p>3.二进制编码(Binary encoding)：二进制编码分为两步，首先将特征进行序号编码，再将序号编码转化为二进制，得到二进制编码，它的好处是得到0/1特征向量的同时能够使得编码维度小于独热编码，减少了存储空间。</p>
+</li>
+</ul>
+</blockquote>
+<p>类别型特征主要是指在有限项中进行取值的特征，通常是字符串形式，目前除了决策树等模型，其它模型不能够对字符串形式的特征直接进行处理，因此需要进行编码处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder,OneHotEncoder</span><br><span class="line"></span><br><span class="line">Movies = pd.DataFrame([</span><br><span class="line">    [<span class="string">&#x27;爱情&#x27;</span>,<span class="string">&#x27;内地&#x27;</span>,<span class="number">2</span>,<span class="string">&#x27;是&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;恐怖&#x27;</span>,<span class="string">&#x27;欧美&#x27;</span>,<span class="number">4</span>,<span class="string">&#x27;否&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;动作&#x27;</span>,<span class="string">&#x27;日本&#x27;</span>,<span class="number">3</span>,<span class="string">&#x27;否&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;搞笑&#x27;</span>,<span class="string">&#x27;港台&#x27;</span>,<span class="number">5</span>,<span class="string">&#x27;是&#x27;</span>]</span><br><span class="line">                      ],</span><br><span class="line">    columns=[<span class="string">&#x27;类型&#x27;</span>,<span class="string">&#x27;地区&#x27;</span>,<span class="string">&#x27;评星&#x27;</span>,<span class="string">&#x27;适宜儿童&#x27;</span>])</span><br><span class="line"></span><br><span class="line">le = LabelEncoder()</span><br><span class="line">Movies[<span class="string">&#x27;类型&#x27;</span>] = le.fit_transform(Movies[<span class="string">&#x27;类型&#x27;</span>])</span><br><span class="line"></span><br><span class="line">ohe = OneHotEncoder()</span><br><span class="line">Movies = ohe.fit_transform(Movies.values).toarray()</span><br><span class="line"></span><br><span class="line">le = LabelEncoder()</span><br><span class="line">Movies[<span class="string">&#x27;类型&#x27;</span>] = le.fit_transform(Movies[<span class="string">&#x27;类型&#x27;</span>])</span><br><span class="line">Movies[<span class="string">&#x27;类型&#x27;</span>] = Movies[<span class="string">&#x27;类型&#x27;</span>].<span class="built_in">map</span>(<span class="keyword">lambda</span> x : <span class="built_in">bin</span>(x))</span><br></pre></td></tr></table></figure>
+<h2 id="组合特征"><a href="#组合特征" class="headerlink" title="组合特征"></a>组合特征</h2><blockquote>
+<ul>
+<li><p>什么是组合特征？如何处理高维组合特征？(较容易)</p>
+<p>为了挖掘数据中的复杂关系，我们在特征工程中会选择将一阶离散特征进行组合成为高阶组合特征，一般情况下我们可以选择将离散特征一一对应组合，但在离散特征属性取值过多的情况下，我们将两属性进行降维后再进行组合；比如A属性有M个取值，B属性有N个取值，按照一一对应的方法就有M<em>N个取值的组合特征，但假如我们将A属性与B属性都分别用K维向量表示(k&lt;&lt;M,k&lt;&lt;N)，再进行组合特征，我们就能得到M\</em>k+N*k个高阶属性</p>
+</li>
+</ul>
+</blockquote>
+<p>这其实等价于矩阵分解。</p>
+<blockquote>
+<ul>
+<li><p>怎样有效地找到组合特征？(较容易)</p>
+<p>通过决策树来进行特征组合的寻找，根据原始输入特征构造决策树，之后每一条从根节点到叶结点的路径都可以看作是一种特征组合的方式。构造决策树的方法我们可以考虑梯度提升决策树，这种构造决策树的方法的思想是在之前构造的决策树残差上构造下一棵决策树。</p>
+</li>
+</ul>
+</blockquote>
+<p><img src="https://image.slidesharecdn.com/slidepracticallessonsfrompredictingclicksonadsatfacebook-150126115417-conversion-gate02/95/practical-lessons-from-predicting-clicks-on-ads-at-facebook-6-638.jpg?cb=1422273310" alt="See the source image"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> log_loss</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingClassifier</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lgb_predict</span>(<span class="params">X, y</span>):</span></span><br><span class="line">    x_train, x_val, y_train, y_val = train_test_split(X, y, test_size=<span class="number">0.2</span>, random_state=<span class="number">2019</span>)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;开始训练gbdt..&#x27;</span>)</span><br><span class="line">    gbm = lgb.LGBMRegressor(objective=<span class="string">&#x27;binary&#x27;</span>, subsample=<span class="number">0.8</span>, max_depth=<span class="number">6</span>, n_estimators=<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">    gbm.fit(x_train, y_train,</span><br><span class="line">            eval_set=[(x_train, y_train), (x_val, y_val)],</span><br><span class="line">            eval_names=[<span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;val&#x27;</span>],</span><br><span class="line">            eval_metric=<span class="string">&#x27;binary_logloss&#x27;</span>,</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">    model = gbm.booster_</span><br><span class="line">    print(<span class="string">&#x27;训练得到叶子数&#x27;</span>)</span><br><span class="line">    gbm_feats = model.predict(X, pred_leaf=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    gbc_feats = gbm_feats.reshape(-<span class="number">1</span>, <span class="number">50</span>)  <span class="comment"># 50棵树</span></span><br><span class="line">    enc = OneHotEncoder(categories=<span class="string">&#x27;auto&#x27;</span>)</span><br><span class="line">    enc.fit(gbc_feats)</span><br><span class="line">    gbc_new_feature = np.array(enc.transform(gbc_feats).toarray())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 原始特征&amp;组合特征</span></span><br><span class="line">    X = np.concatenate((X, gbc_new_feature), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 划分数据集</span></span><br><span class="line">    x_train, x_val, y_train, y_val = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">2019</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># LR</span></span><br><span class="line">    lr = LogisticRegression(solver=<span class="string">&#x27;lbfgs&#x27;</span>)</span><br><span class="line">    lr.fit(x_train, y_train)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 评估：log_loss</span></span><br><span class="line">    tr_logloss = log_loss(y_train, lr.predict_proba(x_train)[:, <span class="number">1</span>])</span><br><span class="line">    print(<span class="string">&quot;gbdt_lr_tr: &quot;</span>, tr_logloss)</span><br><span class="line">    val_logloss = log_loss(y_val, lr.predict_proba(x_val)[:, <span class="number">1</span>])</span><br><span class="line">    print(<span class="string">&quot;gbdt_lr_val&quot;</span>, val_logloss)</span><br></pre></td></tr></table></figure>
+<h2 id="文本表示模型"><a href="#文本表示模型" class="headerlink" title="文本表示模型"></a>文本表示模型</h2><blockquote>
+<ul>
+<li><p>有哪些文本表示模型？它们各有什么优缺点？(较容易)</p>
+<ul>
+<li><p>词袋模型以及N-gram模型</p>
+<p>词袋模型属于最基础的文本表示模型，它不考虑文本内词与词之间的关系，直接将文本中的分词进行切分，然后使用TF-IDF来计算权重，TF-IDF值越大，表示这个词在这个文本中越重要。<br>$$<br>TF-IDF(t,d)=TF(t,d)*IDF(t),IDF(t)=log\frac{total_documents}{documents_with_t+1}<br>$$<br>逆频率IDF一个直观的作用便是将在多篇文章中出现多次的词语，可能是通用词，于是降低它在文本中的权重；单词级别的划分可能会将几个单词组合成的词义忽略，N-gram通过将连续的N个单词组成的词组作为特征放入向量表示中，此外对于同一单词的不同词性变化，文本预处理中一般会采取词干抽取(word stemming)，即将不同词性的同一单词统一为统一词性形式。</p>
+</li>
+<li><p>主题模型</p>
+<p>用于从文本中发现代表性主题，可以参考：<a href="http://xiangweixi.cn/2021/03/29/%E5%86%8D%E8%B0%88%E6%A6%82%E7%8E%87%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B/">再谈概率潜在语义分析模型</a>。</p>
+</li>
+<li><p>词嵌入于深度学习模型</p>
+<p>词嵌入(word embedding)是一类模型的统称，它们将词向量化为低维空间上的稠密向量，此时低维空间上的每一维都可以看作是文本的一个主题，只是这个主题比较隐晦。</p>
+<p>词袋模型过于底层，现在使用的卷积神经网络和循环神经网络之所以能够在文本表示中击败传统模型的原因，是因为卷积神经网络和循环神经网络中的隐层能够提取到传统模型无法提取的特征；而相较于全连接网络，它们一方面能更好提取文本特征，另一方面减少了网络结构中的待学习参数，降低训练时间，防止过拟合。</p>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line">corpus = [</span><br><span class="line">    <span class="string">&#x27;This is the first document.&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;This is the second second document.&#x27;</span>,  </span><br><span class="line">    <span class="string">&#x27;And the third one.&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Is this the first document?&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">transformer = TfidfVectorizer()</span><br><span class="line">tfidf = transformer.fit_transform(corpus)</span><br></pre></td></tr></table></figure>
+<h2 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h2>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/04/15/百面机器学习-特征工程/" target="_blank" title="百面机器学习-特征工程">http://xiangweixi.cn/2021/04/15/百面机器学习-特征工程/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/04/15/papers/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          papers
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/04/15/Tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Tensorflow学习笔记-3</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96-Normalization"><span class="nav-number">1.</span> <span class="nav-text">特征归一化(Normalization)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%88%AB%E5%9E%8B%E7%89%B9%E5%BE%81-Categorical-Feature"><span class="nav-number">2.</span> <span class="nav-text">类别型特征(Categorical Feature)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E7%89%B9%E5%BE%81"><span class="nav-number">3.</span> <span class="nav-text">组合特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">文本表示模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word2Vec"><span class="nav-number">5.</span> <span class="nav-text">Word2Vec</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
