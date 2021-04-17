@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百面机器学习-模型评估 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="machine learning" />
+  
+  
+  
+  
+  <meta name="description" content="NFL定理告诉我们，任意两个算法的性能期望是相同的。因此我们评估算法时，需要选择特定的任务以及性能指标，知道评估指标的精确定义、有针对性地选择合适的评估指标、根据评估指标的反馈进行模型的调整，这些都是模型评估阶段的关键问题。 评估指标的局限性  准确率的局限性(容易) 在奢侈品广告投放中，尽管线下测试时用户分类器准确率达到了95%以上，为什么模型上线后大部分广告仍然投给了非奢侈品用户？这是因为准确">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-模型评估">
+<meta property="og:url" content="http://xiangweixi.cn/2021/04/17/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="NFL定理告诉我们，任意两个算法的性能期望是相同的。因此我们评估算法时，需要选择特定的任务以及性能指标，知道评估指标的精确定义、有针对性地选择合适的评估指标、根据评估指标的反馈进行模型的调整，这些都是模型评估阶段的关键问题。 评估指标的局限性  准确率的局限性(容易) 在奢侈品广告投放中，尽管线下测试时用户分类器准确率达到了95%以上，为什么模型上线后大部分广告仍然投给了非奢侈品用户？这是因为准确">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-17T02:59:02.000Z">
+<meta property="article:modified_time" content="2021-04-17T13:07:29.091Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-百面机器学习-模型评估" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-模型评估
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/04/17/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" class="article-date">
+	  <time datetime="2021-04-17T02:59:02.000Z" itemprop="datePublished">2021-04-17</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NFL定理告诉我们，任意两个算法的性能期望是相同的。因此我们评估算法时，需要选择特定的任务以及性能指标，知道评估指标的精确定义、有针对性地选择合适的评估指标、根据评估指标的反馈进行模型的调整，这些都是模型评估阶段的关键问题。</p>
+<h2 id="评估指标的局限性"><a href="#评估指标的局限性" class="headerlink" title="评估指标的局限性"></a>评估指标的局限性</h2><blockquote>
+<ul>
+<li><p>准确率的局限性(容易)</p>
+<p>在奢侈品广告投放中，尽管线下测试时用户分类器准确率达到了95%以上，为什么模型上线后大部分广告仍然投给了非奢侈品用户？这是因为准确率定义，导致在样本数量不平衡的分类问题中，准确率基本只受样本数量较大的类别的影响。在线上时，我们只会对模型判别的奢侈品用户进行广告的投放，这会导致模型在数量较少的样本集上的准确率较低的缺点被凸显。我们可以使用更为有效的平均准确率（每个类别下的准确率的算术平均）作为模型评估指标。</p>
+<p>实际上，也有可能不是指标选择的原因，模型的欠拟合或过拟合、测试集与训练集划分不合理、线下评估与线上测试样本的分布不一致等都可能导致这样的问题。但评估指标选择出错是最容易被发现，也是最容易影响评估结果的因素。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>精确率与召回率的权衡(容易)</p>
+<p>我们首先明确什么是精确率(percision)和召回率(recall)，精确率=TP/(TP+FP)，召回率=TP/(TP+FN)；它们是既矛盾又统一的两个指标，为了提高precision，分类器需要尽量在“更有把握”时才把样本预测为正样本，但此时会因为分类器过于保守导致漏掉正样本，recall值降低。因此我们使用P-R曲线对模型进行评估，P-R曲线横轴为R纵轴为P，曲线趋势一般为随着R增大，P减小。</p>
+<p>除此之外，F1-score=2*P*R/(P+R)和ROC曲线也能综合反映一个排序模型的性能。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>平方根误差的“意外”(容易)</p>
+<p>RMSE经常被用来衡量回归模型的好坏，首先来看一下它的公式<br>$$<br>RMSE=\sqrt{\frac{\sum_{i=1}^n(y_i-\hat{y_i})^2}{n}}<br>$$<br>一般情况下，RMSE能够很好地反映回归模型预测值与真实值的偏离程度。但在实际问题中，如果存在个别偏离程度非常大的离群点(outlier)，即使离群点数量很少，也会导致RMSE指标变差。</p>
+<p>针对离群点问题，我们从三个方面进行解决，第一，若我们认定离群点属于噪声，这就需要在数据预处理阶段将这些噪声过滤掉；第二，如果我们认定离群点不属于噪声，则要提高模型的拟合能力；第三，我们可以使用比RMSE更合适的评估指标，比如平均绝对百分比误差(Mean Absolute Percent Error)，它的鲁棒性比RMSE更好，计算公式为：<br>$$<br>MAPE=|\sum_{i=1}^n\frac{y_i-\hat{y_i}}{y_i}|\frac{100}{n}<br>$$<br>相较于RMSE，MAPE近似于将每个点误差进行了归一化，降低了个别离群点带来的绝对误差的影响。</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> precision_recall_curve</span><br><span class="line">y_true = np.array([<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line">y_scores = np.array([<span class="number">0.1</span>, <span class="number">0.4</span>, <span class="number">0.35</span>, <span class="number">0.8</span>])</span><br><span class="line">precision, recall, thresholds = precision_recall_curve(y_true, y_scores)</span><br></pre></td></tr></table></figure>
+<h2 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h2><blockquote>
+<ul>
+<li><p>什么是ROC曲线？(容易)</p>
+<p>ROC全称为Receiver Operating Characteristic Curve，受试者工作特征曲线，源于军事领域，后广泛用于医学领域。</p>
+<p>横坐标为假阳性率(Flase Positive Rate)；纵坐标为真阳性率(True Positive Rate)；二者计算公式如下:<br>$$<br>FPR=\frac{FP}{N};TPR=\frac{TP}{P}<br>$$</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>如何绘制ROC曲线？(较容易)</p>
+<p>ROC是通过不断改变分类器的阈值来生成曲线上的关键点的，在二值分类问题中，我们将阈值从正无穷慢慢减小到0，就能得到ROC曲线上的一系列点，连线后即可得到ROC曲线。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>如何计算AUC？(较容易)</p>
+<p>AUC(Area Under Curve)，指的是ROC曲线下的面积，一个积分计算即可得到结果，ROC曲线一般位于y=x直线上方，所以AUC一般在0.5~1之间，若ROC曲线位于y=x下方则说明模型的性能较差，通过将预测概率设为1-p即可得到更好的分类器。AUC越大，说明模型越可能将真正的样本排在前面，模型的性能也就越好。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>ROC曲线相比P-R曲线有什么特点？(一般)</p>
+<p>相较于P-R曲线，ROC曲线在正负样本的分布发生变化时，ROC曲线的形状基本不变，而P-R曲线则会发生剧烈变化。这个特点能够使ROC曲线能够尽量降低不同测试集带来的干扰，更加客观的衡量模型本身，在计算广告领域，正负样本数量往往很不平衡，因此常使用ROC曲线。但假如我们希望更多的看到模型在特定数据集上的表现，我们应该使用P-R曲线。</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> to_categorical</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_curve, auc  <span class="comment">###计算roc和auc</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">acu_curve</span>(<span class="params">y,prob</span>):</span></span><br><span class="line"><span class="comment">#y真实prob预测</span></span><br><span class="line">    fpr,tpr,threshold = roc_curve(y,prob) <span class="comment">###计算真阳性率和假阳性率</span></span><br><span class="line">    roc_auc = auc(fpr,tpr) <span class="comment">###计算auc的值</span></span><br><span class="line"> </span><br><span class="line">    plt.figure()</span><br><span class="line">    lw = <span class="number">2</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">    plt.plot(fpr, tpr, color=<span class="string">&#x27;darkorange&#x27;</span>,</span><br><span class="line">             lw=lw, label=<span class="string">&#x27;ROC curve (area = %0.3f)&#x27;</span> % roc_auc) <span class="comment">###假正率为横坐标，真正率为纵坐标做曲线</span></span><br><span class="line">    plt.plot([<span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>], color=<span class="string">&#x27;navy&#x27;</span>, lw=lw, linestyle=<span class="string">&#x27;--&#x27;</span>)</span><br><span class="line">    plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</span><br><span class="line">    plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</span><br><span class="line">    plt.xlabel(<span class="string">&#x27;False Positive Rate&#x27;</span>)</span><br><span class="line">    plt.ylabel(<span class="string">&#x27;True Positive Rate&#x27;</span>)</span><br><span class="line">    plt.title(<span class="string">&#x27;AUC&#x27;</span>)</span><br><span class="line">    plt.legend(loc=<span class="string">&quot;lower right&quot;</span>)</span><br><span class="line"> </span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="余弦距离的应用"><a href="#余弦距离的应用" class="headerlink" title="余弦距离的应用"></a>余弦距离的应用</h2><p>样本间的距离是定义模型的优化目标以及训练方法的基础，使用余弦距离可以表示两个特征向量之间的相似度，余弦相似度取值范围为[-1,1]，如果想要得到距离，使用1减去余弦相似度可以得到取值范围[0,2]。</p>
+<blockquote>
+<ul>
+<li><p>结合你的学习和研究经历，探讨为什么在一些场景中要使用余弦相似度而不是欧式距离？(较容易)</p>
+<p>对于特征向量A和B，它们的余弦相似度cos(A,B)为两个向量夹角的余弦，关注的是向量之间的角度关系，而不关心它们的绝对大小。在文本、图像、视频等领域，特征向量通常维度极高，余弦相似度在这样的情况下仍然保持着“相同时为1，正交时为0，相反时为-1”的性质，而欧式距离在这种情况下极差较大，而且可解释性也较弱。</p>
+<p>在Word2Vec中，向量的模长是经过归一化的，此时欧式距离和余弦距离满足：<br>$$<br>||A-B||_2=\sqrt{2(1-cos(A,B))}<br>$$<br>在此情景下，如果选择距离最小(相似度最大)的近邻，那么使用余弦相似度和欧式距离的结果是相同的。</p>
+<p>总体来说，欧式距离体现数值上的绝对差异，而余弦距离体现方向上的相对差异。</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cosine_similarity</span>(<span class="params">A,B</span>):</span></span><br><span class="line">  d = np.dot(A,B)/(np.linalg.norm(A)*np.linalg.norm(B))</span><br><span class="line">  <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/04/17/百面机器学习-模型评估/" target="_blank" title="百面机器学习-模型评估">http://xiangweixi.cn/2021/04/17/百面机器学习-模型评估/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/15/papers/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">papers</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">评估指标的局限性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROC%E6%9B%B2%E7%BA%BF"><span class="nav-number">2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%99%E5%BC%A6%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">余弦距离的应用</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
