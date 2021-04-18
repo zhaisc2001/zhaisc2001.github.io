@@ -19,7 +19,7 @@
 <meta property="og:description" content="NFL定理告诉我们，任意两个算法的性能期望是相同的。因此我们评估算法时，需要选择特定的任务以及性能指标，知道评估指标的精确定义、有针对性地选择合适的评估指标、根据评估指标的反馈进行模型的调整，这些都是模型评估阶段的关键问题。 评估指标的局限性  准确率的局限性(容易) 在奢侈品广告投放中，尽管线下测试时用户分类器准确率达到了95%以上，为什么模型上线后大部分广告仍然投给了非奢侈品用户？这是因为准确">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-17T02:59:02.000Z">
-<meta property="article:modified_time" content="2021-04-17T13:07:29.091Z">
+<meta property="article:modified_time" content="2021-04-18T03:50:39.147Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
@@ -252,6 +252,96 @@
 </ul>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cosine_similarity</span>(<span class="params">A,B</span>):</span></span><br><span class="line">  d = np.dot(A,B)/(np.linalg.norm(A)*np.linalg.norm(B))</span><br><span class="line">  <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><p>余弦距离是否是一个严格定义的距离？(一般)</p>
+<p>距离的定义：在一个集合中，如果每一对元素均可唯一确定一个实数，使得三条距离公理(正定性、对称性、三角不等式)成立，则该实数可称为这对元素之间的距离。余弦距离明显满足前两条，但它不满足三角不等式。比如特征向量(0,1),(1,0),(1,1)之间的余弦距离便不符合三角不等式。因此余弦距离并不是一个严格定义的距离，在机器学习领域，除了余弦距离我们还有KL距离，也称作相对熵，它常用于计算两个分布之间的差异，不满足对称性和三角不等式。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="A-B测试陷阱"><a href="#A-B测试陷阱" class="headerlink" title="A/B测试陷阱"></a>A/B测试陷阱</h2><p>在互联网领域，A/B测试是验证新模块、新功能、新产品是否有效，新的算法或模型是否有提升等的主要测试方法。</p>
+<blockquote>
+<ul>
+<li><p>在对模型进行充分的离线评估后，为什么还要进行在线A/B测试？(容易)</p>
+<p>原因如下：1.离线评估无法完全消除模型过拟合的影响；2.离线评估无法完全还原线上的工程环境。一般来讲，离线评估往往不会考虑线上环境的延迟、数据丢失、标签数据缺失等情况，也就是说离线评估的环境过于理想；3.线上系统的某些商业指标在离线评估中无法估算。在离线评估中，我们通常关注的是P-R曲线、ROC曲线，而线上评估我们可以全面了解用户点击率、留存时长、PV访问量等的变化等。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>如何进行线上A/B测试？(容易)</p>
+<p>进行A/B测试主要手段是进行用户分桶，然后进行对照实验，对实验组用户施以新模型，对对照组用户施以旧模型。此时需要注意的是抽样样本的独立性以及抽样方式的无偏性。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>如何划分实验组和对照组？(较容易)</p>
+<p>新的推荐模型为A(针对美国用户)，原先的推荐模型为B(针对全体用户)，在正式上线之前提出了三种实验组与对照组划分方法，哪种是正确的？1.根据user_id个位数的奇偶性将用户划分为实验组和对照组，对实验组施以推荐模型A，对照组施以推荐模型B；2.将user_id个位数为奇数且为美国用户作为实验组，其余用户作为对照组；3.将user_id个位数为奇数且为美国用户作为实验组，user_id为偶数作为对照组。</p>
+<p>正确做法是上述三种都不对，应该选择美国用户再按照user_id奇偶性进行区分，第一种做法没有区分美国用户，对照组与实验组结果都被稀释；第二种做法稀释了对照组；第三种做法对照组产生了偏差。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="模型评估的方法"><a href="#模型评估的方法" class="headerlink" title="模型评估的方法"></a>模型评估的方法</h2><p>机器学习模型的评估中，我们对于训练集和测试集的划分，以及模型的验证方法各有千秋，我们需要掌握它们并合理运用。</p>
+<blockquote>
+<ul>
+<li>在模型评估过程中，有哪些主要的验证方法，它们的优缺点是什么？(较容易)<ul>
+<li>Holdout检验：最简单最直接的验证方法，直接将原始样本按照一定比例随机划分为训练集和验证集两部分；Holdout检验缺点很明显，验证集上计算出来的评估指标和原始划分的方法有很大关系。</li>
+<li>交叉验证：为了消除Holdout检验中的随机性引入的方法。</li>
+<li><ul>
+<li>k-fold交叉验证：首先将全部样本划分为k个子集，依次遍历它们，每次遍历到的子集选取为验证集，其余子集作为训练集，进行模型的训练和验证；最后取k次遍历的平均值作为最终的评估指标。实践中，k通常取10。</li>
+<li>留一验证：每次留下一个样本进行验证，其它全部作为训练集进行模型的训练，在样本总数较多的情况下，留一验证法时间开销极大，与之相应的有留p验证法，每次留下p个样本作为验证集，它的时间开销更大，因此这两种方法都很少在实际工程中使用。</li>
+<li>自助法：这种方法适用于样本数量较少的时候，对于样本数量为n的集合，进行n次有放回的抽取，得到大小为n的训练集。n次抽样中，有的样本被重复抽取，有的样本不会被抽到，未抽到的样本作为验证集。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">X = np.arange(<span class="number">24</span>).reshape(<span class="number">12</span>,<span class="number">2</span>)</span><br><span class="line">kf = KFold()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> train_index,test_index <span class="keyword">in</span> kf.split(X):</span><br><span class="line">  print(X[train_index])</span><br><span class="line">  print(X[test_index])</span><br><span class="line">  print(<span class="string">&#x27;-&#x27;</span>*<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><p>在自助法的采样过程，对n个样本进行n次自助采样，当n趋于无穷大的时候，最终有多少数据从未选择过？(一般)</p>
+<p>一个样本在一次抽样中未被抽中的概率为(1-1/n)，n次抽样均为抽中的概率为(1-1\n)<sup>n</sup>，于是当n趋于无穷大时，需要计算的是：<br>$$<br>\mathop{lim}\limits_{n\rightarrow\infin}(1-\frac{1}{n})^n=\frac{1}{e}<br>$$<br>于是有n/e的样本可以作为验证集。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="超参数调优"><a href="#超参数调优" class="headerlink" title="超参数调优"></a>超参数调优</h2><p>超参数是指机器学习中通过学习无法得到的参数，需要工程师人为设定，此外便需要通过调优方法得到。</p>
+<blockquote>
+<ul>
+<li><p>超参数有哪些调优方法？(一般)</p>
+<p>超参数调优主要包括网格搜索、随机搜索、贝叶斯优化等方法。我们首先需要明确超参数的搜索算法包括哪些要素，一是目标函数，即算法需要最大化/最小化的目标；二是搜索范围，一般通过上限和下限来确定；三是算法的其他参数，如搜索步长。</p>
+<ul>
+<li>网格搜索：最简单、应用最广泛的超参数搜索算法，它通过查找搜索范围内的所有的点来确定最优值。使用较大搜索范围和较小步长，网格搜索有很大可能能够找到超参数的全剧最优值，但是这样的方案非常耗费计算资源和时间。实际应用中，网格搜索法使用较大范围和较大步长，先确定全剧最优值可能的位置，然后再使用较小步长进行搜索，但这样的方法很可能得不到全局最优值。</li>
+<li>随机搜索：随机搜索与网格搜索类似，但它是对上下限中的点进行采样，进行随机搜索。它的理论依据是，当样本集足够大时，能够大概率找到全局最优值或其近似值。这种方法相较于网格搜索更快，但对于结果也是没有保障的。</li>
+<li>贝叶斯优化：贝叶斯优化算法在寻找最优超参数时，通过对目标形状进行学习，找到能够使目标函数向全局最优值提升的参数。具体来说，它根据先验分布，假设一个搜集函数，然后每一次使用新的采样点来测试目标函数，利用这个信息来更新先验分布；最后，算法测试由后验分布给出的全局最值最可能出现的位置的点。贝叶斯问题容易陷入局部最优值，为了解决这个问题，贝叶斯优化需要在“探索”与“利用”间做出平衡。也就是我们说的<a href="http://xiangweixi.cn/2021/01/02/Multi-armed-Bandit-Problem/">EE-dilemma</a>，之前的多臂赌博机问题博文中介绍过。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="过拟合与欠拟合"><a href="#过拟合与欠拟合" class="headerlink" title="过拟合与欠拟合"></a>过拟合与欠拟合</h2><blockquote>
+<ul>
+<li><p>在模型评估过程中，过拟合和欠拟合具体是指什么现象？(容易)</p>
+<p>过拟合是指模型对于训练数据拟合状况过当的情况，比如模型过于复杂，将样本中的噪声也学习到模型中，这样会导致模型泛化能力的下降，应用过程中容易输出错误的预测结果。</p>
+<ul>
+<li><p>降低过拟合风险：1.从数据入手，获得更多的数据能够降低噪声的影响，直接增加数据是比较困难的，我们可以通过数据扩充的方法来增加训练集，比如在上一篇特征工程中对图像数据不足问题的解决方法。</p>
+</li>
+<li><p>降低模型复杂度：数据较少时，模型过于复杂是产生过拟合的主要原因，适当降低模型的复杂度可以避免模型拟合过多的采样噪声。例如在神经网络中减少网络层数、神经元个数等；在决策树模型中降低树的深度、进行剪枝等。</p>
+</li>
+<li><p>正则化方法：给模型的参数加上正则约束，如L1、L2正则化，将权值的大小加入损失函数中。</p>
+</li>
+<li><p>集成学习方法，将多个模型集成到一起，如stacking,bagging,boost方法。</p>
+</li>
+</ul>
+<p>降低欠拟合的方法：</p>
+<ul>
+<li>添加新特征：特征不足或是现有特征与标签关联性不强容易导致模型出现欠拟合，我们可以通过“上下文特征”“ID类特征”“组合特征”等构建新的特征，往往可以取得更好的结果；在深度学习潮流中，我们可以使用梯度决策提升树、因子分解机、Deep-crossing等方法来丰富特征。</li>
+<li>增加模型的复杂度，简单模型的学习能力较差，通过增加模型的复杂度可以使得模型拥有更强的拟合能力，例如在线性模型中添加高次项，在神经网络模型中增加网络层数或神经元个数等。</li>
+<li>减小正则化系数：用于防止过拟合的正则化系数在模型欠拟合时应该减小。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
 
       
     </div>
@@ -332,7 +422,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">评估指标的局限性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROC%E6%9B%B2%E7%BA%BF"><span class="nav-number">2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%99%E5%BC%A6%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">余弦距离的应用</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">评估指标的局限性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROC%E6%9B%B2%E7%BA%BF"><span class="nav-number">2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%99%E5%BC%A6%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">余弦距离的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-B%E6%B5%8B%E8%AF%95%E9%99%B7%E9%98%B1"><span class="nav-number">4.</span> <span class="nav-text">A&#x2F;B测试陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">模型评估的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="nav-number">6.</span> <span class="nav-text">超参数调优</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E4%B8%8E%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="nav-number">7.</span> <span class="nav-text">过拟合与欠拟合</span></a></li></ol>
     
     </div>
   </aside>
