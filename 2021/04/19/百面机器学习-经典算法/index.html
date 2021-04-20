@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百面机器学习-经典算法 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="machine learning" />
+  
+  
+  
+  
+  <meta name="description" content="在数据驱动的连接主义机器学习方法大行其道之前，符号主义才是机器学习的正统。没有最好的分类器，只有最合适的分类器。 支持向量机机器学习领域，支持向量机涵盖了各个方面的知识，也是面试题目中的基础题型。   在空间中线性可分的两类点，分别向SVM分类的超平面上做投影，这些点在超平面上的投影仍然是线性可分的吗？(一般) 线性可分的两类点，指的是通过一个超平面可以将两类点完全分开。我们想要探讨的是向这个超平">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-经典算法">
+<meta property="og:url" content="http://xiangweixi.cn/2021/04/19/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="在数据驱动的连接主义机器学习方法大行其道之前，符号主义才是机器学习的正统。没有最好的分类器，只有最合适的分类器。 支持向量机机器学习领域，支持向量机涵盖了各个方面的知识，也是面试题目中的基础题型。   在空间中线性可分的两类点，分别向SVM分类的超平面上做投影，这些点在超平面上的投影仍然是线性可分的吗？(一般) 线性可分的两类点，指的是通过一个超平面可以将两类点完全分开。我们想要探讨的是向这个超平">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-19T02:32:58.000Z">
+<meta property="article:modified_time" content="2021-04-20T14:30:45.587Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-百面机器学习-经典算法" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-经典算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/04/19/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95/" class="article-date">
+	  <time datetime="2021-04-19T02:32:58.000Z" itemprop="datePublished">2021-04-19</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在数据驱动的连接主义机器学习方法大行其道之前，符号主义才是机器学习的正统。没有最好的分类器，只有最合适的分类器。</p>
+<h2 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h2><p>机器学习领域，支持向量机涵盖了各个方面的知识，也是面试题目中的基础题型。</p>
+<blockquote>
+<ul>
+<li><p>在空间中线性可分的两类点，分别向SVM分类的超平面上做投影，这些点在超平面上的投影仍然是线性可分的吗？(一般)</p>
+<p>线性可分的两类点，指的是通过一个超平面可以将两类点完全分开。我们想要探讨的是向这个超平面进行这两类点的投影，这些投影点是否仍然线性可分。</p>
+<p>举一个最简单的反例，若两类点变成了两个点，那么此时的分类超平面就是它们连线的中垂线，这两个点在超平面上的投影是同一个点，显然不是线性可分的。</p>
+<p>实际上，对于任意线性可分的两组点，它们在SVM分类的超平面上的投影都是线性不可分的。我们可以从二维情况开始讨论，再推广到高维空间中。我们首先证明SVM的分类超平面实际上是只由支持向量决定的。考虑SVM中的KKT条件，有<br>$$<br>\triangledown_\omega L(\omega^*,\beta^*,\alpha^*)=\omega^*-\sum_{i=1}^N\alpha_i^*y_ix_i=0<br>$$</p>
+<p>$$<br>\triangledown_\omega L(\omega^*,\beta^*,\alpha^*)=-\sum_{i=1}^N\alpha_i^*y_i=0<br>$$</p>
+<p>$$<br>\alpha_i^*≥0<br>$$</p>
+<p>$$<br>g_i(\omega^*)≤0<br>$$</p>
+<p>$$<br>\alpha_i^<em>g_i(\omega^</em>)=0<br>$$</p>
+<p>可以看到除了支持向量以外，其他向量带入会导致系数为0，因此SVM的分类结果与仅使用支持向量的分类结果一致，这就是SVM拥有极高运行效率的关键之一。由此我们证明了SVM的分类超平面只由支持向量决定。接下来我们假设存在这样一个SVM分类超平面，使得支持向量在该超平面的投影依然线性可分，于是我们可以发现，不同类别的支持向量各自的连线中，必定有一条连线的中垂线是更好的分类超平面。而这个更好的分类超平面上，支持向量的投影不是线性可分的。</p>
+<p>事实上，我们还可以使用超平面分离定理(Separating Hyperplane Theorem,SHT)，该定理描述的是，对于不相交的两个凸集，存在一个超平面能够将两个凸集分割，在二维平面的情况中，两个凸集间距离最短的两点连线的中垂线就是一个能够将这两个凸集分离的超平面。细致地讲，这里有三种情况，这里不再赘述。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>是否存在一组参数使SVM训练误差为0？(一般)</p>
+<p>使用高斯核进行训练的SVM中，试证明给定训练集中不存在两个点在同一位置，则存在一组参数{𝝰<sub>1</sub>,𝝰<sub>2</sub>,…,𝝰<sub>m</sub>,b}以及参数𝛔使得该SVM的训练误差为0。</p>
+<p>根据SVM的原理，在加入核函数后预测函数为：<br>$$<br>f(x)=\sum_{i=1}^m \alpha_iy^{(i)}K(x^{(i)},x)+b<br>$$<br>由于不存在两个点在同一位置，所以对于任意i≠j，有||x<sup>(i)</sup>-x<sup>(j)</sup>||≥𝛆，对于任意i，固定𝝰<sub>i</sub>=1以及b=0，只保留参数𝛔，则有<br>$$<br>f(x)=\sum_{i=1}^my^{(i)}K(x^{(i)},x)=\sum_{i=1}^my^{(i)}e^{\frac{-||x^{(i)}-x||}{2\sigma^2}}<br>$$<br>将任意x<sup>(j)</sup>代入，则有<br>$$<br>f(x^{(j)})=\sum_{i=1}^my^{(i)}e^{\frac{-||x^{(i)}-x^{(j)}||}{2\sigma^2}}<br>$$</p>
+<p>$$<br>f(x^{(j)})-y^{(j)}=\sum_{i=1,i≠j}^my^{(i)}e^{\frac{-||x^{(i)}-x^{(j)}||}{2\sigma^2}}<br>$$</p>
+<p>由题意知||x<sup>(i)</sup>-x<sup>(j)</sup>||≥𝛆，取𝛔=𝛆/(2logm)<sup>1/2</sup>，可将上式转化为<br>$$<br>||f(x^{(j)})-y^{(j)}||=||\sum_{i=1,i≠j}^my^{(i)}e^{\frac{-||x^{(i)}-x^{(j)}||}{2\sigma^2}}||<br>$$</p>
+<p>$$<br>||\sum_{i=1,i≠j}^my^{(i)}e^{\frac{-||x^{(i)}-x^{(j)}||}{2\sigma^2}}||≤||\sum_{i=1,i≠j}^me^{-logm}||=\frac{m-1}{m}&lt;1<br>$$</p>
+<p>所以对于任意x<sup>(j)</sup>，预测结果与真实标签的误差小于1，而在这种情况下它会被分类为真实标签，因此所有样本的类别都被正确预测，训练误差为0。</p>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/04/19/百面机器学习-经典算法/" target="_blank" title="百面机器学习-经典算法">http://xiangweixi.cn/2021/04/19/百面机器学习-经典算法/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/17/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">百面机器学习-模型评估</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">支持向量机</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
