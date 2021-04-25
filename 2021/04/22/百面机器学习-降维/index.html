@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百面机器学习-降维 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="machine learning" />
+  
+  
+  
+  
+  <meta name="description" content="机器学习中，数据通常需要被表示成向量形式以输入模型进行训练。对高维向量进行处理和分析时，会极大地消耗系统资源，甚至可能产生维度灾难。因此，使用低维度向量表示原始高维度的特征显得尤为重要，常见的降维方法有主成分分析、线性判别分析、等距映射、局部线性嵌入、拉普拉斯特征映射、局部保留投影等。 PCA最大方差理论主成分分析作为降维中最经典的方法，至今有上百年历史，它是一种非监督的、线性、全局算法。   如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-降维">
+<meta property="og:url" content="http://xiangweixi.cn/2021/04/22/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%99%8D%E7%BB%B4/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="机器学习中，数据通常需要被表示成向量形式以输入模型进行训练。对高维向量进行处理和分析时，会极大地消耗系统资源，甚至可能产生维度灾难。因此，使用低维度向量表示原始高维度的特征显得尤为重要，常见的降维方法有主成分分析、线性判别分析、等距映射、局部线性嵌入、拉普拉斯特征映射、局部保留投影等。 PCA最大方差理论主成分分析作为降维中最经典的方法，至今有上百年历史，它是一种非监督的、线性、全局算法。   如">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-22T08:59:22.000Z">
+<meta property="article:modified_time" content="2021-04-25T05:33:39.453Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-百面机器学习-降维" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-降维
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/04/22/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%99%8D%E7%BB%B4/" class="article-date">
+	  <time datetime="2021-04-22T08:59:22.000Z" itemprop="datePublished">2021-04-22</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>机器学习中，数据通常需要被表示成向量形式以输入模型进行训练。对高维向量进行处理和分析时，会极大地消耗系统资源，甚至可能产生维度灾难。因此，使用低维度向量表示原始高维度的特征显得尤为重要，常见的降维方法有主成分分析、线性判别分析、等距映射、局部线性嵌入、拉普拉斯特征映射、局部保留投影等。</p>
+<h2 id="PCA最大方差理论"><a href="#PCA最大方差理论" class="headerlink" title="PCA最大方差理论"></a>PCA最大方差理论</h2><p>主成分分析作为降维中最经典的方法，至今有上百年历史，它是一种非监督的、线性、全局算法。</p>
+<blockquote>
+<ul>
+<li><p>如何定义主成分？从这种定义出发，如何设计目标函数使得降维达到提取主成分的目的？针对这个目标函数，如何对PCA问题进行求解？(较简单)</p>
+<p>PCA旨在找到数据中的主成分，并利用这些主成分表证原始数据从而进行降维。我们从最简单的二维数据来看看PCA究竟是如何工作的。</p>
+<p>对于一组给定的数据点{v<sub>1</sub>,v<sub>2</sub>,…,v<sub>n</sub>}，其中所有向量均为列向量，中心化后的表示为{x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub>}={v<sub>1</sub>-μ,v<sub>2</sub>-μ,…,v<sub>n</sub>-μ}，μ为给定数据点的均值坐标，我们知道一个向量与单位向量的内积在几何上表示为这个向量到单位向量的投影长度，所以x<sub>i</sub>在𝛚方向上的投影坐标可以表示为x<sub>i</sub><sup>T</sup>𝛚。我们的目标是寻找一个单位向量𝛚，使得x<sub>1</sub>,x<sub>2</sub>,…,x<sub>n</sub>在它方向上的投影方差尽可能大，投影后的均值为<br>$$<br>\mu’=\frac{1}{n}\sum_{i=1}^nx_i^T\omega=(\frac{1}{n}\sum_{i=1}^nx_i^T)\omega=0<br>$$<br>我们投影后的方差可以表示为<br>$$<br>D(x)=\frac{1}{n}\sum_{i=1}^n(x_i^T\omega)^2=\frac{1}{n}\sum_{i=1}^n(x_i^T\omega)^T(x_i^T\omega)=\frac{1}{n}\sum_{i=1}^n\omega^Tx_ix_i^T\omega=\omega^T(\frac{1}{n}\sum_{i=1}^nx_ix_i^T)\omega<br>$$<br>经过观察该式中间部分就是协方差矩阵，于是这个问题可以被表述为<br>$$<br>max(\omega^T\sum\omega),s.t.\omega^T\omega=1<br>$$<br>引入拉格朗日算子，对𝛚求导并令其为0，能够得出<br>$$<br>D(x)=\omega^T\sum\omega=\lambda\omega^T\omega=\lambda<br>$$<br>x投影之后的方差实际上就是x协方差矩阵的特征值，我们要找的最大的方差就是协方差矩阵最大的特征值，最佳投影方向就是最大特征值对应的特征向量，以此类推。至此，我们得到以下几种PCA的求解方法：</p>
+<p>(1)对样本数据进行中心化处理；</p>
+<p>(2)求样本协方差矩阵；</p>
+<p>(3)对协方差矩阵进行特征值分解，将特征值从大到小排列；</p>
+<p>(4)取特征值前d大对应的特征向量，将n维样本映射到d维：<br>$$<br>x’=\omega’^Tx<br>$$<br>定义降维后的信息占比为：<br>$$<br>\eta=\frac{\sqrt{\sum_{i=1}^d\lambda_i^2}}{\sqrt{\sum_{i=1}^n\lambda_i^2}}<br>$$<br>由于PCA是一种线性降维方法，有一定的局限性，我们可以通过核映射方法扩展得到核主成分分析，也可以通过流形映射的降维方法，比如等距映射、局部线性嵌入、拉普拉斯特征映射等非线性操作进行降维。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="PCA最小平方误差理论"><a href="#PCA最小平方误差理论" class="headerlink" title="PCA最小平方误差理论"></a>PCA最小平方误差理论</h2><blockquote>
+<ul>
+<li><p>PCA求解的其实是最佳投影方向，即一条直线，这与数学中线性回归问题的目标不谋而合，能否从回归的角度定义PCA的目标并相应地求解问题呢？(较简单)</p>
+<p>我们依然考虑二维空间中的样本点，上一节我们是想要找到一条直线这些样本的投影方差最大，现在我们把这个问题转化为一个回归问题，要使得样本点的平方误差最小。数据集中每个点x<sub>k</sub>到超平面D的距离为<br>$$<br>distance(x_k,D)=||x_k-\tilde{x}<em>k||<br>$$<br>若这个超平面是由d个标准正交基W={𝛚<sub>1</sub>,𝛚<sub>2</sub>,…,𝛚<sub>d</sub>}组成，那么点的投影可以表示为<br>$$<br>\tilde{x_k}=\sum_{i=1}^d(\omega^T_ix_k)\omega_i<br>$$<br>于是我们可以得到PCA要优化的目标为<br>$$<br>\mathop{argmin}\limits_{\omega_1,…,\omega_d}\sum</em>{k=1}^n||x_k-\tilde{x}_k||^2<br>$$</p>
+<p>$$<br>s.t.\omega_i^T\omega_j=\delta_{ij}=1(i≠j)or\ 0(i=j)<br>$$</p>
+<p>有<br>$$<br>||x_k-\tilde{x}<em>k||^2=(x_k-\tilde{x}_k)^T(x_k-\tilde{x}_k)=x_k^Tx_k-2x_k^T\tilde{x}_k+\tilde{x}^T_k\tilde{x}_k<br>$$<br>第一项是一个常数，第二项与第三项经过变换后可以得到原式为<br>$$<br>||x_k-\tilde{x}_k||^2=-\sum</em>{i=1}^d\omega_i^Tx_kx_k^T\omega_i+x_k^Tx_k=-tr(W^Tx_kx_k^TW)+C<br>$$<br>所以我们的优化问题为<br>$$<br>\mathop{argmax}\limits_{W}tr(W^TXX^TW) s.t. W^TW=I<br>$$<br>其中<br>$$<br>XX^T=\sum_kx_kx^T_k<br>$$<br>假如我们对W中的d个基一次求解，就会发现最佳直线其实和最大方差法求解的投影方向一致。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="线性判别分析"><a href="#线性判别分析" class="headerlink" title="线性判别分析"></a>线性判别分析</h2><p>线性判别分析(Linear Discriment Analysis)实际上是一种有监督学习算法，同时它经常被用来对数据进行降维。相比较于PCA，LDA的区别就在于它是由标签的，而PCA只是将样本点投影到方差最大的方向上而已。</p>
+<blockquote>
+<ul>
+<li><p>对于具有类别标签的数据，应当如何设计目标函数使得降维的过程中不损失类别信息？在这种情况下，应当如何进行求解？(较简单)</p>
+<p>LDA首先是一个用于有监督的分类算法，我们首先考虑两类有标签样本数据，μ<sub>i</sub>代表它们各自的均值点，我们希望投影之后两类之间的距离尽可能大，距离表示为<br>$$<br>D(C_1,C_2)=||\tilde{\mu}_1-\tilde{\mu}<em>2||^2<br>$$<br>因此需要优化的问题<br>$$<br>\mathop{max}\limits</em>{\omega}||\omega^T(\mu_1-\mu_2)||^2,s.t.\omega^T\omega=1<br>$$<br>我们很容易看出当𝛚方向与μ<sub>1</sub>-μ<sub>2</sub>方向相同时，该距离达到最大值，但实际上这样的效果不佳，原因是不同类别的样本在超平面上混为一体，不能够线性可分。</p>
+<p>于是我们引入了类内距离，由此得到LDA的中心思想——最大化类间距离以及最小化类内距离。可以得到<br>$$<br>\mathop{maxJ(\omega)}\limits_{\omega}=\frac{||\omega^T(\mu_1-\mu_2)||^2}{D_1+D_2}<br>$$<br>其中𝛚为单位向量，D<sub>1</sub>，D<sub>2</sub>分别表示两类投影后的方差<br>$$<br>D_1=\sum_{x\in C_1}(\omega^Tx-\omega^T\mu_1)^2=\sum_{x\in C_1}\omega^T(x-\mu_1)(x-\mu_1)^T\omega<br>$$</p>
+<p>$$<br>D_2=\sum_{x\in C_2}\omega^T(x-\mu_2)(x-\mu_2)^T\omega<br>$$</p>
+<p>因此J(𝛚)可以写成<br>$$<br>J(\omega)=\frac{\omega^T(\mu_1-\mu_2)(\mu_1-\mu_2)^T\omega}{\sum_{x\in C_i}\omega^T(x-\mu_2)(x-\mu_2)^T\omega}<br>$$<br>我们定义内间散度矩阵为S<sub>B</sub>，类内散度矩阵S<sub>w</sub>。可以写为<br>$$<br>J(\omega)=\frac{\omega^TS_B\omega}{\omega^TS_w\omega}<br>$$<br>此时需要最大化J(𝛚)，只需要对J求导并令其为0得出<br>$$<br>(\omega^TS_w\omega)S_B\omega=(\omega^TS_B\omega)S_w\omega<br>$$<br>令λ=J(𝛚)，于是我们可以得到<br>$$<br>S_B\omega=\lambda S_w\omega==&gt;S_w^{-1}S_B\omega=\lambda\omega<br>$$<br>从这里我们可以看出，实际上我们最大化的目标变成了矩阵的特征值，而从类间方差的定义来看，我们只需要知道样本均值和类内方差就能够得到最佳投影方向。</p>
+</li>
+</ul>
+</blockquote>
+<p>LDA相比PCA能够有效利用标签信息，但Fisher实际上是对数据分布做了一些很强的假设（每一类数据都是高斯分布、各个类协方差相等），实际上数据不满足这些假设，也能够达到有效降维的目的，这是因为LDA是一种线性模型，相较于复杂模型来说鲁棒性更好。而至于它表达能力不足的问题，我们可以通过引入核函数扩展LDA方法来解决问题。</p>
+<h2 id="线性判别与主成分分析"><a href="#线性判别与主成分分析" class="headerlink" title="线性判别与主成分分析"></a>线性判别与主成分分析</h2><blockquote>
+<ul>
+<li><p>LDA和PCA作为经典的降维算法，如何从应用的角度分析其原理的异同？从数学推导的角度，两种降维算法在目标函数上有何区别和联系？(较简单)</p>
+<p>将LDA扩展到多类高位情况时，之前定义的类内散度矩阵仍然适用，但类间散度矩阵已经不适用于此处，我们引入一个新的矩阵S<sub>t</sub>来表示全局整体的散度，称为全局散度矩阵：<br>$$<br>S_t=\sum_{i=1}^n(x_i-\mu)(x_i-\mu)^T<br>$$<br>我们将全局散度矩阵定义为类内散度矩阵与类间散度矩阵的和，有S<sub>t</sub>=S<sub>b</sub>+S<sub>w</sub>，所以高维情况下，类间散度可表示为<br>$$<br>S_b=S_t-S_w=\sum_{i=1}^n(x_i-\mu)(x_i-\mu)^T-\sum_{x\in C_i}(x-\mu_i)(x-\mu_i)^T<br>$$</p>
+</li>
+</ul>
+<p>$$<br>=\sum_{j=1}^N(\sum_{x\in C_i}(x-\mu)(x-\mu)^T-\sum_{x\in C_i}(x-\mu_i)(x-\mu_i)^T)=\sum_{j=1}^Nm_j(\mu_j-\mu)(\mu_j-\mu)^T<br>$$</p>
+<p>​        其中m<sub>j</sub>是第j类样本的数量，N时总类别的个数，所以我们可以得出最大化类间散度实际上就是每个类别的中心经过投影后离全局中心足够远。根据LDA的原理，我们将最大化的目标函数定位<br>$$<br>J(W)=\frac{tr(WS_bW^T)}{tr(WS_wW^T)}<br>$$<br>​        W是待求解的超平面，W<sup>T</sup>W=I。</p>
+<p>​        求解最佳投影平面W={w<sub>1</sub>,w<sub>2</sub>,…,w<sub>d</sub>}求解S<sub>w</sub><sup>-1</sup>S<sub>b</sub>矩阵前d个最大的特征值，此时我们得到了多个类别标签高维数据的LDA求解方法。</p>
+<p>​        (1)计算数据集中每个类别的均值向量μ<sub>j</sub>，及总体均值向量μ；</p>
+<p>​        (2)计算类内散度矩阵S<sub>w</sub>，全局散度矩阵S<sub>t</sub>，并得到类间散度矩阵S<sub>b</sub>=S<sub>t</sub>-S<sub>w</sub>；</p>
+<p>​        (3)对矩阵S<sub>w</sub><sup>-1</sup>S<sub>b</sub>进行特征值分解，将特征值从大到小排列；</p>
+<p>​        (4)取特征值前d大的特征向量，将样本映射d维。</p>
+<p>​        从PCA和LDA降维方法的求解过程来看，它们都是使用了特征值分解，但对应的原理有所区别。</p>
+<p>​        从目标出发，PCA选择的是投影后数据方差最大的方向，使用主成分来表示原始数据可以去除冗余的维度。而LDA选择的是通过类别标签信息找到具有判别性的维度，使得原始数据投影后不同类别尽可能分开。</p>
+<p>​        从一个简单例子来说，一个多人谈话语音识别任务中，PCA能够降维后得到人的语音，而LDA降维后让不同人的语音具有区分性。而在人脸识别中，基于PCA的识别方法叫做eigenface，但由于人脸识别是为识别不同的人，所以LDA的效果会更好。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/04/22/百面机器学习-降维/" target="_blank" title="百面机器学习-降维">http://xiangweixi.cn/2021/04/22/百面机器学习-降维/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/19/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">百面机器学习-经典算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA%E6%9C%80%E5%A4%A7%E6%96%B9%E5%B7%AE%E7%90%86%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">PCA最大方差理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA%E6%9C%80%E5%B0%8F%E5%B9%B3%E6%96%B9%E8%AF%AF%E5%B7%AE%E7%90%86%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text">PCA最小平方误差理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">线性判别分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E4%B8%8E%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">线性判别与主成分分析</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
