@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百面机器学习-概率图模型 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="machine learning" />
+  
+  
+  
+  
+  <meta name="description" content="《百面机器学习》中，形容概率图模型为“优雅”，它构建了这样一幅图，用观测结点表示观测到的数据，用隐含节点表示潜在的只是，用边来描述知识与数据的相互关系，最后基于这样的关系图获得一个概率分布，非常“优雅”地解决了问题。 概率图中的节点分为隐含节点和观测结点，边分为有向边和无向边。节点对应于随机变量，边对应于随机变量的依赖关系或是相互关系，有向边表示单向依赖，无向边表示相互依赖。概率图模型分为贝叶斯网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-概率图模型">
+<meta property="og:url" content="http://xiangweixi.cn/2021/04/27/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="《百面机器学习》中，形容概率图模型为“优雅”，它构建了这样一幅图，用观测结点表示观测到的数据，用隐含节点表示潜在的只是，用边来描述知识与数据的相互关系，最后基于这样的关系图获得一个概率分布，非常“优雅”地解决了问题。 概率图中的节点分为隐含节点和观测结点，边分为有向边和无向边。节点对应于随机变量，边对应于随机变量的依赖关系或是相互关系，有向边表示单向依赖，无向边表示相互依赖。概率图模型分为贝叶斯网">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-27T06:40:43.000Z">
+<meta property="article:modified_time" content="2021-04-28T09:13:25.698Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-百面机器学习-概率图模型" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-概率图模型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/04/27/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" class="article-date">
+	  <time datetime="2021-04-27T06:40:43.000Z" itemprop="datePublished">2021-04-27</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>《百面机器学习》中，形容概率图模型为“优雅”，它构建了这样一幅图，用观测结点表示观测到的数据，用隐含节点表示潜在的只是，用边来描述知识与数据的相互关系，最后基于这样的关系图获得一个概率分布，非常“优雅”地解决了问题。</p>
+<p>概率图中的节点分为隐含节点和观测结点，边分为有向边和无向边。节点对应于随机变量，边对应于随机变量的依赖关系或是相互关系，有向边表示单向依赖，无向边表示相互依赖。概率图模型分为贝叶斯网络和马尔科夫网络两类，前者可以用一个有向图结构表示，后者可以用一个无向图表示。更详细地说，概率图模型包括了朴素贝叶斯模型、最大熵模型、隐马尔可夫模型、条件随机场、主题模型等。</p>
+<h2 id="概率图模型的联合概率分布"><a href="#概率图模型的联合概率分布" class="headerlink" title="概率图模型的联合概率分布"></a>概率图模型的联合概率分布</h2><blockquote>
+<ul>
+<li><p>写出从上至下为一二一模式的贝叶斯网络的联合概率分布？(简单)</p>
+<p>给定A条件下，B和C条件独立，给定B和C条件下，A和D条件独立，综上，联合概率为<br>$$<br>P(A,B,C,D)=P(A)P(B|A)P(C|A)P(D|B,C)<br>$$</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>写出从上至下为一二一模式的马尔可夫网络的联合概率分布？(简单)</p>
+<p>马尔可夫网络中，联合概率分布定义为<br>$$<br>P(x)=\frac{1}{Z}\prod_{Q\in C}\varphi_Q(x_Q)<br>$$<br>其中C为马尔可夫网络中最大团所构成的集合，Z是归一化因子，定义为<br>$$<br>Z=\sum_x\prod_{Q\in C}\varphi_Q(x_Q)<br>$$<br>我们通常将团Q的势函数指定为指数函数，如<br>$$<br>\varphi_Q(x_Q)=e^{-H_Q(x_Q)}<br>$$<br>其中<br>$$<br>H_Q(x_Q)=\sum_{u,v\in Q,u≠v}\alpha_{u,v}x_ux_v+\sum_{v\in Q}\beta_vx_v<br>$$<br>对于团的定义是，节点组成的一个子集，如果在这个子集中，任意两点之间都存在边的相连，那么这个子集中的所有节点构成了一个团，如果在这个子集中加入任意其他节点都不能构成一个团，那么这样的自己就是一个最大团。</p>
+<p>一二一模式的马尔可夫网络，我们有四个最大团(A,B),(A,C),(B,D),(C,D)，所以联合概率分布可以表示为<br>$$<br>P(A,B,C,D)=\frac{1}{Z}\varphi_1(A,B)\varphi_2(A,C)\varphi_3(B,D)\varphi_4(C,D)<br>$$<br>采用指数函数作为势函数则有<br>$$<br>H(A,B,C,D)=\alpha_1AB+\alpha_2AC+\alpha_3BD+\alpha_4CD+\beta_1A+\beta_2B+\beta_3C+\beta_4D<br>$$<br>所以联合概率分布为<br>$$<br>P(A,B,C,D)=\frac{1}{Z}e^{-H(A,B,C,D)}<br>$$</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="概率图表示"><a href="#概率图表示" class="headerlink" title="概率图表示"></a>概率图表示</h2><p>概率图还原模型联合概率分布，即使用概率图模型表示模型的概率。</p>
+<blockquote>
+<ul>
+<li><p>解释朴素贝叶斯模型的原理，并给出概率图模型表示。(较容易)</p>
+<p>朴素贝叶斯模型通过预测制定样本属于特定类别的概率P(y<sub>i</sub>|x)来预测该样本的所属类别，即<br>$$<br>y=\mathop{max}\limits_{y_i}P(y_i|x)<br>$$<br>使用贝叶斯公式，可以得到<br>$$<br>P(y_i|x)=\frac{P(x|y_i)P(y_i)}{P(x)}<br>$$<br>x作为样本对应的特征向量，P(x)为样本的瞎眼概率，对于特定的样本x和任意类别y<sub>i</sub>，P(x)的取值是相同的，并不会影响P(y<sub>i</sub>|x)取值的相对大小，假设特征之间彼此独立，我们可以得到<br>$$<br>P(y_i|x)\propto P(x|y_i)P(y_i)=P(x_1|y_i)P(y_i)P(x_2|y_i)P(y_i)…P(x_n|y_i)P(y_i)<br>$$<br>可以用盘式记法将x表示为一个盘。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>解释最大熵模型的原理，并给出概率图模型表示。(较容易)</p>
+<p>熵是对不确定性的度量，熵越大，不确定性也就越大，最大熵原理是概率模型学习的一个准则，指导思想是在满足约束条件的模型集合中选取熵最大的模型。</p>
+<p>假设离散随机变量x的分布为P(x)，则关于这个分布的熵定义为<br>$$<br>H(P)=-\sum_{x}P(x)logP(x)<br>$$<br>可以看出当x服从均匀分布时对应的熵最大，也就是不确定性最高。</p>
+<p>给定离散随机变量x,y，定义在条件概率分布上的熵为<br>$$<br>H(P)=-\sum_{x,y}\tilde{P}(x)P(y|x)logP(y|x)<br>$$<br>式中第一项是样本在训练样本机上的经验分布，即x各个取值在样本中出现的频率统计。</p>
+<p>最大熵模型就是要学习到合适的条件概率分布使得熵最大。在没有数据集的情况下，最大熵模型默认P(y|x)是均匀分布的，我们希望通过训练数据集找到其中的一些规律，从而消除一些不确定性。在这里我们使用特征函数f(x,y)，我们加入约束，使得特征函数f(x,y)关于二元经验分布和关于模型的条件概率分布和一元经验分布期望值相等<br>$$<br>E_{\tilde{P}}(f)=E_P(f)<br>$$<br>其中，特征函数f(x,y)关于二元经验分布的期望值计算公式为<br>$$<br>E_{\tilde{P}}(f)=\sum_{x,y}\tilde{P}(x,y)f(x,y)<br>$$<br>f(x,y)关于模型P(y|x)和一元经验分布的期望值<br>$$<br>E_P(f)=\sum_{x,y}\tilde{P}(x)P(y|x)f(x,y)<br>$$<br>给定数据集以及M个特征，最大熵模型的学习等价于约束最优化问题<br>$$<br>\mathop{max}\limits_{P}H(P)=-\sum_{x,y}\tilde{P}(x)P(y|x)logP(y|x)<br>$$</p>
+<p>$$<br>s.t.,E_{\tilde{P}}(f_i)=E_P(f_i),\forall i=1,2,…,M,\sum_{y}P(y|x)=1<br>$$</p>
+<p>求解之后可以得到最大熵模型的表达形式为<br>$$<br>P_w(y|x)=\frac{1}{Z}exp(\sum_{i=1}^Mw_if_i(x,y))<br>$$<br>最终，最大熵模型实际上被归结为了学习最佳参数w，使得P<sub>w</sub>(y|x)最大化。从概率图模型的角度，我们可以将P<sub>w</sub>(y|x)表述为非常类似于非常类似于指数函数的马尔可夫网络。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="生成式模型与判别式模型"><a href="#生成式模型与判别式模型" class="headerlink" title="生成式模型与判别式模型"></a>生成式模型与判别式模型</h2><blockquote>
+<ul>
+<li>常见的概率图模型中，哪些是生成式模型，哪些是判别式模型？</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/04/27/百面机器学习-概率图模型/" target="_blank" title="百面机器学习-概率图模型">http://xiangweixi.cn/2021/04/27/百面机器学习-概率图模型/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/25/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%9D%9E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">百面机器学习-非监督学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%81%94%E5%90%88%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="nav-number">1.</span> <span class="nav-text">概率图模型的联合概率分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%9B%BE%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">概率图表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%BC%8F%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%88%A4%E5%88%AB%E5%BC%8F%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">生成式模型与判别式模型</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

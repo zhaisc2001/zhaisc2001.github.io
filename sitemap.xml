@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xiangweixi.cn/2021/04/27/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/</loc>
+    
+    <lastmod>2021-04-28</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xiangweixi.cn/2021/04/25/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%9D%9E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/</loc>
     
     <lastmod>2021-04-27</lastmod>
@@ -368,7 +375,7 @@
 
   <url>
     <loc>http://xiangweixi.cn/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -376,119 +383,119 @@
   
   <url>
     <loc>http://xiangweixi.cn/tags/hexo/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/database/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/LightGBM/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/reinforcement-learning/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/HFOs/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/research-plan/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/EEG/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/unsupervised-learning/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/calculus/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/DCIC2021/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/scrapy/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/Docker/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/PAKDD2021/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/deep-learning/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/tensorflow/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/research/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/machine-learning/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -497,21 +504,21 @@
   
   <url>
     <loc>http://xiangweixi.cn/categories/technology/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/categories/how-s-life/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/categories/master-entrance-exam/</loc>
-    <lastmod>2021-04-27</lastmod>
+    <lastmod>2021-04-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
