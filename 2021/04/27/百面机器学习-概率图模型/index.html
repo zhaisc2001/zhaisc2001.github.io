@@ -19,7 +19,7 @@
 <meta property="og:description" content="《百面机器学习》中，形容概率图模型为“优雅”，它构建了这样一幅图，用观测结点表示观测到的数据，用隐含节点表示潜在的只是，用边来描述知识与数据的相互关系，最后基于这样的关系图获得一个概率分布，非常“优雅”地解决了问题。 概率图中的节点分为隐含节点和观测结点，边分为有向边和无向边。节点对应于随机变量，边对应于随机变量的依赖关系或是相互关系，有向边表示单向依赖，无向边表示相互依赖。概率图模型分为贝叶斯网">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-27T06:40:43.000Z">
-<meta property="article:modified_time" content="2021-04-28T09:13:25.698Z">
+<meta property="article:modified_time" content="2021-05-03T02:27:50.476Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,39 @@
 </blockquote>
 <h2 id="生成式模型与判别式模型"><a href="#生成式模型与判别式模型" class="headerlink" title="生成式模型与判别式模型"></a>生成式模型与判别式模型</h2><blockquote>
 <ul>
-<li>常见的概率图模型中，哪些是生成式模型，哪些是判别式模型？</li>
+<li><p>常见的概率图模型中，哪些是生成式模型，哪些是判别式模型？(一般)</p>
+<p>我们令可观测变量集合为X，预测目标变量集合为Y，其他变量集合为Z。生成式模型是对联合概率分布P(X,Y,Z)进行建模，给定X的条件下，通过计算边缘分布达到对变量集合Y进行推断的目的，即<br>$$<br>P(Y|X)=\frac{P(X,Y)}{P(X)}=\frac{\sum_{Z}P(X,Y,Z)}{\sum_{Y,Z}P(X,Y,Z)}<br>$$<br>判别式模型是直接对条件概率分布P(Y,Z|X)进行建模，然后消掉无关变量Z就可以得到对变量集合Y的预测，即<br>$$<br>P(Y|X)=\sum_{Z}P(Y,Z|X)<br>$$<br>常见的概率图模型有前面提到的朴素贝叶斯、最大熵模型，还有贝叶斯网络、隐马尔可夫模型、条件随机场、pLSA、LDA等，基于前面的问题解答我们可以知道朴素贝叶斯、贝叶斯网络、pLSA、LDA等模型都是先对联合概率分布进行建模，然后通过边缘分布推断得到对变量的预测，他们都是生成式模型，而最大熵模型是对条件概率分布直接建模，属于判别式模型。隐马尔可夫和条件随机场前者是生成式、后者是判别式，它们都是用于对序列建模的方法。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="马尔可夫模型"><a href="#马尔可夫模型" class="headerlink" title="马尔可夫模型"></a>马尔可夫模型</h2><p>我们首先对马尔可夫过程做一个介绍，马尔可夫过程是满足无后效性的随机过程。即t<sub>n</sub>时的状态x<sub>n</sub>，有<br>$$<br>P(x_n|x_1,x_2,…,x_{n-1})=P(x_n|x_{n-1})<br>$$<br>隐马尔可夫模型是对含有未知参数(隐状态)的马尔可夫链进行建模的生成模型，时间和状态的取值都是离散的马尔可夫过程被称为马尔可夫链。</p>
+<p>隐马尔可夫模型只能观察到隐状态对应的输出，而可观测状态的输出仅取决于对应的隐状态。隐马尔可夫模型中的参数包括隐状态之间的转移概率、隐状态到可观测状态的输出概率、隐状态x的取值空间、观测状态y的取值空间以及初始状态的概率分布。</p>
+<blockquote>
+<ul>
+<li><p>如何对中文分词问题用隐马尔可夫模型进行建模和训练？(一般)</p>
+<p>我们先用一个简单的例子来说明隐马尔可夫模型的建模过程，假设三个含有不同数量红色药丸和蓝色药丸的葫芦，我们按照以下规则从葫芦中取出药丸：</p>
+<p>(1)随机挑选一个葫芦；</p>
+<p>(2)从葫芦里倒出一颗药，记录是红色还是蓝色后将要放回；</p>
+<p>(3)从当前葫芦依照一定的概率转移到下个葫芦；</p>
+<p>(4)重复步骤(2)和(3)；</p>
+<p>上述过程中，我们不知道拿到的哪一个葫芦，用隐马尔可夫模型描述上述过程，隐状态就是当前取的哪一个葫芦，隐状态取值空间为{1,2,3}，可观测状态的取值空间为{红色，蓝色}，初始状态的概率分布是第(1)布随机挑选葫芦的概率分布，隐状态间的转移概率就是从当前葫芦转移到下一个葫芦的概率，而隐状态的输出概率就是对应葫芦里红色和蓝色药丸的概率。药的顺序就是观测状态的序列，而每次拿到的葫芦的顺序就是隐状态的序列。</p>
+<p>隐马尔可夫模型包括概率计算问题、预测问题、学习问题三个基本问题。</p>
+<p>(1)概率计算问题：已知模型的所有参数，计算观测序列Y出现的概率，可以使用前向和后向算法求解；</p>
+<p>(2)预测问题：已知模型所有参数和预测序列Y，计算最可能的隐状态序列X，可以使用经典的DP算法——维特比算法来求解；</p>
+<p>(3)学习问题：已知观测序列Y，求解使得该观测序列概率最大的模型参数，包括隐状态序列、隐状态之间的转移概率分布以及从隐状态到观测状态的概率分布，可使用Baum-Welch算法进行参数的学习。</p>
+<p>我们回到最初的问题，我们可以将分词问题转化为一个序列标注问题进行建模，B表示一个词开头的第一个字，E表示一个词结尾的最后一个字，M表示一个词中间的字，S表示一个单字词，隐状态的取值空间为{B,E,M,S}。同时对隐状态的转移概率给出一些先验知识，B和M后面只能是M或者E，S和E后面只能是B或者是S。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>最大熵马尔可夫模型为什么会产生标注偏置问题？如何解决？(较难)</p>
+<p>隐马尔可夫模型等用于解决序列标注问题的模型中，常常对标注进行独立性假设，以隐马尔可夫模型为例介绍标注偏置问题(Label Bias Problem)。</p>
+<p>在隐马尔可夫模型中，隐状态的转移满足马尔可夫过程；同时假设观测序列中各个状态仅仅取决于它对应的隐状态。隐马尔可夫模型建模时考虑了隐状态间的转移概率和隐状态到观测状态的输出概率。</p>
+<p>实际中的序列标注问题，隐状态不仅与单个观测状态有关，还与观测序列的长度、上下文等信息，一个词被标注为动词还是名词，不仅与它本身有关还要看上前文的其他词，所以引出了最大熵马尔可夫模型(Maximum Entropy Markov Model)，最大熵马尔可夫模型在建模时，去除了隐马尔可夫模型中观测状态相互独立的假设，而是考虑整个观测序列，因此拥有更强的表达能力。隐马尔可夫模型是对隐状态序列和观测状态序列的联合概率进行建模的生成式模型，而最大熵马尔可夫模型是直接对标注的后验概率进行建模的判别式模型。</p>
+<p>最大熵马尔可夫模型建模<br>$$<br>p(x_{1…n}|y_{1…n})=\prod_{i=1}^np(x_i|x_{i-1},y_{1…n})<br>$$<br>其中p(x<sub>i</sub>|x<sub>i-1</sub>,y<sub>1…n</sub>)会在局部进行归一化，也就是枚举x<sub>i</sub>全部取值后进行求和之后再计算概率<br>$$<br>p(x_i|x_{i-1},y_{1…n})=\frac{exp(F(x_i,x_{i-1},y_{1…n}))}{\sum_{x_i}exp(F(x_i,x_{i-1},y_{1…n}))}<br>$$<br>其中F时括号中所有特征的线性叠加。</p>
+<p>最大熵马尔可夫模型会产生标注偏置问题，意思是为了使得整体的后验概率提高，由于局部归一化的影响，隐状态会倾向于转移到哪些后续状态可能更少的状态上。为了解决这个问题我们引入了条件随机场(Conditional Random Field)在最大熵马尔可夫模型的基础上，进行了全局归一化，条件随机场建模如下<br>$$<br>p(x_{1…n}|y_{1…n})=\frac{\prod_{i=1}^nexp(F(x_i,x_{i-1},y_{1…n}))}{\sum exp(F(y_{1…n}))}<br>$$</p>
+</li>
 </ul>
 </blockquote>
 
@@ -307,7 +339,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%81%94%E5%90%88%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="nav-number">1.</span> <span class="nav-text">概率图模型的联合概率分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%9B%BE%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">概率图表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%BC%8F%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%88%A4%E5%88%AB%E5%BC%8F%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">生成式模型与判别式模型</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%81%94%E5%90%88%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="nav-number">1.</span> <span class="nav-text">概率图模型的联合概率分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%9B%BE%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">概率图表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%BC%8F%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%88%A4%E5%88%AB%E5%BC%8F%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">生成式模型与判别式模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">马尔可夫模型</span></a></li></ol>
     
     </div>
   </aside>
