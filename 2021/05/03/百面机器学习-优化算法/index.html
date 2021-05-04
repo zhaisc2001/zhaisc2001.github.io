@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百面机器学习-优化算法 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="machine learning" />
+  
+  
+  
+  
+  <meta name="description" content="优化是应用数学的一个分支，也是机器学习的核心组成部分。实际上，机器学习算法&#x3D;模型表征+模型评估+优化算法。优化算法做的是在模型表征空间中国呢找到模型评估指标最好的模型，不同的优化算法对应的模型表征和评估指标不同，我们需要了解优化算法原理。 有监督学习的损失函数机器学习中关键一环是模型评估，损失函数定义了模型的评估指标，没有损失函数我们就无法比较模型，我们要针对具体的问题选取合适的损失函数。   有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-优化算法">
+<meta property="og:url" content="http://xiangweixi.cn/2021/05/03/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="优化是应用数学的一个分支，也是机器学习的核心组成部分。实际上，机器学习算法&#x3D;模型表征+模型评估+优化算法。优化算法做的是在模型表征空间中国呢找到模型评估指标最好的模型，不同的优化算法对应的模型表征和评估指标不同，我们需要了解优化算法原理。 有监督学习的损失函数机器学习中关键一环是模型评估，损失函数定义了模型的评估指标，没有损失函数我们就无法比较模型，我们要针对具体的问题选取合适的损失函数。   有">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-03T02:56:31.000Z">
+<meta property="article:modified_time" content="2021-05-04T03:31:33.387Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-百面机器学习-优化算法" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-优化算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/05/03/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="article-date">
+	  <time datetime="2021-05-03T02:56:31.000Z" itemprop="datePublished">2021-05-03</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>优化是应用数学的一个分支，也是机器学习的核心组成部分。实际上，机器学习算法=模型表征+模型评估+优化算法。优化算法做的是在模型表征空间中国呢找到模型评估指标最好的模型，不同的优化算法对应的模型表征和评估指标不同，我们需要了解优化算法原理。</p>
+<h2 id="有监督学习的损失函数"><a href="#有监督学习的损失函数" class="headerlink" title="有监督学习的损失函数"></a>有监督学习的损失函数</h2><p>机器学习中关键一环是模型评估，损失函数定义了模型的评估指标，没有损失函数我们就无法比较模型，我们要针对具体的问题选取合适的损失函数。</p>
+<blockquote>
+<ul>
+<li><p>有监督学习涉及到的损失函数有哪些？请列举并简述它们的特点？(简单)</p>
+<p>有监督学习中，损失函数刻画了模型和训练样本的匹配程度。假设训练样本的形式为(x<sub>i</sub>，y<sub>i</sub>)，其中x<sub>i</sub>表示第i个样本的特征，y<sub>i</sub>表示该样本的标签，参数为𝛉的模型可以表示为函数f(.,𝛉):X-&gt;Y，我们定义损失函数为L(.,.):YxY-&gt;R<sub>≥0</sub>，L(f(x<sub>i</sub>,𝛉))越小，表明模型在该样本点匹配得越好。</p>
+<p>对二分类问题，Y={1,-1}，我们希望sign f(x<sub>i</sub>,𝛉)=y<sub>i</sub>，最自然的损失函数是0-1损失，即<br>$$<br>L_{0-1}(f,y)=1_{fy≤0}<br>$$<br>其中1<sub>p</sub>是指示函数(Indicator Function)，当且仅当P为真时取值为1，否则取值为0。该损失函数可以直观地刻画分类的错误率，但是由于它非凸、非光滑，对于这个函数的优化比较困难，它的一个代理函数是Hinge损失函数<br>$$<br>L_{hinge}(f,y)=max{0,1-fy}<br>$$<br>Hinge损失函数是0-1损失函数的一个凸上界，它在fy=1处不可导，因此它的优化方法不是SGD，而是次梯度下降法。0-1损失函数的另一个代理函数是Logistic损失函数<br>$$<br>L_{logistic}(f,y)=log_2(1+exp(-fY))<br>$$<br>它也是0-1损失函数的凸上界，而且它处处光滑，因此可以用梯度下降法优化，它对于所有的样本点都有所惩罚，因此logistic损失函数对异常点是敏感的。当预测值在-1到1之间时，我们使用交叉熵损失函数<br>$$<br>L_{crossentropy}(f,y)=-log_2(\frac{1+fy}{2})<br>$$<br>交叉熵损失函数也是0-1损失函数的光滑凸上界。</p>
+<p>对于回归问题，我们最常用的损失函数时平方损失函数，它是光滑的，能够使用SGD进行优化，当预测值离实际值偏差较大，平方损失函数惩罚力度加大，因此它也是对于异常点敏感的，我们可以使用绝对损失函数来解决该问题<br>$$<br>L_{absolute}(f,y)=|f-y|<br>$$<br>绝对损失函数问题在于它在f=y处不是光滑的，我们可以使用Huber损失函数，这样既满足了可导性，也满足了对异常点的鲁棒性，Huber损失函数<br>$$<br>L_{Huber}(f,y)=(f-y)^2,when\ |f-y|≤\delta<br>$$</p>
+<p>$$<br>L_{Huber}(f,y)=2\delta|f-y|-\delta^2,when\ |f-y|&gt;\delta<br>$$</p>
+<p>它在|f-y|较小时为平方损失，在|f-y|较大时为线性损失，处处可导，且对异常点鲁棒。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="机器学习中的优化问题"><a href="#机器学习中的优化问题" class="headerlink" title="机器学习中的优化问题"></a>机器学习中的优化问题</h2><p>大部分机器学习的参数估计问题也可以写成优化问题，机器学习模型不同，损失函数不同，对应的优化问题也不相同。</p>
+<blockquote>
+<ul>
+<li><p>机器学习中的优化问题，哪些时凸优化函数，哪些是非凸优化问题？各举一个例子。(较简单</p>
+<p>我们首先对凸函数下一个严格定义，函数是凸函数当且仅当对于定义域中的任意两袋内x,y，和任意实数λ∈[0,1]总有<br>$$<br>L(\lambda x+(1-\lambda x)y)≤\lambda L(x)+(1-\lambda)L(y)<br>$$<br>该不等式的一个直观解释，凸函数曲面上任意两点连接而成的线段，其上的任意一点都不会处于该函数曲面的下方。（关于凹凸函数，有一个相当变态的事实就是在中文语境下的凹凸函数的定义和由外语翻译而来的凹凸函数的定义是相反的，国内的定义参照同济大学数学系的《高等数学.第七版》（上册）一个函数图像形似“凹”或“凸”则是凹函数或凸函数，而国外的定义参照Cambridge University的Convex Optimization则是函数上方是凸集的是凸函数，函数上方是凹集的是凹函数）</p>
+<p>我们将逻辑回归作为一个例子，逻辑回归用于解决二分类问题，假设模型参数为𝛉，则逻辑回归的优化问题为<br>$$<br>\mathop{min}\limits_{\theta}L(\theta)\sum_{i=1}^{n}log(1+exp(-y_i\theta^Tx_i))<br>$$<br>可以通过计算目标函数的二阶Hessian矩阵来验证凸性。</p>
+<p>求一阶导，得到<br>$$<br><br>$$</p>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/05/03/百面机器学习-优化算法/" target="_blank" title="百面机器学习-优化算法">http://xiangweixi.cn/2021/05/03/百面机器学习-优化算法/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/27/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">百面机器学习-概率图模型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">有监督学习的损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">机器学习中的优化问题</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
