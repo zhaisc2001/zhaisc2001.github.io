@@ -19,7 +19,7 @@
 <meta property="og:description" content="优化是应用数学的一个分支，也是机器学习的核心组成部分。实际上，机器学习算法&#x3D;模型表征+模型评估+优化算法。优化算法做的是在模型表征空间中国呢找到模型评估指标最好的模型，不同的优化算法对应的模型表征和评估指标不同，我们需要了解优化算法原理。 有监督学习的损失函数机器学习中关键一环是模型评估，损失函数定义了模型的评估指标，没有损失函数我们就无法比较模型，我们要针对具体的问题选取合适的损失函数。   有">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-03T02:56:31.000Z">
-<meta property="article:modified_time" content="2021-05-06T03:31:19.614Z">
+<meta property="article:modified_time" content="2021-05-08T03:07:04.761Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
@@ -239,7 +239,70 @@
 <p>M是训练样本的个数，模型参数的更新公式为<br>$$<br>\theta_{t+1}=\theta_t-\alpha \nabla L(\theta_t)<br>$$<br>因此，经典的梯度下降法在每次对模型参数进行更新时需要遍历所有的数据，为了解决该问题，提出了随机梯度下降法(Stochastic Gradient Descent, SGD)用单个训练样本的损失来近似平均损失，即<br>$$<br>L(\theta;x_i,y_i)=L(f(x_i,\theta),y_i)<br>$$</p>
 <p>$$<br>\nabla L(\theta;x_i,y_i)=\nabla L(f(x_i,\theta),y_i)<br>$$</p>
 <p>因此，随机梯度下降法用单个训练数据也可以对模型参数进行一次更新，大大加快了收敛速率，该方法也非常适用于在线更新场景。</p>
-<p>为了降低随机梯度的方差，从而使得迭代算法更加稳定，也为了充分利用高度优化的矩阵运算操作</p>
+<p>为了降低随机梯度的方差，从而使得迭代算法更加稳定，也为了充分利用高度优化的矩阵运算操作，实际运用中我们会同时处理若干数据，这种方法被称为小批量梯度下降法(Mini-Batch Gradient Descent)。假设我们每次同时处理m个训练数据，则目标函数及其梯度为<br>$$<br>L(\theta)=\frac{1}{m}\sum_{j=1}^m L(f(x_{i_{j}},\theta),y_{i_{j}})<br>$$</p>
+<p>$$<br>\nabla L(\theta)=\frac{1}{m}\sum_{j=1}^m\nabla L(f(x_{i_{j}},\theta),y_{i_j})<br>$$</p>
+<p>对于小批量梯度下降法的使用，有三点需要注意的：</p>
+<p>(1)如何选取参数m？不同应用中，最优的m通常会不一样，需要调参选取，一般选取2的幂次来充分利用矩阵运算操作，可以在2的幂次中挑选最优的取值，例如32、64、128等。</p>
+<p>(2)如何挑选m个训练数据？为了避免数据的特定顺序给算法收敛带来的影响，一般会在每次遍历训练数据之前，对所有数据进行随机排序，然后在每次迭代时按顺序挑选m个训练数据直到遍历完所有数据。</p>
+<p>(3)如何选取学习速率𝝰？为了加快收敛速率，同时提高求解精度，通常会采用衰减学习速率方案：一开始算法采用较大的学习速率，当误差曲线进入平台期后，减小学习速率做更精细的调整。最优的学习速率方案也通常需要调参才能得到。</p>
+<p>综上，通常采用小批量梯度下降法解决训练数据量过大的问题。每次更新模型参数时，只需要处理m个训练数据即可，其中m是一个远小于总数据量M的常数，这样能够大大加快训练过程。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="随机梯度下降法的加速"><a href="#随机梯度下降法的加速" class="headerlink" title="随机梯度下降法的加速"></a>随机梯度下降法的加速</h2><p>随机梯度下降法有时候会成为一个坑，我们这里对它进行一个剖析。</p>
+<blockquote>
+<ul>
+<li><p>随机梯度下降法失效的原因——摸着石头下山。(较容易)</p>
+<p>我们经常用下山来形容最优化，随机梯度下降就像是蒙眼下山，而随机梯度下降法就好比蒙着眼睛下山。批量梯度下降法在全部训练集上计算准确的梯度，即<br>$$<br>\sum_{i=1}^n \nabla_\theta f(\theta;x_i,y_i)+\nabla_\theta\phi(\theta)<br>$$<br>其中f是损失函数，𝛗是正则项，而随机梯度则是使用单个样本的梯度来估计当前梯度。，随机梯度最容易出问题的是梯度图中的“山谷”和“鞍点”会导致随机梯度停止不变。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>为了改进随机梯度下降，研究者做了哪些改动？提出了哪些方法？(一般)</p>
+<p>随机梯度下降法本质上就是使用一个迭代方法更新参数，每次迭代在当前位置基础上进行更新，更新公式为<br>$$<br>\theta_{t+1}=\theta_t-\eta g_t<br>$$<br>改造的随机梯度下降法仍然是基于这个更新公式</p>
+<ul>
+<li><p>动量(Momentum)方法：</p>
+<p>在山谷与鞍点停滞不前的随机梯度下降法，假如能够保持“惯性”，就有机会找到真正的最优方向，因此使用模型方法，模型参数的迭代公式为<br>$$<br>v_t=\gamma v_{t-1}+\eta g_t<br>$$</p>
+<p>$$<br>\theta_{t+1}=\theta_t-v_t<br>$$</p>
+<p>前进的“步伐”有两部分决定，一部分是常规的学习速率与当前估计梯度的乘积，，二是衰减的前一次步伐，动量方法的更新公式对“惯性”的利用就体现在对前一次“步伐”信息的重利用上。而前一次步伐的衰减系数扮演的是阻力。</p>
+<p>相较于随机梯度下降法，动量方法收敛速度更快，收敛曲线更稳定。</p>
+</li>
+<li><p>AdaGrad方法</p>
+<p>除了利用上次步伐的惯性，我们还能获得什么呢？我们期待获得对周围环境的感知，随机梯度下降法对周围环境的感知，是指在参数空间中，根据不同参数一些经验性判断，自适应地确定参数的学习速率，不同参数的更新步幅是不同的。比如文本处理中训练词嵌入模型的参数时，有些词或词组频繁出现，有的词或词组极少出现。数据的稀疏性导致相应参数的梯度的稀疏性，不频繁出现的词或词组参数的梯度在大多数情况下为0，因此它们的学习率很大，而经常更新的参数我们希望它的学习速率能够减小。AdaGrad方法采用“历史梯度平方和”来衡量不同参数的梯度的稀疏性，取值越小表明越稀疏，具体的参数更新公式为<br>$$<br>\theta_{t+1,i}=\theta_{t,i}-\frac{\eta}{\sqrt{\sum_{k=1}^t g_{k,i}^2 + \epsilon}}g_{t,i}<br>$$<br>其中𝛉<sub>t+1,i</sub>表示t+1时刻的参数向量𝛉<sub>t+1</sub>的第i个参数，g<sub>k,i</sub>表示k时刻的梯度向量g<sub>k</sub>的第i个维度。另外分母中求和的形式实现了退火过程，意味着随着时间推移，学习速率越来越小。</p>
+</li>
+<li><p>Adam方法</p>
+<p>Adam方法将惯性保持和环境感知两个优点集于一身。一方面，Adam记录梯度的一阶矩(first moment)，即过往梯度与当前梯度的平均，这体现惯性保持；另一方面，Adam还记录梯度的二阶矩(second moment)，即过往梯度平方和当前梯度平方的平均，这类似AdaGrad方法，体现了环境感知能力，为不同参数产生自适应的学习速率。一阶矩和二阶矩都类似于滑动窗口内求平均的思想，也就是当前梯度和近一段时间内梯度的平均值，具体来说，他们呢采用指数衰退平均(exponential decay average)技术：<br>$$<br>m_t=\beta_1m_{t-1}+(1-\beta_1)g_t<br>$$</p>
+<p>$$<br>v_t=\beta_2 v_{t-1}+(1-\beta_2)g_t^2<br>$$</p>
+<p>一阶矩相当于梯度估计结果的期望，二阶矩相当于从开始到现在梯度估计结果平方的期望，一阶矩绝对值和二阶矩都很大时，说明此时梯度大且稳定；前者小后者大时，说明梯度不稳定；前者大后者小这种情况不可能出现；前者和后者都小说明优化进入了平台期，梯度趋于0。具体来说，Adam的更新公式为<br>$$<br>\theta_{t+1}=\theta_t -\frac{\eta *\hat{m}_t}{\sqrt{\hat{v}_t+\epsilon}}<br>$$<br>其中<br>$$<br>\hat{m}_t=\frac{m_t}{1-\beta_1^t},\hat{v}_t=\frac{v_t}{1-\beta_2^t}<br>$$</p>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="L1正则化与稀疏性"><a href="#L1正则化与稀疏性" class="headerlink" title="L1正则化与稀疏性"></a>L1正则化与稀疏性</h2><p>稀疏性说白了就是让模型参数很多都为0，这样相当于时做了一次特征选择。</p>
+<blockquote>
+<ul>
+<li><p>L1正则化能够使模型参数具有稀疏性的原理是什么？(一般)</p>
+<ul>
+<li><p>角度一：解空间形状</p>
+<p>我们可以通过二维的情况来找到一个直观的解释，L1正则项约束后的解空间形状是一个菱形，对角边是x轴和y轴，L2正则项约束后的解空间形状是一个圆形。我们的最优化目标函数等高线相较于L2的解空间，很明显更容易和L1的解空间在坐标轴上产生交点，此时我们可以得到稀疏解。</p>
+<p>这个解释正确但是不够精细，我们通过KKT条件给出解释，实际上正则项和带约束条件是等价的。我们将最优化问题添加约束为w的L2范数平方不能大于m<br>$$<br>min \sum_{i=1}^N(y_i-w^Tx_i)^2<br>$$</p>
+<p>$$<br>s.t. ||w||^2_2≤m<br>$$</p>
+<p>为了求解带约束条件的凸优化问题，我们使用拉格朗日法<br>$$<br>\sum_{i=1}^N (y_i-w^Tx_i)^2+\lambda (||w||^2_2-m)<br>$$<br>若w*和λ*分别是原问题和对偶问题的最优解，则根据KKT条件，它们应该满足<br>$$<br>0=\nabla_w(\sum_{i=1}^N(y_i-w^{<em>T}x_i)^2+\lambda^</em>(||w^*||^2_2-m))<br>$$</p>
+<p>$$<br>0≤\lambda^*<br>$$</p>
+<p>仔细看就会发现，第一个式子就是w<em>为带L2正则项优化问题的最优解的条件，而λ\</em>就是L2正则项前面的正则参数。</p>
+<p>这时回头再看开头的问题就清晰了。L2正则化相当于为参数定义了一个圆形的解空间，而L1相当于为参数定义了一个菱形的解空间。</p>
+</li>
+<li><p>角度二：函数叠加</p>
+<p>第二个角度试图用更直观的图示来解释L1产生稀疏性这一现象，仅考虑一维的情况，多维情况是类似的。假设目标函数最小值在非0处产生，考虑加上L2正则化项，目标函数变成了L(w)+cw<sup>2</sup>，最小值点向原点靠近，但仍然非原点；考虑加上L1正则化项，目标函数变成了L(w)+C|w|，此时最小值点在原点，产生了稀疏性。</p>
+<p>产生上述现象原因在于，假如L1正则项之后，正则项部分在原点左边导数为-C，在原点右边导数为C，因此只要愿目标函数导数绝对值小于C，那么带正则项目的目标函数在左边递减，右边递增，原点必然是最小值点；而带L2的目标函数只有在原点处导数为0，只要原目标函数在原点处导数不为0，那么最小值点就不会在原点，所以L2只有减小w绝对值的作用，对解空间的稀疏性没有贡献。</p>
+<p>在一些在线梯度下降算法中，往往会采用截断梯度法来产生稀疏性，这同L1正则项产生稀疏性的原理是类似的。</p>
+</li>
+<li><p>角度3:贝叶斯先验</p>
+<p>从贝叶斯派的角度来理解L1正则化和L2正则化，简单的解释是，L1正则化相当于对模型参数w引入了拉普拉斯先验，L2正则化相当于对模型引入了高斯先验，而拉普拉斯先验使得参数为0的概率更大。原因在于两种分布在0处曲线L1是尖峰L2是平滑。</p>
+</li>
+</ul>
 </li>
 </ul>
 </blockquote>
@@ -323,7 +386,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">有监督学习的损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">机器学习中的优化问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">经典优化算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E9%AA%8C%E8%AF%81"><span class="nav-number">4.</span> <span class="nav-text">梯度验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">随机梯度下降法</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">有监督学习的损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">机器学习中的优化问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">经典优化算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E9%AA%8C%E8%AF%81"><span class="nav-number">4.</span> <span class="nav-text">梯度验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">随机梯度下降法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%9A%84%E5%8A%A0%E9%80%9F"><span class="nav-number">6.</span> <span class="nav-text">随机梯度下降法的加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1%E6%AD%A3%E5%88%99%E5%8C%96%E4%B8%8E%E7%A8%80%E7%96%8F%E6%80%A7"><span class="nav-number">7.</span> <span class="nav-text">L1正则化与稀疏性</span></a></li></ol>
     
     </div>
   </aside>
