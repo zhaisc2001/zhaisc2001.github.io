@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百面机器学习-采样 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="machine learning" />
+  
+  
+  
+  
+  <meta name="description" content="“知秋一叶，尝鼎一脔”。采样顾名思义，就是从特定概率分布抽取相应样本点的过程。采样在机器学习中有着非常重要的应用：它能够将复杂的分布简化为离散样本点；可以使用重采样对样本集进行调整以更好地适合后期模型的学习。这一章我们介绍一些与采样相关的知识，比如采样的作用、常见的采样方法及其具体实现、采样的应用等。 采样的作用  举例说明采样在机器学习中的应用。(较简单) 采样本质上是对随机现象的模拟，比如说二">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-采样">
+<meta property="og:url" content="http://xiangweixi.cn/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="“知秋一叶，尝鼎一脔”。采样顾名思义，就是从特定概率分布抽取相应样本点的过程。采样在机器学习中有着非常重要的应用：它能够将复杂的分布简化为离散样本点；可以使用重采样对样本集进行调整以更好地适合后期模型的学习。这一章我们介绍一些与采样相关的知识，比如采样的作用、常见的采样方法及其具体实现、采样的应用等。 采样的作用  举例说明采样在机器学习中的应用。(较简单) 采样本质上是对随机现象的模拟，比如说二">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-08T03:12:22.000Z">
+<meta property="article:modified_time" content="2021-05-16T13:11:41.395Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-百面机器学习-采样" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-采样
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/" class="article-date">
+	  <time datetime="2021-05-08T03:12:22.000Z" itemprop="datePublished">2021-05-08</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>“知秋一叶，尝鼎一脔”。采样顾名思义，就是从特定概率分布抽取相应样本点的过程。采样在机器学习中有着非常重要的应用：它能够将复杂的分布简化为离散样本点；可以使用重采样对样本集进行调整以更好地适合后期模型的学习。这一章我们介绍一些与采样相关的知识，比如采样的作用、常见的采样方法及其具体实现、采样的应用等。</p>
+<h2 id="采样的作用"><a href="#采样的作用" class="headerlink" title="采样的作用"></a>采样的作用</h2><blockquote>
+<ul>
+<li><p>举例说明采样在机器学习中的应用。(较简单)</p>
+<p>采样本质上是对随机现象的模拟，比如说二项分布的采样就是对“丢硬币正面是啥”这一随机事件的模拟。</p>
+<p>另一方面，采样得到的样本集也可以看作是一种非参数模型，即用较少量的样本点（经验分布）来近似地刻画总体分布，并刻画总体分布中的不确定性。从这个角度来讲，采样实际上也是一种信息的降维。就像我们在训练模型时，将数据集划分为训练集和测试集，除了方便评估模型以及防止过拟合之外，还有着简化问题的考虑，这种信息降维的特性，使得采样在数据可视化方面也有很多应用，可以帮助人们快速、直观地了解总体分布中数据的结构和特性。</p>
+<p>对当前数据集进行重采样，可以充分利用已有数据集，挖掘更多信息，比如自助法和刀切法(Jack Knife)，通过对样本多次重采样来估计统计量的偏差、方差等。此外，利用重采样技术，可以在保持特定信息的前提下，有意识地改变样本的分布，这样能够更适应模型的后续训练和学习，例如利用重采样来处理分类模型的训练样本不均衡问题。</p>
+<p>此外由于有些模型结构复杂、含有隐变量等，导致求解公式比较复杂，这种情况下我们可以使用采样方法进行随机模拟，从而对这些复杂模型进行近似求解或推理。这一般会转化为某些函数在特定分布下的积分或期望，或者是求某些随机变量或参数在给定数据下的后验分布等，例如在潜在狄利克雷分布和深度玻尔兹曼机求解过程中，由于含有隐变量，直接计算比较困难，此时我们可以采用吉布斯采样对隐变量分布进行采样。对于贝叶斯模型，还可以将隐变量和参数变量，对它们的联合分布进行采样。和一些确定性的近似求解方法如变分贝叶斯方法、期望传播等不同，基于采样的随机模拟方法是数值型的近似求解方法。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="均匀分布随机数"><a href="#均匀分布随机数" class="headerlink" title="均匀分布随机数"></a>均匀分布随机数</h2><p>均匀分布指的是空间中每一个样本点对应的概率(密度)是相等的。根据样本空间是否连续，又分为离散均匀分布和连续均匀分布。均匀分布可以算作是最简单的概率分布。从均匀分布中进行采样，即生成均匀分布随机数，几乎是所有采样算法都需要用到的基本操作。然而即使是如此简单的分布，也需要精心设计一定的策略。</p>
+<blockquote>
+<ul>
+<li><p>如何变成实现均匀分布随机数生成器？(容易)</p>
+<p>首先需要明确的是，计算机程序实际上都是确定性的，因此并不能产生真正意义上的完全均匀分布随机数，只是通过程序生成的伪随机数能够通过近似的随机性测试。此外，计算机的存储和计算单元只能处理离散状态值，因此也不能产生连续均匀分布随机数，只能通过离散分布来逼近连续分布。</p>
+<p>生成离散均匀分布伪随机数一般使用线性同余法(Linear Congruential Generator)，可以得到计算公式为<br>$$<br>x_{t+1}=a*x_t+c(mod\ m),<br>$$<br>也就是根据当前生成的随机数来进行适当变换今儿随机得到下一次的随机数，而初始的随机数被称为随机种子。上面的公式可以得到的是区间[0,m-1]上的随机整数，如果想要得到区间[0,1]上的连续均匀分布随机数，用当前随机数除以m即可得到。这里我们给出一个gcc中采用的glibc版本各参数的值：m=2<sup>31</sup>-1,a=1103515245,c=12345。</p>
+<p>线性同余法的随机种子一般使用系统时间，但系统时间最小单位是秒，可能导致1秒内执行的多个随机数生成器取到的是同一个随机数。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="常见的采样方法"><a href="#常见的采样方法" class="headerlink" title="常见的采样方法"></a>常见的采样方法</h2><p>对于一个随机变量，通常用概率密度来刻画该变量的概率分布特性。具体来讲，可以根据概率密度函数来计算该值对应的概率（密度）。反过来，也可以根据概率密度函数提供的概率分布信息来生成随机变量的一个取值，这就是采样。因此在某种意义上来讲，采样是概率密度函数的逆向应用。</p>
+<blockquote>
+<ul>
+<li><p>通用采样方法，简单描述它们的主要思想以及具体操作步骤。(一般)</p>
+<p>几乎所有的采样方法都是以均匀分布随机数作为基本操作。均匀分布随机数一般用线性同余法来产生，首先假设已经生成了[0,1]上的均匀分布随机数。对于一些简单的分布，可以直接用均匀采样的一些扩展方法来产生样本点，比如有限离散分布可以使用轮盘赌算法进行采样。很多不方便直接进行采样的分布，可以考虑使用函数变换法，如果随机变量x和画存在变换关系u=𝛗(x)，则概率密度有如下关系<br>$$<br>p(u)|\phi’(x)|=p(x)<br>$$<br>因此，如果目标分布p(x)不好进行采样，可以构造一个变换，是的从变换之后的分布p(u)对u进行采样，这样我们可以先对画进行采样然后通过反函数得到x，如果是高维空间随机变量，那么𝛗’(x)对应的是Jacobian行列式。</p>
+<p>特别地，在函数变换法中，如果变换关系𝛗是x的累积分布函数的话，则得到所谓的逆变换采样(Inverse Transform Sampling)。假设采样的目标分布概率密度函数为p(x)，那么可以得到累积分布函数为<br>$$<br>u=\Phi(x)=\int^x_{-\infin}p(t)dt<br>$$<br>则逆变换采样法按照如下过程进行采样：</p>
+<p>(1)从均匀分布U(0,1)产生一个随机数u<sub>i</sub>;</p>
+<p>(2)计算x<sub>i</sub>=𝛗<sup>-1</sup>(u<sub>i</sub>)，其中𝛗<sup>-1</sup>(.)是累积分布函数的逆函数。</p>
+<p>上述采样过程得到的x<sub>i</sub>服从p(x)分布。</p>
+<p>若待采样的目标分布的累积分布函数的逆函数无法求解或者不容易计算，则不适用于逆变换采样法，此时可以构造一个容易采样的参考分布，先对参考分布进行采样，然后对得到的样本进行一定的后处理操作，使得最终的样本服从目标分布。常见的拒绝采样(Rejection Sampling)、重要性采样(Importance Sampling)，就属于这类采样算法。</p>
+<p>拒绝采样，又叫接受/拒绝采样(Accept-Reject Sampling)。对于目标分布p(x)，选取一个容易采样的参考分布q(x)，使得对于任意x都有p(x)≤M*q(x)，则可以按如下过程采样</p>
+<p>(1)从参考分布q(x)中随机抽取一个样本x<sub>i</sub>；</p>
+<p>(2)从均匀分布U(0,1)产生一个随机数u<sub>i</sub>;</p>
+<p>(3)如果u<sub>i</sub>≤p(x<sub>i</sub>)/Mq(x<sub>i</sub>)，则接受样本x<sub>i</sub>；否则拒绝，重新进行步骤(1)~(3)，直到新产生的样本x<sub>i</sub>被接受。</p>
+<p>通过简单的推导，可以知道最终得到的x<sub>i</sub>服从目标分布p(x)。如图所示，拒绝采样的关键是为目标分布p(x)选取一个合适的包络函数M*q(x)：包络函数越紧，每次采样时样本被接受的概率越大，采样概率越高，在实际应用中，为了维持采样效率，有时很难寻找一个解析形式的q(x)，因此延伸出了自适应拒绝采样(Adaptive Rejection Sampling)，在目标分布是对数凹函数时，用分段线性函数来覆盖目标分布的对数lnp(x)。</p>
+<p>很多时候，采样的最终目的并不是为了得到样本，而是为了进行一些后续任务，如预测变量取值，这通常表现为一个求函数期望的形式。重要性采样就是用于计算函数f(x)在目标分布p(x)上的积分(函数期望)，即<br>$$<br>E[f]=\int f(x)p(x)dx<br>$$<br>找一个比较容易抽样的参考分布q(x)，并令w(x)=p(x)/q(x)，则有<br>$$<br>E[f]=\int f(x)w(x)q(x)dx<br>$$<br>这里w(x)可以看成是样本x的重要性权重，由此，可以先从参考分布q(x)中抽取N个样本，然后由下面的公式估计E[f]<br>$$<br>E[f]=\hat{E}<em>N[f]=\sum</em>{i=1}^Nf(x_i)w(x_i)<br>$$<br>如果不需要计算函数积分，只想从目标分布p(x)中采样出若干样本，则可以用重要性重采样(Sampling-Importance Re-sampling, SIR)，先在从参考分布q(x)中抽取N个样本{x<sub>i</sub>}，然后按照它们对应的重要性权重{w(x<sub>i</sub>)}对这些样本进行重新采样(这是一个简单的针对有限离散分布的采样)，最终得到的样本服从目标分布p(x)。</p>
+<p>实际上在这里的「总结与拓展」中，我看到了一个比较有意思的问题：如何从一个不规则多边形中随机取一个点？而这个问题的解法是以从三角形中随机取点为基础的，关于在三角形中「均匀」地随机取一点大家有一些争论，这个回答也比较有意思：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31706710">https://www.zhihu.com/question/31706710</a></p>
+</li>
+</ul>
+</blockquote>
+<h2 id="高斯分布的采样"><a href="#高斯分布的采样" class="headerlink" title="高斯分布的采样"></a>高斯分布的采样</h2><p>高斯分布，又称正态分布。实际应用中，我们经常需要对高斯分布进行采样，展示不同的采样方法在高斯分布上的具体操作以及性能对比，我们会对这些采样方法有更直观的印象。</p>
+<blockquote>
+<ul>
+<li><p>如何对高斯分布进行采样？(一般)</p>
+<p>首先，假设随机变量z服从标准正态分布N(0,1)，令<br>$$<br>x=\sigma *z+\mu<br>$$<br>则x服从均值为μ、方差为𝞂<sup>2</sup>的高斯分布N(μ,𝞂<sup>2</sup>)。因此，任意高斯分布都可以由标准正态分布通过拉伸和平移得到，所以这里只考虑标准正态分布的采样。常见的采样方法有逆变换法、拒绝采样、重要性采样、马尔可夫蒙特卡洛采样法等。具体到高斯分布，要如何采样呢？</p>
+<p>如果直接采用逆变换法，基本操作步骤为：</p>
+<p>(1)产生[0,1]上的均匀分布随机数u。</p>
+<p>(2)令<br>$$<br>z=\sqrt{2}erf^{-1}(2u-1)<br>$$<br>则z服从标准正态分布，其中erf(.)是高斯误差函数，它是标准正态分布的累积分布函数经过简单平移和拉伸变换后的形式，定义如下<br>$$<br>erf(x)=\frac{2}{\sqrt{\pi}}\int_0^xe^{-t^2}dt<br>$$<br>上述逆变换法需要求解erf(x)的逆函数，这并不是一个初等函数，没有显式解，计算起来比较麻烦，为了避免这种非初等函数的求逆操作，Box-Muller算法提出如下解决方法：若单个高斯分布的累积分布函数不好求逆，那么两个独立的高斯分布的联合分布呢？假设x,y是两个服从标准正态分布的独立随机变量，它们的联合概率密度为<br>$$<br>p(x,y)=\frac{1}{2\pi}e^{-\frac{x^2+y^2}{2}}<br>$$<br>这个积分将坐标变换为极坐标再求积分会很简单。</p>
+<p>具体采样过程如下</p>
+<p>1.产生[0,1]上的两个独立的均匀分布随机数u<sub>1</sub>，u<sub>2</sub>。</p>
+<p>2.令x=(-2ln(u<sub>1</sub>))<sup>1/2</sup>cos2𝜋u<sub>2</sub>,y=(-2ln(u<sub>1</sub>))<sup>1/2</sup>sin2𝜋u<sub>2</sub>，则x,y服从标注正态分布，并且是相互独立的。</p>
+<p>Box-Muller算法由于需要计算三角函数，相对来说还是比较耗时，而Marsaglia polar method则必开了三角函数的计算，因而更快：</p>
+<p>(1)在单位圆上产生均匀分布随机数对(x,y)（在矩形中利用拒绝采样法即可得到）；</p>
+<p>(2)令<br>$$<br>s=x^2+y^2<br>$$<br>则<br>$$<br>x\sqrt{\frac{-2lns}{s}},y\sqrt{\frac{-2lns}{s}}<br>$$<br>是两个服从标准正态分布的样本，可以用于代替Box-Muller算法中的cosine和sine操作。</p>
+<p>除了逆变换法，我们还可以利用拒绝采样法，选择一个比较好计算累积分布逆函数的参考分布来覆盖当前正态分布(可以乘以一个常数倍)，进而转化为对参考分布的采样以及对样本点的拒绝/接收操作。考虑到高斯分布的特性，我们可以用指数分布作为参考分布。</p>
+<p>指数分布的累积分布机器你函数都比较容易求解。由于指数分布样本空间为x≥0，而标准正态分布样本空间为全体实数，因此还需要用正态分布的对称性转化为全坐标轴。具体来说，取λ=1的指数分布作为参考分布，其密度函数为<br>$$<br>q(x)=e^{-x}<br>$$<br>对应累积分布函数及其逆函数分别为<br>$$<br>F(x)=1-e^{-x}<br>$$</p>
+<p>$$<br>F^{-1}(u)=-log(1-u)<br>$$</p>
+<p>利用逆变换法很容易得到指数分布的样本，然后再根据采样法来决定是否接受该样本，概率为<br>$$<br>A(x)=\frac{p(x)}{M*q(x)}<br>$$<br>其中<br>$$<br>p(x)=\frac{2}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}(x≥0)<br>$$<br>实际应用时可以使M尽可能小，这样每次接受的概率大，采样效率更高。</p>
+<p>具体采样过程如下：</p>
+<p>1.产生[0,1]上的均匀分布随机数u<sub>0</sub>，计算x=F<sup>-1</sup>(u<sub>0</sub>)得到指数分布的样本x；</p>
+<p>2.再产生[0,1]上的均匀分布随机数u<sub>1</sub>，若u<sub>1</sub>&lt;A(x)，则接受x，进入下一步；否则拒绝，跳回道步骤1重新采样；</p>
+<p>3.最后再产生[0,1]上的均匀分布随机数u<sub>2</sub>，若u<sub>2</sub>&lt;0.5，则将x转化为-x，否则保持不变；最终得到标准正态分布的一个样本。</p>
+<p>拒绝采样法的效率取决于接受概率的大小：参考分布与目标分布越接近，则采样效率越高。更高效的拒绝采样算法是Ziggurat算法，它使用了多个阶梯矩形来逼近目标分布。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="马尔可夫蒙特卡洛法"><a href="#马尔可夫蒙特卡洛法" class="headerlink" title="马尔可夫蒙特卡洛法"></a>马尔可夫蒙特卡洛法</h2><p>在之前学习李航老师的《统计学习方法》中已经讲过，不再赘述。值得注意的是下面这个问题</p>
+<blockquote>
+<ul>
+<li><p>MCMC采样法如何得到相互独立的样本？(较容易)</p>
+<p>与一般的蒙特卡洛方法不同，MCMC采样得到的样本序列相邻样本不是独立的，因为后一个样本是前一个样本根据特定的转移概率得到的，甚至有一定可能就是前一个样本。我们想要取独立同分布样本，可以同时运行多条马尔可夫链，也可以在同一条马尔可夫链上隔若干样本选取一个。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="贝叶斯网络的采样"><a href="#贝叶斯网络的采样" class="headerlink" title="贝叶斯网络的采样"></a>贝叶斯网络的采样</h2><p>概率图模型经常被用来描述多个随机变量的联合概率分布。贝叶斯网络，又称信念网络或有向无环图模型。它是一种概率图模型。</p>
+<blockquote>
+<ul>
+<li><p>如何对贝叶斯网络进行采样？如果只需要考虑一部分变量的边缘分布，如何采样？如果网络中含有观测变量，又该如何采样？(一般)</p>
+<p>对一个没有观测变量的贝叶斯网络进行采样，最简单的方法是祖先采样(Ancestral Sampling)，它的核心思想是根据有向图的顺序，先对祖先节点进行采样，只有当某个节点的所有父节点都已完成采样，才对该节点进行采样。贝叶斯网络的全概率公式为<br>$$<br>p(z_1,z_2,..,z_n)=\prod_{i=1}^np(z_i|pa(z_i))<br>$$<br>如果只需要对贝叶斯网络中一部分随机变量的边缘分布进行采样，可以用祖先采样先对全部随机变量进行采样，然后直接忽视那些不需要的变量的采样值即可。</p>
+<p>接下来考虑含有观测变量的贝叶斯网络的采样，最简单的方法是逻辑采样，同样是利用祖先采样得到所有变量的取值。如果这个样本在观测变量上的采样值和实际观测值相同，则接受，否则拒绝，重新采样。这种方法的缺点是采样效率可能会很低。随着观测变量个数增加、每个变量的状态数目上升，逻辑采样法的采样效率急剧下降，实际中基本不可用。</p>
+<p>实际应用中我们参考重要性采样的思想，不再对观测变量进行采样，只对非观测变量采样，但是最终得到的样本需要赋一个重要性权值<br>$$<br>w\propto \prod_{z_o\in E}p(z_i|pa(z_i))<br>$$<br>其中E是观测变量集合。这种采样方法称作似然加权采样(Likelihood Weighted Sampling)，产生的样本权值可以用于后续的积分操作。除此之外，还可以使用MCMC采样法进行采样，具体来说，如果使用Metropolis-Hastings采样法的话，只需要在随机向量上选择一个概率转移矩阵，然后按照概率转移矩阵不断进行状态转换，每次转移有一定概率的接受或拒绝，最终得到的样本序列会收敛到目标分布。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="不均衡样本集的重采样"><a href="#不均衡样本集的重采样" class="headerlink" title="不均衡样本集的重采样"></a>不均衡样本集的重采样</h2><p>在训练二分类模型时，例如医疗诊断、网络入侵检测、信用卡反诈骗等，经常会遇到正负样本不均衡的问题。为了让分类器在正样本和负样本上都有足够的准确率和召回率，我们不能直接使用不均衡的样本集来进行训练学习。</p>
+<blockquote>
+<ul>
+<li><p>对于二分类问题，当训练集中正负样本非常不均衡时，如何处理数据以更好地训练分类模型？(一般)</p>
+<p>很多分类模型在训练数据不均衡时会出现问题，本质原因是模型在训练时优化的目标函数和人们在测试时使用的评价标准不一致。这种“不一致”可能是由于训练数据的样本分布与测试时期望的样本分布不一致，也可能是由于训练阶段不同类别的权重(重要性)与测试阶段不一致，例如训练时认为所有样本的贡献是相等的，而测试时FP样本和FN样本有不同的代价。</p>
+<p>基于这些分析，我们从两个角度来处理样本不均衡问题</p>
+<p>1.基于数据的方法</p>
+<p>对数据进行重采样，使原本不均衡的样本变得均衡。首先，记样本数大的类别为C<sub>maj</sub>，样本数小的类别为C<sub>min</sub>，它们对应的数据集分别为S<sub>maj</sub>和S<sub>min</sub>。</p>
+<p>最简单的处理不均衡样本记得方法是随机采样。采样氛围过采样以及欠采样，随机过采样指的是从少数类样本集S<sub>min</sub>随机重复抽取样本(有放回)以得到更多样本；随机欠采样则是从多数样本集S<sub>maj</sub>随机选取较少的样本(有放回或者无放回)。直接的随机采样虽然简单，但也容易造成一些问题，过采样容易导致对少数类样本的多次复制，扩大了数据规模，造成过拟合；欠采样会舍弃样本，导致有用信息的损失，同时造成模型学习了整体模式的一部分。</p>
+<p>为了解决这些问题，在过采样时并不是简单地复制样本，而是采用一些方法生成新的样本。例如，SMOTE是通过对少数类S<sub>min</sub>中选择一个样本x，从它在S<sub>min</sub>中的K近邻中随机选一个样本y，然后在x,y连线上随机选择一点合成成为新的样本，这种方法可以降低过拟合的风险。而SMOTE算法可能会增大类间重叠程度，于是生成一些不能提供有益信息的样本。为此出现Borderline-SMOTE、ADASYN等改进算法，前者通过只给出在分类边界上的少数类样本合成新样本，而ADASYN则给不同的少数类样本合成不同个数的新样本，此外还可以采用一些数据清理方法来进一步降低合成样本带来的类间重叠，以得到更加良定义的类簇。</p>
+<p>同样为了处理欠采样，可以采用Informed Undersampling来解决由于随机欠采样带来的数据丢失问题，常见的Informed Undersampling算法有</p>
+<p>(1)easy ensemble算法，每次从多数类S<sub>maj</sub>上随机抽取一个子集E，子集大小约等于少数类S<sub>min</sub>，然后用E+S<sub>min</sub>训练一个分类器；重复上述过程若干次，得到多个分类器，最终的分类结果就是多个分类器结果的融合；</p>
+<p>(2)balance cascade算法，级联结构，在每一级中从多数类S<sub>maj</sub>中随机抽取子集E，用E+S<sub>min</sub>训练该级的分类器；然后将S<sub>maj</sub>中能够被当前分类器正确分类的样本剔除掉，继续下一级的操作，重复若干次得到级联结构；最终的输出结果是各级分类器结果的融合。</p>
+<p>(3)其他诸如NearMiss(利用K近邻信息挑选具有代表性的样本)、One-sided Selection(采用数据清理技术)等算法。</p>
+<p>在实际应用中，具体的采样操作可能并不总是如上述算法，基于聚类的采样方法来指导过采样/欠采样操作；经常使用的数据扩充方法也是一种过采样，对少数类样本进行一些噪声扰动或变换以构造新的样本；而Hard Negative Mining则是一种欠采样，把比较难的样本抽出来用于迭代分类器。</p>
+<p>2.基于算法的方法</p>
+<p>样本不均衡时还可以通过改变模型训练的目标函数来矫正不平衡性；当样本集极其不均衡时，也可以将问题转化为单类学习(one-class learning)、异常检测(anomaly detection)。我们这里不再赘述。</p>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/05/08/百面机器学习-采样/" target="_blank" title="百面机器学习-采样">http://xiangweixi.cn/2021/05/08/百面机器学习-采样/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/05/03/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">百面机器学习-优化算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">采样的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%87%E5%8C%80%E5%88%86%E5%B8%83%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">均匀分布随机数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E9%87%87%E6%A0%B7%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">常见的采样方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83%E7%9A%84%E9%87%87%E6%A0%B7"><span class="nav-number">4.</span> <span class="nav-text">高斯分布的采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">马尔可夫蒙特卡洛法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C%E7%9A%84%E9%87%87%E6%A0%B7"><span class="nav-number">6.</span> <span class="nav-text">贝叶斯网络的采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%9D%87%E8%A1%A1%E6%A0%B7%E6%9C%AC%E9%9B%86%E7%9A%84%E9%87%8D%E9%87%87%E6%A0%B7"><span class="nav-number">7.</span> <span class="nav-text">不均衡样本集的重采样</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
