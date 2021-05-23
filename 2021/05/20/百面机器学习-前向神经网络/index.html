@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>百面机器学习-前向神经网络 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="machine learning" />
+  
+  
+  
+  
+  <meta name="description" content="深度前馈网络(Deep Feedforward Networks)是一种典型的深度学习模型。其目标为拟合某个函数f，即定义映射y&#x3D;f(x;𝛉)将输入x转化为某种预测的输出y，并同时学习网络参数𝛉的值，使模型得到最优的函数近似。由于从输入到输出的过程中不存在与模型自身的反馈连接，此类模型被称为”前馈”。 深度前馈网络通常由多个函数复合在一起来表示，该模型与一个有向无环图相关联，其中图则描述了函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-前向神经网络">
+<meta property="og:url" content="http://xiangweixi.cn/2021/05/20/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%91%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="深度前馈网络(Deep Feedforward Networks)是一种典型的深度学习模型。其目标为拟合某个函数f，即定义映射y&#x3D;f(x;𝛉)将输入x转化为某种预测的输出y，并同时学习网络参数𝛉的值，使模型得到最优的函数近似。由于从输入到输出的过程中不存在与模型自身的反馈连接，此类模型被称为”前馈”。 深度前馈网络通常由多个函数复合在一起来表示，该模型与一个有向无环图相关联，其中图则描述了函数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://th.bing.com/th/id/Rc8819bfa47f10802b4c625e2a68eaeb4?rik=BHc0geCi9lGRBA&pid=ImgRaw">
+<meta property="og:image" content="https://th.bing.com/th/id/Rd0b5cbf5f7910d5bdb8f154e5a230682?rik=ZoI0niK1N/oGXQ&pid=ImgRaw">
+<meta property="article:published_time" content="2021-05-20T11:27:26.000Z">
+<meta property="article:modified_time" content="2021-05-23T09:29:08.674Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://th.bing.com/th/id/Rc8819bfa47f10802b4c625e2a68eaeb4?rik=BHc0geCi9lGRBA&pid=ImgRaw">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-百面机器学习-前向神经网络" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-前向神经网络
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2021/05/20/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%91%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="article-date">
+	  <time datetime="2021-05-20T11:27:26.000Z" itemprop="datePublished">2021-05-20</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>深度前馈网络(Deep Feedforward Networks)是一种典型的深度学习模型。其目标为拟合某个函数f，即定义映射y=f(x;𝛉)将输入x转化为某种预测的输出y，并同时学习网络参数𝛉的值，使模型得到最优的函数近似。由于从输入到输出的过程中不存在与模型自身的反馈连接，此类模型被称为”前馈”。</p>
+<p>深度前馈网络通常由多个函数复合在一起来表示，该模型与一个有向无环图相关联，其中图则描述了函数的复合方式，例如“链式结构”f(x)=f<sup>(3)</sup>(f<sup>(2)</sup>(f<sup>(1)</sup>(x))))。链的全长定义为网络模型的“深度”。网络学习算法则需要决定如何使用中间的“隐藏层”来最优的实现f*的近似。</p>
+<p>深度前馈网络是一类网络模型的统称，我们常见的多层感知机、自编码器、限制玻尔兹曼机，以及卷积神经网络都是其中的成员。</p>
+<h2 id="多层感知机与布尔函数"><a href="#多层感知机与布尔函数" class="headerlink" title="多层感知机与布尔函数"></a>多层感知机与布尔函数</h2><blockquote>
+<ul>
+<li><p>多层感知机表示异或逻辑最少需要几个隐藏层(仅考虑二元输入)？</p>
+<p>我们回顾逻辑回归(0个隐藏层)的公式<br>$$<br>Z=sigmoid(AX+BY+C)<br>$$<br>其中sigmoid激活函数是单调递减的：当AX+BY+C取值增大时，Z的取值也增大；当AX+BY+C的取值减少时，Z的取值也减小。而AX+BY+C对于X和Y的变化也是单调的，因此采用逻辑回归是无法精确学习输出为异或的模型表示。</p>
+<p>然后我们再考虑具有一个隐藏层的情况。事实上，通用近似定理告诉我们，一个前馈神经网络如果具有线性输出层和至少一层具有任何一种“挤压”性质的激活函数的隐藏层，当给予网络足够数量的隐藏单元时，可以以任意精度近似任何从一个有限维空间到另一个有限维空间的波莱尔可测函数。可以简单认为我们常用的激活函数和目标函数是通用近似定理适用的一个子集，因此多层感知机的表达能力是非常强的，关键在于我们是否能够学习到对应此表达的模型参数。</p>
+<p>在这里，我们还并不涉及模型参数学习，而是通过精心设计一个模型参数以说明包含一个隐含层的多层感知机就可以确切地计算异或函数。在隐藏单元Z<sub>1</sub>中，X和Y输入权重均为1，且偏置为1，等同于计算H<sub>1</sub>=X+Y-1，再应用ReLU函数max(0,H<sub>1</sub>)，第一个隐藏单元在X和Y均为1时激活，第二个隐藏单元在X和Y均为0时激活，最后再将两个隐藏单元的输出做一个线性变换即可实现异或操作。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>如果只使用一个隐层，需要多少隐节点能够实现包含n元输入的任意布尔函数？</p>
+<p>包含n元输入的任意布尔函数可以唯一表示为析取范式(Disjunctive Normal Form，DNF)(由有限个简单合取式构成的析取式)的形式。先看一个n=5的简单示例<br>$$<br>Y=\overline{X_1 X_2}X_3X_4\overline{X_5}+\overline{X_1}X_2\overline{X_3}X_4X_5+\overline{X_1}X_2X_3\overline{X_4X_5}+X_1\overline{X_2X_3X_4}X_5+X_1\overline{X_2}X_3X_4X_5+X_1X_2\overline{X_3X_4}X_5<br>$$<br>首先证明单个隐结点可以表示任意合取取范式。考虑任意布尔变量假设X<sub>i</sub>，若它在合取范式中出现的形式为正(X<sub>i</sub>)，则设权重为1；若出现的形式为非，则设权重为-1；未出现则设为0，并且偏置设为合取范式中变量的总数取负之后再加1.可以看出，当采用ReLU激活函数之后，当且仅当所有出现的布尔变量均满足条件时，该隐藏单元才会被激活，否则输出0.然后令所有隐藏单元到输出层的参数为1，并设输出单元的偏置为0.这样，当且仅当所有的隐藏单元都未被激活时，才会输出0，否则都将输出一个正数，起到了析取的作用。</p>
+<p>使用卡诺图对间隔填充的网格进行分析，发现反转任意网格的取值都会引起规约，因此n元布尔函数的析取范式最多包含2<sup>(n-1)</sup>个不可规约的合取范式，对于单隐层感知机，需要2<sup>(n-1)</sup>个隐节点实现。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>考虑多隐层的情况，实现包含n元输入的任意布尔函数最少需要多少个网络节点和网络层？</p>
+<p>参考问题1的解答，二元输入需要三个结点(两个隐藏层节点，一个输出层节点)来完成一次异或操作，对于四元输入，包含三次异或操作，需要9个结点即可完成，以此类推我们可以知道n元异或操作需要包括3(n-1)个结点(包括最终输出节点)。可以发现，多隐层结构可以将隐节点的数目从指数级O(2<sup>(n-1)</sup>)直接减少至线性级O(3(n-1))!</p>
+<p>在上面所举的例子，n元异或所需的3(n-1)个结点可以对应2(n-1)个网络层(包括隐含层和输出层)，实际上，层数可以进一步减小。考虑到四元的输入W、X、Y、Z；需要的最少网络层数为2log<sub>2</sub>N(向上取整)。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="深度神经网络中的激活函数"><a href="#深度神经网络中的激活函数" class="headerlink" title="深度神经网络中的激活函数"></a>深度神经网络中的激活函数</h2><p>线性模型是机器学习领域中最基本也是最重要的工具，以逻辑回归和线性回归为例，无论通过闭解形式还是使用凸优化，它们都能高效且可靠地拟合数据。需要非线性变换对数据的分布进行重新映射。对于深度神经网络，我们在每一层线性变换后叠加一个非线性激活函数，以避免多层网络等效于单层线性函数，从而获得更强大的学习与拟合能力。</p>
+<blockquote>
+<ul>
+<li><p>写出常用激活函数及其导数(容易)</p>
+<p>Sigmoid激活函数的形式为<br>$$<br>f(z)=\frac{1}{1+exp(-z)}<br>$$<br>对应的导函数为<br>$$<br>f’(z)=f(z)(1-f(z))<br>$$<br>Tanh激活函数的形式为<br>$$<br>f(z)=tanh(z)=\frac{e^z-e^{-z}}{e^z+e^{-z}}<br>$$<br>对应的导函数为<br>$$<br>f’(z)=1-(f(z))^2<br>$$<br>ReLU激活函数的形式为<br>$$<br>f(z)=max(0,z)<br>$$<br>对应的导函数为<br>$$<br>f’(z)=1,z&gt;0;f’(z)=0,z≤0<br>$$</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>为什么Sigmoid和Tanh激活函数会导致梯度消失的现象？(较容易)</p>
+<p>Sigmoid激活函数的曲线，它将输入z映射到区间(0,1)，当z很大时，f(z)趋近于0。其导数f’(z)=f(z)(1-f(z))在z很大或很小时都会趋近于0，造成梯度消失的现象。</p>
+<p>Tanh激活函数的曲线，当z很大时，f(z)趋近于1；当z很小时，f(z)趋近于-1.其导数f’(z)=1-(f(z))<sup>2</sup>在z很大或很小时都会趋近于0，同样会出现“梯度消失”。实际上，Tanh激活函数相当于Sigmoid的平移<br>$$<br>tanh(x)=2sigmoid(2x)-1<br>$$</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>ReLU系统的激活函数相对于Sigmoid和Tanh激活函数的优点是什么？它们有什么局限性以及如何改进？(一般)</p>
+<ul>
+<li><p>优点：1.从计算的角度上，Sigmoid和Tanh激活函数均需要计算指数，复杂度高，而ReLU只需要一个阈值即可得到激活值。</p>
+<p>2.ReLU的非饱和性可以有效地解决梯度消失的问题，提供相对宽的激活边界。</p>
+<p>3.ReLu的单侧抑制提供了网络的稀疏表达能力。</p>
+</li>
+<li><p>局限性：ReLU的局限性在于其训练过程中会导致神经元死亡的问题。这是由于f(z)=max(0,z)导致负梯度在经过该ReLU单元时被置为0，且在之后也不被任何数据激活，即流经该神经元的梯度永远为0，不对任何数据产生响应。在实际训练中，如果学习率(Learning Rate)设置较大，会导致超过一定比例的神经元不可逆死亡，进而参数梯度无法更新，整个训练过程失败。</p>
+</li>
+<li><p>未解决这一问题，人们设计了ReLU的变种Leaky ReLU(LReLU)，其形式表示为<br>$$<br>f(z)=z,z&gt;0;f(z)=az,z≤0;<br>$$<br>ReLU和LReLU的函数曲线对比，LReLU与ReLU的区别在于，当z&lt;0时其值不为0，而是一个斜率为a的线性函数，一般a为一个很小的正常数，这样既实现了单侧抑制，又保留了部分负梯度信息以致不完全丢失。但另一方面，a值的选择增加了问题难度，需要较强的人工先验或多或多次重复训练以确定合适的参数值。</p>
+<p>基于此，参数化的PReLU(Parametric ReLU)应运而生。它与LReLU的主要区别是将负轴部分斜率𝝰作为网络中一个可学习的参数，进行反向传播训练，与其他含参数网络层联合优化。而另一个LReLU的变种增加了“随机化”机制，具体地，在训练过程中，斜率𝝰作为一个LReLU的变种增加了“随机化”机制，具体地，在训练过程中，斜率𝝰作为一个满足某种分布的随机采样；测试时再固定下来。Random ReLU (RReLU)在一定程度上能起到正则化的作用。关于ReLU系列激活函数，更多详细内容及实验性能对比可以参考相关论文。</p>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="多层感知机的反向传播算法"><a href="#多层感知机的反向传播算法" class="headerlink" title="多层感知机的反向传播算法"></a>多层感知机的反向传播算法</h2><p>多层感知机中，输入信号通过各个网络层的隐节点产生输出的过程称为前向传播。定义了一个典型的多层感知机。为便于表示，定义第(l)层的输入x<sup>(i)</sup>，输出为a<sup>(l)</sup>；在每一层中，首先利用输入x<sup>(l)</sup>和偏置b<sup>(l)</sup>计算仿射变换z<sup>l</sup>=W<sup>(l)</sup>x<sup>(l)</sup>+b<sup>(l)</sup>;然后激活函数f作用于z<sup>(l)</sup>，得到a<sup>(l)</sup>=L<sub>w,b</sub>(x<sup>(l)</sup>)=f(z<sup>(l)</sup>);a<sup>(l)</sup>直接作为下一层的输入，即x<sup>(l+1)</sup>。设x<sup>(l)</sup>为m维的向量，z<sup>(l)</sup>和a<sup>(l)</sup>为n维的向量，则W<sup>(l)</sup>为m*n维的矩阵。在网络训练中，前向传播最终会产生一个标量损失函数，反向传播算法(Back Propagation)则将损失函数的信息沿网络层向后传播用以计算梯度，达到优化网络参数的目的。反向传播是神经网络中非常重要的算法。</p>
+<blockquote>
+<ul>
+<li><p>写出多层感知机的平方误差和交叉熵损失函数。(较容易)</p>
+<p>m样本的集合{(x<sup>(1)</sup>,y<sup>(1)</sup>),…,(x<sup>(m)</sup>,y<sup>(m)</sup>)}，其整体代价函数为<br>$$<br>J(W,b)=[\frac{1}{m}\sum_{i=1}^m J(W,b;x^{(i)},y^{(i)})]+\frac{\lambda}{2}\sum_{l=1}^{N-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(W_{ij}^{(l)})^2<br>$$<br>一般情况下第一项为平方误差项，第二项为L2正则化项，功能上可称为权重衰减项。</p>
+<p>交叉熵损失用于二分类场景，二分类场景为例，交叉熵损失函数定义为<br>$$<br>J(W,b)=-\frac{1}{m}\sum_{i=1}^m(y^{(i)}lno^{(i)}+(1-y^{(i)})ln(1-o^{(i)}))<br>$$<br>多分类场景中，我们也可以写出相应的损失函数<br>$$<br>J(W,b)=-\frac{1}{m}\sum_{i=1}^m\sum_{k=1}^ny_k^{(i)}lno_k^{(i)}<br>$$<br>其中o代表第i个样本的预测属于类别k的概率，y为实际的概率。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>根据问题1中的损失函数，推导各层参数更新的梯度计算公式。(较难)</p>
+<p>第l层的参数为W<sup>(l)</sup>,b<sup>(l)</sup>；每一层的仿射变换为z<sup>(i)</sup>=W<sup>(l)</sup>x<sup>(l)</sup>+b<sup>(l)</sup>；输出为a<sup>(l)</sup>=f(z<sup>(l)</sup>)，其中f为非线性激活函数(如Sigmoid、Tanh、ReLU等)；a<sup>(l)</sup>直接作为下一层的输入，即x<sup>(l+1)</sup>=a<sup>(l)</sup>。</p>
+<p>我们使用批量梯度下降来更新参数，更新公式为<br>$$<br>W_{ij}^{(l)}=W_{ij}^{(l)}-\alpha\frac{\partial}{\partial W_{ij}^{(l)}}J(W,b)<br>$$</p>
+<p>$$<br>b_i^{(l)}=b_i^{(l)}-\alpha\frac{\partial}{\partial b_i^{(l)}}J(W,b)<br>$$</p>
+<p>𝝰为学习速率，控制每次迭代更新的幅度。</p>
+<p>问题核心在于求解两个偏导数，为了得到地推公式，我们还需要计算损失函数对隐层的偏导数<br>$$<br>\frac{\partial}{\partial z_{i}^{(l)}}J(W,b)=\sum_{j=1}^{s_{l+1}}(\frac{\partial J(W,b)}{\partial z_j^{(l+1)}}\frac{\partial z_j^{(l+1)}}{\partial z_i^{(l)}})<br>$$<br>其中s<sub>i+1</sub>为第l+1层的节点数，而<br>$$<br>\frac{\partial z_j^{(l+1)}}{\partial z_i^{(l)}}=\frac{\partial(W_j^{(l+1)}x^{(l+1)}+b_j^{(l+1)})}{\partial z_i^{(l)}}<br>$$<br>其中b<sup>(l+1)</sup>与z<sub>i</sub><sup>(l)</sup>无关，因此偏导数可以省去，x<sup>(l+1)</sup>=a<sup>(l)</sup>=f(x<sup>(l)</sup>)，因此上式可写为<br>$$<br>\frac{\partial z_j^{(l+1)}}{\partial z_i^{(l)}}=W_{ij}^{(l)}f’(z_i^{(l)})<br>$$<br>损失函数对第l层第i个神经元的偏导数可以看作损失函数在此处产生的残差，记为𝛅<sub>i</sub><sup>(l)</sup>，从而递推公式可以表示为<br>$$<br>\delta_i^{(l)}=(\sum_{j=1}^{s_{l+1}}W_{ij}^{(l)}\delta_j^{(l+1)})f’(z_i^{(l)})<br>$$<br>损失对参数函数的梯度可以写为<br>$$<br>\frac{\partial}{\partial W_{ij}^{(l)}}J(W,b)=\frac{\partial J(W,b)}{\partial z_j^{(l+1)}}\frac{\partial z_j^{(l+1)}}{\partial W_{ij}^{(l)}}=\delta_i^{(l+1)}x_j^{(l+1)}<br>$$</p>
+<p>$$<br>=\delta _i^{(l+1)}a_j^{(l)}\frac{\partial}{\partial b_i^{(l)}}J(W,b)=\delta_i^{(l+1)}<br>$$</p>
+<p>针对平方误差损失和交叉熵损失产生不同的梯度，平方误差损失<br>$$<br>\delta^{(L)}=-(y-a^{(L)})f’(z^{(L)})<br>$$<br>交叉熵损失<br>$$<br>J(W,b)=\sum_{k=1}^ny_klna_k^{(L)}<br>$$<br>在分类问题中，y<sub>k</sub>仅在一个类别k时取值为1，其余为0。则有<br>$$<br>J(W,b)=-lna_{\tilde{k}}^{(L)}<br>$$</p>
+<p>$$<br>\delta^{(L)}=-\frac{f’(z_{\tilde{k}}^{(L)})}{f(z_{\tilde{k}}^{(L)})}<br>$$</p>
+<p>若激活函数取SoftMax，满足f’(x)=f(x)(1-f(x))，因此<br>$$<br>\delta^{(L)}=f(z_k^{(L)})-1=a_{\tilde{k}}^{(L)}-1<br>$$</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>平方误差损失函数和交叉熵损失函数分别适合什么场景？(一般)</p>
+<p>一般来说，平方损失函数更适合输出为连续，并且最后一层不含Sigmoid或SoftMax激活函数的神经网络；交叉熵损失则更适合二分类或者多分类的场景。</p>
+<p>平方损失函数不适合最后一层含有Sigmoid或Softmax激活函数的神经网络原因，我们可以从第L层残差入手<br>$$<br>\delta(L)=-(y-a^{(L)})f’(z^{(L)})<br>$$<br>最后一项时激活函数的导数，如果激活函数是Sigmoid函数或SoftMax，z<sup>(L)</sup>绝对值较大，函数的梯度会趋于饱和，即f’(z<sup>(L)</sup>)的绝对值非常小，会导致梯度较小，基于梯度的学习速度较慢。当使用交叉熵损失函数时，残差为<br>$$<br>\delta^{(L)}=a_{\tilde{k}}^{(L)}-1<br>$$<br>是线性的，所以不会存在学习速度过慢问题。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="神经网络训练技巧"><a href="#神经网络训练技巧" class="headerlink" title="神经网络训练技巧"></a>神经网络训练技巧</h2><p>在大规模神经网络训练过程中，我们会面临过拟合问题，解决方法包括数据增强、参数范数惩罚/正则化、模型集成等，其中Dropout时模型集成方法中最高效与常用的技巧。同时深度神经网络的训练中涉及诸多超参数，例如学习率、权重衰减系数、Dropout比例等，这些参数的选择会显著影响模型。批量归一化(Batch Normalization)方法有效规避了这些复杂参数对网络训练产生的影响，在加速训练收敛的同时也提升了网络的泛化能力。</p>
+<blockquote>
+<ul>
+<li><p>神经网络训练时是否可以将全部参数初始化为0？(容易)</p>
+<p>考虑全连接的深度神经网络，同一层中的任意神经元都是同构的，它们拥有相同的输入和输出，如果再将参数全部初始化为同样的值，那么无论前向传播还是反向传播的取值都是完全相同。学习过程将永远无法打破这种对称性，最终同一网络层的各个参数仍然是相同的。</p>
+<p>因此我们需要随机初始化神经网络参数的值来打破这种对称性。简单来说，我们可以初始化参数为取值范围(-(1/d)<sup>1/2</sup>,(1/d)<sup>1/2</sup>)的均匀分布，其中d是一个神经元接受的输入维度。偏置可以被简单设为0，并不会导致参数对称问题。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>为什么Dropout可以抑制过拟合？它的工作原理和实现？(一般)</p>
+<p>Dropout是指在深度网络的训练中，以一定概率随机“临时丢弃”一部分神经元节点。具体来讲，Dropout作用于每份小批量训练数据，由于其随机丢弃部分神经元的机制，相当于每次迭代都是训练的不同结构神经网络。类比于集成学习方法中的Bagging方法，传统意义上的Bagging涉及到多个模型的同时训练与测试评估，当网络与参数规模庞大时，这种集成方式需要消耗大量的运算时间与空间。Dropout在小批量级别上的操作，提供了一种轻量级的Bagging集成近似，能够实现指数级数量神经网络的训练与评测。</p>
+<p>Dropout具体实现中，要求某个神经元节点激活值以一定的概率p被舍弃，即该神经元工作暂停，因此对于含N个神经元节点的网络架构来说，使用Dropout可以将它们视作2<sup>N</sup>个模型的集成(前提是训练次数足够多)。这些模型可认为是原始网络的子网络，它们共享部分权值，拥有相同的层数，而且模型整体的参数数目不变，这样做不仅简化运算，而且每次训练会减弱全体神经元之间的联合适应性，减少过拟合的风险，增强泛化能力。</p>
+<p>在神经网络中应用Dropout包括训练和预测两个阶段，训练过程中每个神经元节点需要增加一个概率系数，训练过程分为前向传播和反向传播两个阶段，原始网络对应的前向传播公式为<br>$$<br>z_i^{(l+1)}=w_i^{(l+1)}y^l+b_i^{(l+1)}<br>$$</p>
+<p>$$<br>y_i^{(l+1)}=f(z_i^{(l+1)})<br>$$</p>
+<p>应用Dropout之后，前向传播公式为<br>$$<br>r_j^{(l)}～Bernoulli(p)<br>$$</p>
+<p>$$<br>\tilde{y}^{(l)}=r^{(l)}*y^{(l)}<br>$$</p>
+<p>$$<br>z_i^{(l+1)}=w_i^{(l+1)}\tilde{y}^l+b_i^{(l+1)}<br>$$</p>
+<p>$$<br>y_i^{(l+1)}=f(z_i^{(l+1)})<br>$$</p>
+<p><img src="https://th.bing.com/th/id/Rc8819bfa47f10802b4c625e2a68eaeb4?rik=BHc0geCi9lGRBA&pid=ImgRaw" alt="See the source image"></p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>批量归一化的基本动机与原理是什么？在卷积神经网络中如何使用？(一般)</p>
+<p>神经网络训练过程实际上就是学习数据的分布，如果训练数据与测试数据的分布不符合独立同分布的假设会使得大大降低网络泛化能力，因此我们需要在训练开始前对所有输入数据进行归一化处理。</p>
+<p>随着网络训练的进行，每个隐层的参数变化使得后一层的输入发生变化，从而每一批训练数据的分布也随之改变，致使网络在每次迭代中都需要拟合不同的数据分布，增大训练复杂度以及过拟合的风险。</p>
+<p>批量归一化方法是针对每一批数据，在每层输入之前增加归一化操作(均值为0，标准差为1)，将所有批数据强制在统一的数据分布下，即对该层的任意一个神经元(假设为第k维)采用如下公式<br>$$<br>\hat{x}^{(k)}=\frac{x^{(k)}-E[x^{(k)}]}{\sqrt{Var[x^{(k)}]}}<br>$$<br>其中x<sup>(k)</sup>为该层第k个神经元的原始输入数据，E[x<sup>(k)</sup>]为这一批输入数据在第k个神经元的均值，分母为第k个神经元的标准差。</p>
+<p>批量归一化可以看作每一层输入和上一层输出之间加入了一个新的计算层，对数据的分布进行了额外约束，这样会导致模型的拟合能力被降低，因为归一化会导致输入整体分布在激活函数的非饱和区域，批量归一化之后数据整体处于函数的非饱和区域，只包含线性变换，破坏了之前学习到的特征分布。为了恢复原始数据分布，具体实现中引入了变换重构以及可学习参数𝜸和𝛃<br>$$<br>y^{(k)}=\gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)}<br>$$<br>其中两个参数分别是输入数据分布的方差和偏差，对于一般网络，不采用批量归一化，这两个参数高度依赖于前面网络学习到的连接权重。而加入了批量归一化操作之后，我们仅需要使用两个参数就可以恢复最优的输入数据分布，与之前的网络层的参数解耦，从而更加有利于优化的过程，提高模型的泛化能力。</p>
+<p>完整的批量归一化网络层前向传导过程如下<br>$$<br>\mu_B\leftarrow \frac{1}{m}\sum_{i=1}^m x_i<br>$$</p>
+<p>$$<br>\sigma^2_B\leftarrow \frac{1}{m}\sum_{i=1}^m(x_i-\mu_B)^2<br>$$</p>
+<p>$$<br>\hat{x}_i\leftarrow \frac{x_i-\mu_B}{\sqrt{\sigma^2_B+\epsilon}}<br>$$</p>
+<p>$$<br>y_i\leftarrow \gamma \hat{x}<em>i+\beta=BN</em>{\gamma,\beta}(x_i)<br>$$</p>
+<p>批量归一化在卷积神经网络中应用时，需要注意卷积神经网络的参数共享机制，每个卷积核在不同位置的神经元当中是共享的，因此也应该被一起归一化。具体实现中，假设网络训练中每一批包含b个样本，由一个卷积核生成的特征图的宽高分别为w和h，则每个特征图所对应的全部神经元个数为b*w*h;利用这些神经元对应的所有输入数据，我们根据一组待学习的参数𝜸和𝛃对每个输入数据进行批量归一化操作。如果有f个卷积核，就对应f个特征图以及f组不同的𝜸和𝛃参数。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="深度卷积神经网络"><a href="#深度卷积神经网络" class="headerlink" title="深度卷积神经网络"></a>深度卷积神经网络</h2><p>卷积神经网络也是一种前馈神经网络，其特点是每层神经元节点只响应前一层局部区域范围内的神经元(全连接网络中每个神经元节点响应前一层和全部节点)。一个深度卷积神经网络通畅由若干卷积层叠加若干全连接层组成，中间也包含各种非线性操作以及池化操作。卷积神经网络同样可以使用反向传播算法进行训练，相较于其他网络模型，卷积操作的参数共享特性使得需要优化的参数数目大大缩减，提高了模型的训练效率以及可扩展性。</p>
+<blockquote>
+<ul>
+<li><p>卷积操作的本质特性包括稀疏交互和参数共享，具体解释这两种特性及其作用。(较容易)</p>
+<ul>
+<li><p>稀疏交互(Sparse Interaction)</p>
+<p>传统神经网络中，网络层之间输入与输出的连接关系可以由一个权值参数矩阵来表示，其中每个单独的参数值都表示了前后层某两个神经元节点之间的交互。对于全连接网络，任意一对输入与输出神经元之间都有交互，形成稠密的连接结构。</p>
+<p>而卷积神经网络中，卷积核尺度远小于输入的维度，这样每个输出神经元仅与前一层特定局部区域内的神经元存在连接权重(即产生交互)，我们称这种特性为稀疏交互。与稠密的连接不同，假设网络中相邻两层分别具有m个输入和n个输出，全连接网络中的权值参数矩阵将包含mxn个参数。对于稀疏交互的卷积网络，如果限定每个输出与前一层神经元的连接数为k，那么该层的参数总量为kxn。在实际应用中，一般k值远小于m就可以取得较为可观的效果；而此时优化过程的时间复杂度将会减小几个数量级，过拟合的情况也得到了较好的改善。</p>
+<p>稀疏交互的物理意义是，通常图像、文本、语音等现实世界中的数据都具有局部的复杂特征。卷积神经网络可以达到从简单到复杂的迈步。</p>
+</li>
+<li><p>参数共享(Parameter Sharing)</p>
+<p>指在同一个模型的不同模块中使用相同的参数，这是卷积运算的固有性质。卷积神经网络中，卷积核中的每一个元素将作用于每一次局部输入的特定位置，这样我们只需要学习一组参数集合，而不需要针对每个位置的每个参数都进行优化，从而大大降低了模型的存储需求。</p>
+<p>参数共享的物理意义是卷积层具有平移等变性。对于图像中的实体，无论它的位置如何变化，我们都应该将它识别成猫，也就是说神经网络的输出对于平移变换来说是等变的。将g是为输入的任意平移函数，令I表示输入图像，平移变换后得到I’=g(I)，当卷积函数f(x)满足f(g(I))=f(I’)=g(f(I))。也就是说先进行卷积再进行平移与先进行平移再进行卷积是一样的结果。</p>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>常用的池化操作有哪些？池化的作用是什么？(一般)</p>
+<p>池化操作主要针对非重叠区域，包括均值池化、最大池化等，均值池化能够抑制由于邻域大小受限造成估计值方差增大的现象，特点是对背景的保留效果更好。最大池化通过取领域内特征最大值实现，能够抑制网络参数误差造成的估计均值偏移的现象，特点是更好的提取纹理信息。池化操作的本质是降采样。此外，特殊的池化操作还有相邻重叠区域的池化以及空间金字塔池化。相邻重叠区域的池化，顾名思义是使用比窗口宽度更小的补偿，使得窗口在每次滑动时存在重叠的区域。空间金字塔池化主要考虑了多尺度信息的描述，将多个尺寸的池化结果拼接在一起作为下一层网络层的输入。</p>
+<p>池化操作除了能显著降低参数量以外，还能保持对平移、伸缩、旋转等操作的不变性。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><p>卷积神经网络如何用于文本分类？(一般)</p>
+<p>卷积神经网络的核心思想是捕捉局部特征，起初在图像领域取得了巨大的成功，后来在文本领域也得到了广泛的应用。对于文本来说，局部特征就是由若干单词组成的滑动窗口，类似于N-gram。卷积神经网络的优势在于能够自动进行特征组合和筛选，获得不同抽象层次的语义信息。由于在每次卷积中采用了共享权重的机制，因此他有更快的训练速度。</p>
+<p><img src="https://th.bing.com/th/id/Rd0b5cbf5f7910d5bdb8f154e5a230682?rik=ZoI0niK1N/oGXQ&pid=ImgRaw" alt="See the source image"></p>
+<p>对于如是卷积神经网络模型，使用它进行文本表示</p>
+<p>1.输入曾是一个NxK的矩阵，其中N为文章所对应的单词总数，K是每个词对应的表示向量的维度。每个词的K维向量可以是预先在其他语料库中训练好的，也可以作为未知的参数由网络训练得到。前者，预训练模型的词嵌入可以利用其他语料库得到更多的先验知识；另一方面，由当前网络训练的词向量能够更好地抓住与当前任务相关联的特征。因此，图中的输入层实际上采用了两个通道的形式，即有两个NxK的输入矩阵，其中一个用预训练模型的词嵌入表达，训练中不再变化，另一个同样方式初始化，当时会发生变化。</p>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/05/20/百面机器学习-前向神经网络/" target="_blank" title="百面机器学习-前向神经网络">http://xiangweixi.cn/2021/05/20/百面机器学习-前向神经网络/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">百面机器学习-采样</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8E%E5%B8%83%E5%B0%94%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">多层感知机与布尔函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">深度神经网络中的激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA%E7%9A%84%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">多层感知机的反向传播算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">神经网络训练技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">5.</span> <span class="nav-text">深度卷积神经网络</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

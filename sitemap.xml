@@ -2,14 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xiangweixi.cn/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/</loc>
+    <loc>http://xiangweixi.cn/2021/05/20/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%91%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
     
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/2021/04/15/papers/</loc>
+    
+    <lastmod>2021-05-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xiangweixi.cn/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/</loc>
     
     <lastmod>2021-05-16</lastmod>
     
@@ -389,7 +396,7 @@
 
   <url>
     <loc>http://xiangweixi.cn/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -397,119 +404,119 @@
   
   <url>
     <loc>http://xiangweixi.cn/tags/hexo/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/database/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/LightGBM/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/reinforcement-learning/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/HFOs/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/research-plan/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/EEG/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/unsupervised-learning/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/calculus/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/DCIC2021/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/scrapy/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/Docker/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/PAKDD2021/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/deep-learning/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/tensorflow/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/research/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/machine-learning/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -518,21 +525,21 @@
   
   <url>
     <loc>http://xiangweixi.cn/categories/technology/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/categories/how-s-life/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/categories/master-entrance-exam/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
