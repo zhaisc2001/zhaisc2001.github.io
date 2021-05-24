@@ -3,20 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>tag: machine learning | Sisicca</title>
+  <title>百面机器学习-循环神经网络 | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="machine learning" />
   
   
   
-  <meta name="description" content="Born To Die.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sisicca">
-<meta property="og:url" content="http://xiangweixi.cn/tags/machine-learning/index.html">
+  
+  <meta name="description" content="对于循环神经网络(Recurrent Neural Network,RNN)来说，处理序列化数据是它擅长的东西。传统的前馈神经网络一般输入都是具有尺寸要求的向量，无法处理变长的序列信息，即使通过一些方法把序列处理成定长的向量，模型也很难捕捉序列中的长距离依赖关系。RNN通过神经元串行起来处理序列化的数据。由于每个神经元能用它的内部变量保存之前输入的序列信息，因此整个序列被浓缩成抽象的表示，并可以据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百面机器学习-循环神经网络">
+<meta property="og:url" content="http://xiangweixi.cn/2021/05/24/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Born To Die.">
+<meta property="og:description" content="对于循环神经网络(Recurrent Neural Network,RNN)来说，处理序列化数据是它擅长的东西。传统的前馈神经网络一般输入都是具有尺寸要求的向量，无法处理变长的序列信息，即使通过一些方法把序列处理成定长的向量，模型也很难捕捉序列中的长距离依赖关系。RNN通过神经元串行起来处理序列化的数据。由于每个神经元能用它的内部变量保存之前输入的序列信息，因此整个序列被浓缩成抽象的表示，并可以据">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-24T07:20:10.000Z">
+<meta property="article:modified_time" content="2021-05-24T13:59:59.645Z">
 <meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
@@ -66,8 +71,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css" >
-  
   
   
 
@@ -75,7 +78,7 @@
 
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -98,7 +101,7 @@
             
               <a class="brand" style="
                  margin-top: 0px;"  
-                 >
+                href="#" data-toggle="modal" data-target="#myModal" >
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
               </a>
             
@@ -147,211 +150,135 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-  
-  
+          <section id="main" style="float:none;"><article id="post-百面机器学习-循环神经网络" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
     
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/archives/2021" class="archive-year">2021</a></h1>
-        </div>
-        <div class="archives">
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      百面机器学习-循环神经网络
+    </h1>
+  
+
+      </header>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
+    <div class="article-meta">
       
-	<a href="/2021/05/24/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="archive-article-date">
+	<a href="/2021/05/24/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="article-date">
 	  <time datetime="2021-05-24T07:20:10.000Z" itemprop="datePublished">2021-05-24</time>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/05/24/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">百面机器学习-循环神经网络</a>
-    </h1>
-  
+    <a class="article-category-link" href="/categories/technology/">technology</a>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
       
-	<a href="/2021/05/20/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%91%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="archive-article-date">
-	  <time datetime="2021-05-20T11:27:26.000Z" itemprop="datePublished">2021-05-20</time>
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/05/20/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%91%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">百面机器学习-前向神经网络</a>
-    </h1>
-  
 
-    </header>
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对于循环神经网络(Recurrent Neural Network,RNN)来说，处理序列化数据是它擅长的东西。传统的前馈神经网络一般输入都是具有尺寸要求的向量，无法处理变长的序列信息，即使通过一些方法把序列处理成定长的向量，模型也很难捕捉序列中的长距离依赖关系。RNN通过神经元串行起来处理序列化的数据。由于每个神经元能用它的内部变量保存之前输入的序列信息，因此整个序列被浓缩成抽象的表示，并可以据此进行分类或生成新的序列。</p>
+<h2 id="循环神经网络和卷积神经网络"><a href="#循环神经网络和卷积神经网络" class="headerlink" title="循环神经网络和卷积神经网络"></a>循环神经网络和卷积神经网络</h2><p>用传统方法进行文本分类任务，通常将一篇文章对应的TF-IDF向量作为输入，其中TF-IDF向量的维度是词汇量的大小，使用前馈神经网络和循环神经网络对文本这样的有序列信息的数据进行建模有什么不同？</p>
+<blockquote>
+<ul>
+<li><p>处理文本数据时，循环神经网络与前馈神经网络相比有什么特点？(容易)</p>
+<p>传统的文本处理任务将TF-IDF向量作为特征输入，这样的输入明显是将文本这样的有序列信息数据作为无序列信息处理，丢失了有序数据，而卷积神经网络可以学习到原文本中的一些局部特征，但是两个单词之间的长距离依赖关系还是很难被学习到。循环神经网络却能够很好处理文本数据变长并且有序的输入序列。它摸你了人阅读一篇文章的顺序，从前到后阅读文章中的每一个单词，将前面阅读到的有用信息编码到状态变量中去，从而拥有了一定的记忆能力。</p>
+<p>由图可见，一个长度为T的序列用循环神经网络建模，展开之后可以看作是一个T层的前馈神经网络。其中第t层的隐含状态h<sub>t</sub>编码了序列中前t个输入的信息，可以通过当前的输入x<sub>t</sub>和上一层神经网络的状态h<sub>t-1</sub>计算得到；最后一层的状态h<sub>T</sub>编码了整个序列的信息，可以作为整篇文档的压缩表示，以此为基础的结构可以应用于多种具体任务。例如，在h<sub>T</sub>后面直接接一个Softmax层，输出文本所属类别的预测概率y</p>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/05/24/百面机器学习-循环神经网络/" target="_blank" title="百面机器学习-循环神经网络">http://xiangweixi.cn/2021/05/24/百面机器学习-循环神经网络/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/05/20/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%91%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">百面机器学习-前向神经网络</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
     
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">循环神经网络和卷积神经网络</span></a></li></ol>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/" class="archive-article-date">
-	  <time datetime="2021-05-08T03:12:22.000Z" itemprop="datePublished">2021-05-08</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/">百面机器学习-采样</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/05/03/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="archive-article-date">
-	  <time datetime="2021-05-03T02:56:31.000Z" itemprop="datePublished">2021-05-03</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/05/03/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">百面机器学习-优化算法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/27/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-	  <time datetime="2021-04-27T06:40:43.000Z" itemprop="datePublished">2021-04-27</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/27/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/">百面机器学习-概率图模型</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/22/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%99%8D%E7%BB%B4/" class="archive-article-date">
-	  <time datetime="2021-04-22T08:59:22.000Z" itemprop="datePublished">2021-04-22</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/22/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%99%8D%E7%BB%B4/">百面机器学习-降维</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/19/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95/" class="archive-article-date">
-	  <time datetime="2021-04-19T02:32:58.000Z" itemprop="datePublished">2021-04-19</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/19/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95/">百面机器学习-经典算法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/17/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" class="archive-article-date">
-	  <time datetime="2021-04-17T02:59:02.000Z" itemprop="datePublished">2021-04-17</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/17/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/">百面机器学习-模型评估</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/15/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" class="archive-article-date">
-	  <time datetime="2021-04-15T11:08:52.000Z" itemprop="datePublished">2021-04-15</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/15/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/">百面机器学习-特征工程</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+    </div>
+  </aside>
 
 </section>
         
@@ -455,6 +382,10 @@
 
 
 
+  
+<script src="/js/dialog.js"></script>
+
+
 
 
 
@@ -538,6 +469,8 @@
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>
