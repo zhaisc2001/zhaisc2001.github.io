@@ -19,7 +19,7 @@
 <meta property="og:description" content="对于循环神经网络(Recurrent Neural Network,RNN)来说，处理序列化数据是它擅长的东西。传统的前馈神经网络一般输入都是具有尺寸要求的向量，无法处理变长的序列信息，即使通过一些方法把序列处理成定长的向量，模型也很难捕捉序列中的长距离依赖关系。RNN通过神经元串行起来处理序列化的数据。由于每个神经元能用它的内部变量保存之前输入的序列信息，因此整个序列被浓缩成抽象的表示，并可以据">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-24T07:20:10.000Z">
-<meta property="article:modified_time" content="2021-05-24T13:59:59.645Z">
+<meta property="article:modified_time" content="2021-05-25T02:58:45.609Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
@@ -191,10 +191,25 @@
 <ul>
 <li><p>处理文本数据时，循环神经网络与前馈神经网络相比有什么特点？(容易)</p>
 <p>传统的文本处理任务将TF-IDF向量作为特征输入，这样的输入明显是将文本这样的有序列信息数据作为无序列信息处理，丢失了有序数据，而卷积神经网络可以学习到原文本中的一些局部特征，但是两个单词之间的长距离依赖关系还是很难被学习到。循环神经网络却能够很好处理文本数据变长并且有序的输入序列。它摸你了人阅读一篇文章的顺序，从前到后阅读文章中的每一个单词，将前面阅读到的有用信息编码到状态变量中去，从而拥有了一定的记忆能力。</p>
-<p>由图可见，一个长度为T的序列用循环神经网络建模，展开之后可以看作是一个T层的前馈神经网络。其中第t层的隐含状态h<sub>t</sub>编码了序列中前t个输入的信息，可以通过当前的输入x<sub>t</sub>和上一层神经网络的状态h<sub>t-1</sub>计算得到；最后一层的状态h<sub>T</sub>编码了整个序列的信息，可以作为整篇文档的压缩表示，以此为基础的结构可以应用于多种具体任务。例如，在h<sub>T</sub>后面直接接一个Softmax层，输出文本所属类别的预测概率y</p>
+<p>由图可见，一个长度为T的序列用循环神经网络建模，展开之后可以看作是一个T层的前馈神经网络。其中第t层的隐含状态h<sub>t</sub>编码了序列中前t个输入的信息，可以通过当前的输入x<sub>t</sub>和上一层神经网络的状态h<sub>t-1</sub>计算得到；最后一层的状态h<sub>T</sub>编码了整个序列的信息，可以作为整篇文档的压缩表示，以此为基础的结构可以应用于多种具体任务。例如，在h<sub>T</sub>后面直接接一个Softmax层，输出文本所属类别的预测概率y，就可以实现文本分类，它们的计算公式分别为<br>$$<br>net_t=Ux_t+Wh_{t-1}<br>$$</p>
+<p>$$<br>h_t=f(net_t)<br>$$</p>
+<p>$$<br>y=g(Vh_T)<br>$$</p>
+<p>其中f和g为激活函数，U为输入层到隐含层的权重矩阵，W为隐含层从上一时刻到下一时刻状态转移的权重矩阵。文本分类任务中，f一般选取Tanh函数或者ReLU函数，g可以采用Softmax函数。</p>
+<p>通过最小化损失误差，我们即可训练RNN，它具备对序列顺序信息的刻画能力，因此往往可以得到更准确的结果。</p>
 </li>
 </ul>
 </blockquote>
+<h2 id="循环神经网络的梯度消失问题"><a href="#循环神经网络的梯度消失问题" class="headerlink" title="循环神经网络的梯度消失问题"></a>循环神经网络的梯度消失问题</h2><p>1991年，深度学习的发展达到冰点，BP算法被指出存在梯度消失问题(Gradient Vanishing)问题，即在梯度的反向传播过程中，后层的梯度以连乘的形式叠加到前层。由于当时神经网络中的激活函数一般都使用Sigmoid函数，而它具有饱和特性，在输入达到一定值的情况下，输出就不会发生明显变化了。而后层梯度本来就比较小，误差梯度反传到前层时一般会衰减为0，因此无法对前层的参数进行有效学习。</p>
+<blockquote>
+<ul>
+<li><p>循环神经网络为什么会出现梯度消失或梯度爆炸？有哪些改进方案？(较容易)</p>
+<p>循环神经网络模型的求解可以采用BPTT(Back Propagation Through Time，基于时间的反向传播)算法实现，BPTT实际上是反向传播算法的简单变种。如果将循环神经网络按照时间展开成为T层的前馈神经网络来理解，那么就和普通的反向传播算法没什么区别。循环神经网络设计初衷之一就是可以捕获长距离输入之间的依赖。从结构上来看，它也理应做到这点，但实践中发现，使用BPTT算法学习的RNN并不能捕获长距离的依赖关系，这是由于深度神经网络中BP算法的梯度消失，RNN的神经网络梯度为<br>$$<br>\frac{\part net_t}{\part net_1}=\frac{\part net_t}{\part net_{t-1}}.\frac{\part net_{t-1}}{\part net_{t-2}}…\frac{\part net_2}{\part net_{1}}<br>$$<br>其中<br>$$<br>\frac{\part net_t}{\part net_{t-1}}=\frac{\part net_t}{\part h_{t-1}}\frac{\part h_{t-1}}{\part net_{t-1}}=W.diag[f’(net_{t-1})]<br>$$<br>其中n为隐含层h<sub>t-1</sub>的维度(即隐含单元的个数)，梯度连乘形式对应的nxn维矩阵，又被称为Jacob矩阵。</p>
+<p>由于预测的误差是沿着神经网络的每一层反向传播的，因此当Jacob的最大特征值大于1时，随着离输出越来越远，每层的梯度大小会呈指数增长，导致梯度爆炸；反之，若Jacob矩阵的最大特征值小于1，梯度的大小会呈指数缩小，产生梯度消失。对于普通的前馈网络来说，梯度消失意味着无法通过加深网络层次来改善神经网络的预测效果，因为只有靠近输出的浅层网络能够起到真正的学习作用，这使得循环神经网络模型很难学习到输入序列中的长距离依赖关系。</p>
+<p>梯度爆炸的问题可以通过梯度裁剪来缓解，即当梯度的范式大于某个给定值时，对梯度进行等比收缩。而梯度消失问题相对比较棘手，需要对模型本身进行改进。深度残差网络是对前馈神经网络的改进，通过残差学习的方式缓解了梯度消失的现象，从而使得我们能够学习到更深层的网络表示；而对于循环神经网络来说，长短时记忆模型(LSTM)和变种门控循环单元(Gated recurrent unit,GRU)等模型通过加入门控机制，很大程度上弥补梯度消失所带来的损失。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="循环神经网络中的激活函数"><a href="#循环神经网络中的激活函数" class="headerlink" title="循环神经网络中的激活函数"></a>循环神经网络中的激活函数</h2><p>在卷积神经网络等前馈神经网络中采用</p>
 
       
     </div>
@@ -275,7 +290,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">循环神经网络和卷积神经网络</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">循环神经网络和卷积神经网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">循环神经网络的梯度消失问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">循环神经网络中的激活函数</span></a></li></ol>
     
     </div>
   </aside>
