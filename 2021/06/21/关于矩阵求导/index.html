@@ -3,20 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>tag: machine learning | Sisicca</title>
+  <title>关于矩阵求导 | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="machine learning" />
   
   
   
-  <meta name="description" content="Born To Die.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sisicca">
-<meta property="og:url" content="http://xiangweixi.cn/tags/machine-learning/index.html">
+  
+  <meta name="description" content="一个非常滑稽的问题，在接触数据科学的接近三年的情况下，我竟然推导不出线性回归的解析解。主要问题在于关于标量对于矩阵（向量）的求导线性代数里没学，相关教材里也没有给出这方面的预备知识。左翻右翻情况下终于在知乎上找到了一篇https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;24709748，讲得算是比较清晰（我能看懂）。 标量f对矩阵X的导数为$$\frac{\partial f}{\parti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于矩阵求导">
+<meta property="og:url" content="http://xiangweixi.cn/2021/06/21/%E5%85%B3%E4%BA%8E%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="Born To Die.">
+<meta property="og:description" content="一个非常滑稽的问题，在接触数据科学的接近三年的情况下，我竟然推导不出线性回归的解析解。主要问题在于关于标量对于矩阵（向量）的求导线性代数里没学，相关教材里也没有给出这方面的预备知识。左翻右翻情况下终于在知乎上找到了一篇https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;24709748，讲得算是比较清晰（我能看懂）。 标量f对矩阵X的导数为$$\frac{\partial f}{\parti">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-21T09:15:53.000Z">
+<meta property="article:modified_time" content="2021-06-21T13:06:35.140Z">
 <meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
@@ -66,8 +71,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css" >
-  
   
   
 
@@ -75,7 +78,7 @@
 
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -98,7 +101,7 @@
             
               <a class="brand" style="
                  margin-top: 0px;"  
-                 >
+                href="#" data-toggle="modal" data-target="#myModal" >
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
               </a>
             
@@ -147,232 +150,143 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-  
-  
+          <section id="main" style="float:none;"><article id="post-关于矩阵求导" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
     
     
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <h1><a href="/archives/2021" class="archive-year">2021</a></h1>
-        </div>
-        <div class="archives">
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      关于矩阵求导
+    </h1>
+  
+
+      </header>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
+    <div class="article-meta">
       
-	<a href="/2021/06/21/%E5%85%B3%E4%BA%8E%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/" class="archive-article-date">
+	<a href="/2021/06/21/%E5%85%B3%E4%BA%8E%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/" class="article-date">
 	  <time datetime="2021-06-21T09:15:53.000Z" itemprop="datePublished">2021-06-21</time>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/06/21/%E5%85%B3%E4%BA%8E%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/">关于矩阵求导</a>
-    </h1>
-  
+    <a class="article-category-link" href="/categories/technology/">technology</a>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
       
-	<a href="/2021/05/24/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="archive-article-date">
-	  <time datetime="2021-05-24T07:20:10.000Z" itemprop="datePublished">2021-05-24</time>
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
 	</a>
 
       
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/05/24/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">百面机器学习-循环神经网络</a>
-    </h1>
-  
 
-    </header>
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一个非常滑稽的问题，在接触数据科学的接近三年的情况下，我竟然推导不出线性回归的解析解。主要问题在于关于标量对于矩阵（向量）的求导线性代数里没学，相关教材里也没有给出这方面的预备知识。左翻右翻情况下终于在知乎上找到了一篇<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24709748%EF%BC%8C%E8%AE%B2%E5%BE%97%E7%AE%97%E6%98%AF%E6%AF%94%E8%BE%83%E6%B8%85%E6%99%B0%EF%BC%88%E6%88%91%E8%83%BD%E7%9C%8B%E6%87%82%EF%BC%89%E3%80%82">https://zhuanlan.zhihu.com/p/24709748，讲得算是比较清晰（我能看懂）。</a></p>
+<p>标量f对矩阵X的导数为<br>$$<br>\frac{\partial f}{\partial X}=[\frac{\partial f}{\partial X_{ij}}]<br>$$<br>求出来是一个与X大小相同的矩阵，这是矩阵导数的定义，在机器学习中并不好用。对于函数较为复杂的情形逐元素求导就像在深度学习中将数据集中使用for…loop来迭代各个元素进行训练，破坏了数据的整体性。</p>
+<p>链接中使用一元微积分中的导数推导到向量的导数，已知一元微积分中导数与微分联系<br>$$<br>df=f’(x)dx<br>$$<br>类比可以得到<br>$$<br>df=\sum_{i=1}^n\frac{\partial f}{\partial x_i}dx_i=\frac{\part f^T}{\part x}dx<br>$$<br>因此我们还可以得到矩阵导数与微分建立联系<br>$$<br>df=\sum_{i=1}^m\sum_{j=1}^n\frac{\part f}{\part X_{ij}}dX_{ij}=tr(\frac{\part f^T}{\part X}dX)<br>$$<br>第一个等号是全微分公式，第二个等号表达了矩阵导数与微分的联系。</p>
+<p>需要关注的矩阵微分的运算法则有<br>$$<br>转置：d(X^T)=(dX)^T；迹：dtr(X)=tr(dX)<br>$$</p>
+<p>$$<br>逆：dX^{-1}=-X^{-1}dXX^{-1}<br>$$</p>
+<p>$$<br>行列式：d|X|=tr(X^#dX)，其中X^#表示X的伴随矩阵，当X可逆时可以写作\<br>d|X|=|X|tr(X^{-1}dX)<br>$$</p>
+<p>$$<br>逐元素乘法：d(X\bigodot Y)=dX\bigodot Y+X\bigodot dY<br>$$</p>
+<p>$$<br>逐元素函数：d\sigma(X)=\sigma’(X)\bigodot dX,\sigma(X)=[\sigma(X_{ij})]是逐元素标量函数运算<br>$$</p>
+<p>后面还有关于行列式、逐元素乘法、逐元素函数，这里不再一一介绍。</p>
+<p>我们有矩阵导数与微分的联系，从左到右的推到需要一些trace trick<br>$$<br>a=tr(a)<br>$$</p>
+<p>$$<br>tr(A^T)=tr(A)<br>$$</p>
+<p>$$<br>tr(A+/-B)=tr(A)+/-tr(B)<br>$$</p>
+<p>$$<br>tr(AB)=tr(BA)<br>$$</p>
+<p>拥有这些法则之后我们可以在对标量函数f求微分，再使用迹技巧给df套上迹并将其它项交换至dX左侧，对照导数与微分的联系即能得到导数，如果矩阵退化为向量，那么用导数与微分的联系即可得到导数。</p>
+<p>接下来使用新建立的运算法则进行一些算例，一定要区分标量求导与矩阵求导的不同。<br>$$<br>f=a^TXb,求\frac{\part f}{\part X}。其中a是m<em>1列向量，X是m</em>n矩阵，b是n*1列向量，f是标量。<br>$$</p>
+<p>$$<br>先求微分，有df=da^TXb+a^TdXb+a^TXdb=a^TdXb,这里的a,b作为常量处理，满足<br>\da=0,db=b。由于df是标量，df=tr(df),等号两边套上trace满足df=tr(a^TdXb)\=tr(ba^TdX)=tr((ab^T)^TdX),这里根据trace-trick交换了两个矩阵，对照矩阵导数与微分的联系，\得到\frac{\part f}{\part X}=ab^T<br>$$</p>
+<p>例2:<br>$$<br>f=a^Texp(Xb),求\frac{\part f}{\part X}。其中a是m<em>1列向量，X是m</em>n矩阵，\b是n*1列向量，exp表示逐元素求指数，f是标量。<br>$$</p>
+<p>$$<br>先求微分有<br>$$</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2021/06/21/关于矩阵求导/" target="_blank" title="关于矩阵求导">http://xiangweixi.cn/2021/06/21/关于矩阵求导/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/" rel="tag">machine learning</a></li></ul>
+
+      
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/06/10/%E9%98%BF%E7%94%98%E6%AD%A3%E4%BC%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">阿甘正传</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
     
+        <ol class="nav">None</ol>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/05/20/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%91%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="archive-article-date">
-	  <time datetime="2021-05-20T11:27:26.000Z" itemprop="datePublished">2021-05-20</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/05/20/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E5%89%8D%E5%90%91%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">百面机器学习-前向神经网络</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/" class="archive-article-date">
-	  <time datetime="2021-05-08T03:12:22.000Z" itemprop="datePublished">2021-05-08</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/05/08/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%87%87%E6%A0%B7/">百面机器学习-采样</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/05/03/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="archive-article-date">
-	  <time datetime="2021-05-03T02:56:31.000Z" itemprop="datePublished">2021-05-03</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/05/03/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">百面机器学习-优化算法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/27/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-	  <time datetime="2021-04-27T06:40:43.000Z" itemprop="datePublished">2021-04-27</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/27/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/">百面机器学习-概率图模型</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/22/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%99%8D%E7%BB%B4/" class="archive-article-date">
-	  <time datetime="2021-04-22T08:59:22.000Z" itemprop="datePublished">2021-04-22</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/22/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E9%99%8D%E7%BB%B4/">百面机器学习-降维</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/19/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95/" class="archive-article-date">
-	  <time datetime="2021-04-19T02:32:58.000Z" itemprop="datePublished">2021-04-19</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/19/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95/">百面机器学习-经典算法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/17/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" class="archive-article-date">
-	  <time datetime="2021-04-17T02:59:02.000Z" itemprop="datePublished">2021-04-17</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/17/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/">百面机器学习-模型评估</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-	<a href="/2021/04/15/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" class="archive-article-date">
-	  <time datetime="2021-04-15T11:08:52.000Z" itemprop="datePublished">2021-04-15</time>
-	</a>
-
-      
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="archive-article-title" href="/2021/04/15/%E7%99%BE%E9%9D%A2%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/">百面机器学习-特征工程</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+    </div>
+  </aside>
 
 </section>
         
@@ -476,6 +390,10 @@
 
 
 
+  
+<script src="/js/dialog.js"></script>
+
+
 
 
 
@@ -559,6 +477,8 @@
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>
