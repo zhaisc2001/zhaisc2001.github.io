@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://xiangweixi.cn/2021/01/03/%E5%8E%BB2021/</loc>
+    <lastmod>2022-07-16</lastmod>
+  </url>
+  <url>
+    <loc>http://xiangweixi.cn/2021/06/21/%E5%85%B3%E4%BA%8E%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/</loc>
+    <lastmod>2022-07-16</lastmod>
+  </url>
+  <url>
     <loc>http://xiangweixi.cn/2021/02/25/3%E6%9C%881%E6%97%A5%E7%BB%84%E4%BC%9A%E6%8A%A5%E5%91%8A/</loc>
     <lastmod>2022-03-16</lastmod>
   </url>
@@ -15,10 +23,6 @@
   <url>
     <loc>http://xiangweixi.cn/2022/02/03/%E7%A0%94%E7%A9%B6%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%88%9B%E5%BB%BA/</loc>
     <lastmod>2022-02-04</lastmod>
-  </url>
-  <url>
-    <loc>http://xiangweixi.cn/2021/06/21/%E5%85%B3%E4%BA%8E%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/</loc>
-    <lastmod>2022-02-03</lastmod>
   </url>
   <url>
     <loc>http://xiangweixi.cn/2021/06/10/%E9%98%BF%E7%94%98%E6%AD%A3%E4%BC%A0/</loc>
@@ -199,10 +203,6 @@
   <url>
     <loc>http://xiangweixi.cn/2021/02/01/HFOs%E6%A3%80%E6%B5%8B%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/</loc>
     <lastmod>2021-02-02</lastmod>
-  </url>
-  <url>
-    <loc>http://xiangweixi.cn/2021/01/03/%E5%8E%BB2021/</loc>
-    <lastmod>2021-01-24</lastmod>
   </url>
   <url>
     <loc>http://xiangweixi.cn/2020/12/24/Build-your-blog-with-hexo-and-Github-based-on-Mac-OS-X/</loc>

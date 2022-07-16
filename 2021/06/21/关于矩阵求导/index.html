@@ -19,7 +19,7 @@
 <meta property="og:description" content="一个非常滑稽的问题，在接触数据科学的接近三年的情况下，我竟然推导不出线性回归的解析解。主要问题在于关于标量对于矩阵（向量）的求导线性代数里没学，相关教材里也没有给出这方面的预备知识。左翻右翻情况下终于在知乎上找到了一篇https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;24709748，讲得算是比较清晰（我能看懂）。 标量f对矩阵X的导数为$$\frac{\partial f}{\parti">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-21T09:15:53.000Z">
-<meta property="article:modified_time" content="2022-02-03T12:52:31.372Z">
+<meta property="article:modified_time" content="2022-07-16T05:20:53.799Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="machine learning">
 <meta name="twitter:card" content="summary">
@@ -199,10 +199,6 @@
 <p>$$<br>tr(A+/-B)=tr(A)+/-tr(B)<br>$$</p>
 <p>$$<br>tr(AB)=tr(BA)<br>$$</p>
 <p>拥有这些法则之后我们可以在对标量函数f求微分，再使用迹技巧给df套上迹并将其它项交换至dX左侧，对照导数与微分的联系即能得到导数，如果矩阵退化为向量，那么用导数与微分的联系即可得到导数。</p>
-<p>接下来使用新建立的运算法则进行一些算例，一定要区分标量求导与矩阵求导的不同。<br>$$<br>f=a^TXb,求\frac{\partial f}{\partial X}。其中a是m<em>1列向量，X是m</em>n矩阵，b是n*1列向量，f是标量。<br>$$</p>
-<p>$$<br>先求微分，有df=da^TXb+a^TdXb+a^TXdb=a^TdXb,这里的a,b作为常量处理，满足<br>\da=0,db=b。由于df是标量，df=tr(df),等号两边套上trace满足df=tr(a^TdXb)\=tr(ba^TdX)=tr((ab^T)^TdX),这里根据trace-trick交换了两个矩阵，对照矩阵导数与微分的联系，\得到\frac{\partial f}{\partial X}=ab^T<br>$$</p>
-<p>例2:<br>$$<br>f=a^Texp(Xb),求\frac{\partial f}{\partial X}。其中a是m<em>1列向量，X是m</em>n矩阵，\b是n*1列向量，exp表示逐元素求指数，f是标量。<br>$$</p>
-<p>$$<br>先求微分有<br>$$</p>
 
       
     </div>
