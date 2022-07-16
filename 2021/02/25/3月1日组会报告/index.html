@@ -19,7 +19,7 @@
 <meta property="og:description" content="目前领域提出的HFO检测器，如阈值检测器、人工神经网络检测器、模糊神经网络检测器等，其实主要可以分成经典方法以及和机器学习中的有监督学习结合的方法，然而这两种方法的缺点都是很明显的：HFOs的振幅和主频没有明确的标准范围，阈值检测器可能导致精度低，同时需要使用者想方法确定一个合理的阈值；有监督方法需要训练集，也就是需要人工对数据进行标注，来用于有监督模型训练。在这样的背景下，我们选择无监督学习方法">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-25T06:37:22.000Z">
-<meta property="article:modified_time" content="2021-02-27T11:27:24.687Z">
+<meta property="article:modified_time" content="2022-03-16T01:50:42.780Z">
 <meta property="article:author" content="Uestc_Sicca">
 <meta property="article:tag" content="HFOs">
 <meta name="twitter:card" content="summary">
@@ -190,7 +190,7 @@
 <p>调研的文献中使用的聚类算法有半监督k-means与mean-shift结合的算法、EM-GMM算法、SVD与improved-FCM结合的算法；这些无监督方法的大致过程都是将iEEG信号进行预处理之后进行聚类，但就像阈值法需要确定一个合理的阈值以及有监督学习需要人工标注数据一样，无监督学习检测也有它的局限性，目前我们了解到的主要是在两个方面：一是需要人工确定聚类数量，二是聚类算法的时间复杂度较高，对于大规模数据的处理可能不如人意。而我们也通过调研文献得到了部分答案。</p>
 <p>对于需要人工确定聚类数量这个问题，首先要说明是k-means和EM-GMM算法以及FCM算法会有这样的问题，有些聚类算法可以自己确定最优聚类数量，但这些聚类算法的聚类结果不如需要指定聚类数量的聚类算法结果误差小，目前该领域的解决方法是将可以自己确定最优聚类数量的算法（比如QEM方法）与需要指定聚类数量的聚类算法进行结合，通过前者确定最优聚类数量之后，再使用后面的聚类算法进行聚类；也有通过半监督聚类方法（比如半监督k-means）和能自行确定最优聚类数量的聚类方法结合进行聚类的，半监督聚类它使用一小部分标注了的数据作为初始聚类中心，这就要求这一小部分标注数据集的具有代表性；最后还有直接将聚类数量预设为2，也就是直接分为HFO类和非HFO类，这样的方法对聚类之前的数据预处理要求较高。</p>
 <p>而对于聚类算法时间复杂度较高这样的问题，一般采用的方法都是使用预筛选以及多次聚类来解决。预筛选一般是使用经典检测方法比如均方根法、瞬时能量法、希尔伯特变换等阈值方法来缩小数据规模，已解决聚类算法时间复杂度较高的问题，而多次聚类则是通过多次聚类中的前面的聚类来初始参数并降低计算复杂度，比如我们可以在EM-GMM聚类之前先使用FCM聚类来初始化EM-GMM模型中高斯分布的均值与方差。</p>
-<p>我们小组根据调研和总结，初步认为未来的小组研究方向大致可以从两方面入手：一是提高无监督学习自动检测器的检测精度，可以通过与迭代启发式算法的结合如退火算法、蚁群算法、遗传算法等来实现，之前的工作中已经有FCM与退火算法以及遗传算法的结合；还可以选择其他的聚类方法如􏰎􏰋􏰌􏰉􏰊􏰇􏰈􏰅􏰆􏰃􏰄􏰁􏰂􏰎􏰋􏰌􏰉􏰊􏰇􏰈􏰅􏰆􏰃􏰄􏰁􏰂X-means、DBScan、Co-clustering等方法来实现。另外一方面就是可以与无监督学习中的降维结合，进行特征的提取，比如PCA、SVD等，之前领域也有SVD提取特征方面的工作。</p>
+<p>我们小组根据调研和总结，初步认为未来的小组研究方向大致可以从两方面入手：一是提高无监督学习自动检测器的检测精度，可以通过与迭代启发式算法的结合如退火算法、蚁群算法、遗传算法等来实现，之前的工作中已经有FCM与退火算法以及遗传算法的结合；还可以选择其他的聚类方法如X-means、DBScan、Co-clustering等方法来实现。另外一方面就是可以与无监督学习中的降维结合，进行特征的提取，比如PCA、SVD等，之前领域也有SVD提取特征方面的工作。</p>
 
       
     </div>
@@ -295,7 +295,7 @@
   <div class="container">
       	<div class="row">
 	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2020 - 2021 Sisicca All Rights Reserved.</p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2022 Sisicca All Rights Reserved.</p>
 	      
 	      
     		<p class="busuanzi_uv">
@@ -457,7 +457,7 @@
             Sisicca
           </div>
           <div class="panel-body">
-            Copyright © 2021 Uestc_Sicca All Rights Reserved.
+            Copyright © 2022 Uestc_Sicca All Rights Reserved.
           </div>
         </div>
       </div>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>毕业设计研究数据集的创建 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Spyder" />
+  
+  
+  
+  
+  <meta name="description" content="在研究生初试结束之后，狠狠地玩到了虎年，不过也差不多得干点儿正事了，毕竟已经拖欠方佳明老师的DDL半个多月了。-_-||我的毕设课题选择的是“在线视频流行度研究”，在线视频采样源选择的是bilibili网站。很抽象的一件事就是这个得自己收集数据并创建数据集，于是我仿照kaggle上的youtube视频数据集对bilibili网站写了个爬虫。[1]下面是爬虫代码以及遇到的一些技术问题。 123456">
+<meta property="og:type" content="article">
+<meta property="og:title" content="毕业设计研究数据集的创建">
+<meta property="og:url" content="http://xiangweixi.cn/2022/02/03/%E7%A0%94%E7%A9%B6%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%88%9B%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="在研究生初试结束之后，狠狠地玩到了虎年，不过也差不多得干点儿正事了，毕竟已经拖欠方佳明老师的DDL半个多月了。-_-||我的毕设课题选择的是“在线视频流行度研究”，在线视频采样源选择的是bilibili网站。很抽象的一件事就是这个得自己收集数据并创建数据集，于是我仿照kaggle上的youtube视频数据集对bilibili网站写了个爬虫。[1]下面是爬虫代码以及遇到的一些技术问题。 123456">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s4.ax1x.com/2022/02/04/HZNUAO.png">
+<meta property="og:image" content="https://s4.ax1x.com/2022/02/04/HZyfeJ.jpg">
+<meta property="article:published_time" content="2022-02-03T13:10:45.000Z">
+<meta property="article:modified_time" content="2022-02-04T04:45:31.126Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="Spyder">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s4.ax1x.com/2022/02/04/HZNUAO.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-研究数据集的创建" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      毕业设计研究数据集的创建
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2022/02/03/%E7%A0%94%E7%A9%B6%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%88%9B%E5%BB%BA/" class="article-date">
+	  <time datetime="2022-02-03T13:10:45.000Z" itemprop="datePublished">2022-02-03</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在研究生初试结束之后，狠狠地玩到了虎年，不过也差不多得干点儿正事了，毕竟已经拖欠方佳明老师的DDL半个多月了。-_-||<br>我的毕设课题选择的是“在线视频流行度研究”，在线视频采样源选择的是bilibili网站。很抽象的一件事就是这个得自己收集数据并创建数据集，于是我仿照kaggle上的youtube视频数据集对bilibili网站写了个爬虫。[1]<br>下面是爬虫代码以及遇到的一些技术问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ssl</span><br><span class="line">ssl._create_default_https_context=ssl._create_unverified_context</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 之前使用非官方数据，可以获取历史数据，但由于数据不全最终舍弃了该方法</span></span><br><span class="line"><span class="comment"># url = &quot;http://bz.feigua.cn/ranking/DailyHotVideo/&quot;</span></span><br><span class="line"><span class="comment"># date_id = 20220118</span></span><br><span class="line"><span class="comment"># channel_list = [&quot;155&quot;,&quot;160&quot;,&quot;1&quot;,&quot;3&quot;,&quot;129&quot;,&quot;4&quot;,&quot;36&quot;,&quot;188&quot;,&quot;202&quot;,&quot;119&quot;,&quot;5&quot;,&quot;181&quot;,&quot;167&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 需要注意的是在requests当中加入proxy的方法与urllib3有所不同</span></span><br><span class="line">url = <span class="string">&quot;https://www.bilibili.com/v/popular/rank/&quot;</span></span><br><span class="line">channel_id = [<span class="string">&quot;guochuang&quot;</span>,<span class="string">&quot;douga&quot;</span>,<span class="string">&quot;music&quot;</span>,<span class="string">&quot;dance&quot;</span>,<span class="string">&quot;game&quot;</span>,<span class="string">&quot;knowledge&quot;</span>,<span class="string">&quot;tech&quot;</span>,<span class="string">&quot;sports&quot;</span>,<span class="string">&quot;car&quot;</span>,<span class="string">&quot;life&quot;</span>,<span class="string">&quot;food&quot;</span>,<span class="string">&quot;animal&quot;</span>,<span class="string">&quot;kichiku&quot;</span>,<span class="string">&quot;fashion&quot;</span>,<span class="string">&quot;ent&quot;</span>]</span><br><span class="line">User_agent=[</span><br><span class="line">    <span class="string">&quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Acoo Browser; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.04506)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/4.0 (compatible; MSIE 7.0; AOL 9.5; AOLBuild 4337.35; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET CLR 2.0.50727; Media Center PC 6.0)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET CLR 1.0.3705; .NET CLR 1.1.4322)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/4.0 (compatible; MSIE 7.0b; Windows NT 5.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; InfoPath.2; .NET CLR 3.0.04506.30)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN) AppleWebKit/523.15 (KHTML, like Gecko, Safari/419.3) Arora/0.3 (Change: 287 c9dfb30)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (X11; U; Linux; en-US) AppleWebKit/527+ (KHTML, like Gecko, Safari/419.3) Arora/0.6&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.2pre) Gecko/20070215 K-Ninja/2.1.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9) Gecko/20080705 Firefox/3.0 Kapiko/3.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (X11; Linux i686; U;) Gecko/20070322 Kazehakase/0.4.5&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.8) Gecko Fedora/1.9.0.8-1.fc10 Kazehakase/0.5.6&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.20 (KHTML, like Gecko) Chrome/19.0.1036.7 Safari/535.20&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; fr) Presto/2.9.168 Version/11.52&quot;</span>,</span><br><span class="line">]</span><br><span class="line">proxy = [</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="string">&#x27;HTTP&#x27;</span>:<span class="string">&#x27;202.108.22.5:80&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;HTTPS&#x27;</span>:<span class="string">&#x27;202.108.22.5:80&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="string">&#x27;HTTP&#x27;</span>:<span class="string">&#x27;60.255.151.82:80&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;HTTPS&#x27;</span>:<span class="string">&#x27;60.255.151.82:80&#x27;</span>   </span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="string">&#x27;HTTP&#x27;</span>:<span class="string">&#x27;60.255.151.81:80&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;HTTPS&#x27;</span>:<span class="string">&#x27;60.255.151.81:80&#x27;</span>   </span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="string">&#x27;HTTP&#x27;</span>:<span class="string">&#x27;58.240.52.114:80&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;HTTPS&#x27;</span>:<span class="string">&#x27;58.240.52.114:80&#x27;</span>   </span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="string">&#x27;HTTP&#x27;</span>:<span class="string">&#x27;202.108.22.5:80&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;HTTPS&#x27;</span>:<span class="string">&#x27;202.108.22.5:80&#x27;</span>   </span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">request_bilibili_rank</span>(<span class="params">channel_id</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    :param channel_id: id of channel</span></span><br><span class="line"><span class="string">    :return: html of website</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    headers = &#123;<span class="string">&quot;User-Agent&quot;</span>: random.choice(User_agent)&#125;</span><br><span class="line">    req = requests.get(url+channel_id, headers=headers, proxies=random.choice(proxy))</span><br><span class="line">    html = req.text</span><br><span class="line">    <span class="keyword">return</span> html</span><br><span class="line"></span><br><span class="line"><span class="comment">#仿照Youtube视频信息数据集确立bilibili数据集的基本信息项</span></span><br><span class="line">data_dict = &#123; </span><br><span class="line">    <span class="string">&quot;video_bv&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;trending_data&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;title&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;channel_title&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;publish_time&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;authors&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;views&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;danmaku&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;likes&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;coins&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;shares&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;tags&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;comment_count&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;description&quot;</span>:[],</span><br><span class="line">    <span class="string">&quot;cover_links&quot;</span>:[],</span><br><span class="line">    <span class="string">&#x27;tid&#x27;</span>:[],</span><br><span class="line">    <span class="string">&#x27;duration&#x27;</span>:[],</span><br><span class="line">    <span class="string">&#x27;favorite&#x27;</span>:[],</span><br><span class="line">    <span class="string">&#x27;scores&#x27;</span>:[],</span><br><span class="line">    <span class="string">&quot;pop&quot;</span>:[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">video_bv = [] <span class="comment">#视频的bv号，在数据库中可以作为key值</span></span><br><span class="line">tid = [] <span class="comment">#分区id</span></span><br><span class="line">trending_data = [] <span class="comment">#进入排行榜的时间，由于官方的排行榜没有给出历史数据，所以这个时间就是对网页进行爬取的时间</span></span><br><span class="line">title = [] <span class="comment">#视频标题</span></span><br><span class="line">channel_title = [] <span class="comment">#分区名称</span></span><br><span class="line">publish_time = [] <span class="comment">#视频的发布时间</span></span><br><span class="line">authors = [] <span class="comment">#视频作者</span></span><br><span class="line">views = [] <span class="comment">#浏览量</span></span><br><span class="line">danmaku = [] <span class="comment">#弹幕数量</span></span><br><span class="line">likes = [] <span class="comment">#点赞数量</span></span><br><span class="line">coins = [] <span class="comment">#硬币数量</span></span><br><span class="line">shares = [] <span class="comment">#分享数量</span></span><br><span class="line">tags = [] <span class="comment">#视频标签</span></span><br><span class="line">comment_count = [] <span class="comment">#评论数量</span></span><br><span class="line">description = [] <span class="comment">#视频描述</span></span><br><span class="line">cover_links = [] <span class="comment">#视频封面链接</span></span><br><span class="line">favorite = [] <span class="comment">#收藏数量</span></span><br><span class="line">duration = [] <span class="comment">#视频时长</span></span><br><span class="line">scores = [] <span class="comment">#视频排行榜得分</span></span><br><span class="line">pop = [] <span class="comment">#是否进入排行榜</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(channel_id)):</span><br><span class="line">    html = request_bilibili_rank(channel_id[j]).replace(<span class="string">&quot; &quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="comment">#每个视频信息在排行榜中是以json形式的文本展示的</span></span><br><span class="line">    rankList = <span class="string">r&#x27;&quot;rankList&quot;:(.*?),&quot;rankNote&quot;:&#x27;</span></span><br><span class="line">    pattern = re.<span class="built_in">compile</span>(rankList,re.S)</span><br><span class="line">    rankList = pattern.findall(html)</span><br><span class="line">    rankList = rankList[<span class="number">0</span>]</span><br><span class="line">    <span class="comment">#在python中false要改写为False，null要改写成None</span></span><br><span class="line">    rankList = rankList.replace(<span class="string">&#x27;false&#x27;</span>,<span class="string">&#x27;False&#x27;</span>)</span><br><span class="line">    rankList = rankList.replace(<span class="string">&#x27;null&#x27;</span>,<span class="string">&#x27;None&#x27;</span>)</span><br><span class="line">    rankList = <span class="built_in">eval</span>(rankList)</span><br><span class="line">    print((j+<span class="number">1</span>)/<span class="built_in">len</span>(channel_id)*<span class="number">100</span>,<span class="string">&quot;%&quot;</span>)</span><br><span class="line">    print(<span class="string">&#x27;-&#x27;</span>*<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> tqdm(rankList):</span><br><span class="line">        rank_dict = i</span><br><span class="line">        video_bv.append(rank_dict[<span class="string">&#x27;bvid&#x27;</span>])</span><br><span class="line">        tid.append(rank_dict[<span class="string">&#x27;tid&#x27;</span>])</span><br><span class="line"><span class="comment">#     stadardTime = time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, rank_dict[&#x27;ctime&#x27;])</span></span><br><span class="line">        publish_time.append(rank_dict[<span class="string">&#x27;ctime&#x27;</span>])</span><br><span class="line">        title.append(rank_dict[<span class="string">&#x27;title&#x27;</span>])</span><br><span class="line">        channel_title.append(rank_dict[<span class="string">&#x27;tname&#x27;</span>])</span><br><span class="line">        trending_data.append(<span class="string">&#x27;2022-02-04&#x27;</span>)</span><br><span class="line">        authors.append(rank_dict[<span class="string">&#x27;owner&#x27;</span>][<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">        views.append(rank_dict[<span class="string">&#x27;stat&#x27;</span>][<span class="string">&#x27;view&#x27;</span>])</span><br><span class="line">        danmaku.append(rank_dict[<span class="string">&#x27;stat&#x27;</span>][<span class="string">&#x27;danmaku&#x27;</span>])</span><br><span class="line">        favorite.append(rank_dict[<span class="string">&#x27;stat&#x27;</span>][<span class="string">&#x27;favorite&#x27;</span>])</span><br><span class="line">        likes.append(rank_dict[<span class="string">&#x27;stat&#x27;</span>][<span class="string">&#x27;like&#x27;</span>])</span><br><span class="line">        coins.append(rank_dict[<span class="string">&#x27;stat&#x27;</span>][<span class="string">&#x27;coin&#x27;</span>])</span><br><span class="line">        scores.append(rank_dict[<span class="string">&#x27;score&#x27;</span>])</span><br><span class="line">        shares.append(rank_dict[<span class="string">&#x27;stat&#x27;</span>][<span class="string">&#x27;share&#x27;</span>])</span><br><span class="line">        comment_count.append(rank_dict[<span class="string">&#x27;stat&#x27;</span>][<span class="string">&#x27;reply&#x27;</span>])</span><br><span class="line">        cover_links.append(rank_dict[<span class="string">&#x27;pic&#x27;</span>])</span><br><span class="line">        duration.append(rank_dict[<span class="string">&#x27;duration&#x27;</span>])</span><br><span class="line">        pop.append(<span class="number">1</span>)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<p>正如这段代码中所说的，一开始本来是打算搞个带历史数据的非官方数据，结果没想到非官方数据连BV号都不带，更不用说标签这些了。不过这个非官方数据还收集掉粉涨粉的排行，无聊的时候还是可以看看的。[2]<br>由于标签以及格式比较好的描述需要通过访问详情视频页面才能获取，为了减少访问次数过多引起的异常，我们首先不获取这两个属性，先通过排行榜页面获取其他属性，再通过BV号进行视频详情页面访问。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用try-except语句确保爬虫不会被中断</span></span><br><span class="line">Error_bv = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(video_bv):</span><br><span class="line">    headers = &#123;<span class="string">&quot;User-Agent&quot;</span>: random.choice(User_agent)&#125;</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        html_i = requests.get(<span class="string">&#x27;https://www.bilibili.com/video/&#x27;</span>+i, headers=headers, proxies=random.choice(proxy)).text.replace(<span class="string">&quot; &quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            keywords_text = <span class="string">r&#x27;name=&quot;keywords&quot;content=&quot;(.*?)&quot;&gt;&lt;&#x27;</span></span><br><span class="line">            pattern = re.<span class="built_in">compile</span>(keywords_text,re.S)</span><br><span class="line">            keywords_text = pattern.findall(html_i)[<span class="number">0</span>]</span><br><span class="line">            tags.append(keywords_text)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            tags.append(<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            desc_text = <span class="string">r&#x27;description&quot;content=&quot;(.*?)&quot;&gt;&lt;&#x27;</span></span><br><span class="line">            pattern = re.<span class="built_in">compile</span>(desc_text,re.S)</span><br><span class="line">            desc_text = pattern.findall(html_i)[<span class="number">0</span>]</span><br><span class="line">            description.append(desc_text)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            description.append(<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        Error_bv.append(i)</span><br><span class="line">        description.append(<span class="string">&quot;&quot;</span>)</span><br><span class="line">        tags.append(<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    time.sleep(random.random()+<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+<p>这个地方有个SSLError一直没能解决<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/HZNUAO"><img src="https://s4.ax1x.com/2022/02/04/HZNUAO.png" alt="HZNUAO.png"></a><br>由于这个这个Error出现频率极低(实测5/1500)，我直接进行了忽略处理，用except跳过了这个错误，并将对应的数据使用空白填补。<br>以上代码是对于正样本(流行视频)的采样，对于负样本的采样可以照葫芦画瓢。<br>需要注意的是负样本采样网址中它搞了一个jsonCallback的限制，而它的由来实际上是生成的16位随机数，这个确实抽象了点。[3]生成随机数的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">call_back = <span class="string">&#x27;jsonCallback_bili_&#x27;</span></span><br><span class="line">e = <span class="string">&#x27;%.16f&#x27;</span>% random.random()</span><br><span class="line">call_back = call_back + e.split(<span class="string">&#x27;.&#x27;</span>)[-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/HZyfeJ"><img src="https://s4.ax1x.com/2022/02/04/HZyfeJ.jpg" alt="HZyfeJ.jpg"></a><br>由此我们可以完成对负样本的采样。</p>
+<p>参考文献：<br>[1] <a target="_blank" rel="noopener" href="https://www.kaggle.com/datasnaek/youtube-new">https://www.kaggle.com/datasnaek/youtube-new</a><br>[2] <a target="_blank" rel="noopener" href="http://bz.feigua.cn/ranking/DailyHotVideo">http://bz.feigua.cn/ranking/DailyHotVideo</a><br>[3] <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45695453/article/details/105757919">https://blog.csdn.net/qq_45695453/article/details/105757919</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2022/02/03/研究数据集的创建/" target="_blank" title="毕业设计研究数据集的创建">http://xiangweixi.cn/2022/02/03/研究数据集的创建/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spyder/" rel="tag">Spyder</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/02/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          计算机系统漫游
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/06/21/%E5%85%B3%E4%BA%8E%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于矩阵求导</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav">None</ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2022 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2022 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

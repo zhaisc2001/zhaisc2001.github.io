@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>信息的表示与处理 | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="CSAPP" />
+  
+  
+  
+  
+  <meta name="description" content="信息存储虚拟内存是内存的抽象，机器级程序将内存视作非常大的字节数组； 十六进制表示一个字节可以用两个十六进制数字表示； 字数据大小字长为32位或64位，即4字节或8字节； 寻址和字节顺序在几乎所有机器上，多字节对象被存储为连续的字节序列，它的地址就是所使用的字节中最小的地址；大端法与小端法； 表示字符串C语言中字符串的本质是以null结尾的字符数组； 表示代码二进制代码是不兼容的； 布尔代数与或非">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信息的表示与处理">
+<meta property="og:url" content="http://xiangweixi.cn/2022/02/04/%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="信息存储虚拟内存是内存的抽象，机器级程序将内存视作非常大的字节数组； 十六进制表示一个字节可以用两个十六进制数字表示； 字数据大小字长为32位或64位，即4字节或8字节； 寻址和字节顺序在几乎所有机器上，多字节对象被存储为连续的字节序列，它的地址就是所使用的字节中最小的地址；大端法与小端法； 表示字符串C语言中字符串的本质是以null结尾的字符数组； 表示代码二进制代码是不兼容的； 布尔代数与或非">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-04T13:20:50.000Z">
+<meta property="article:modified_time" content="2022-02-08T00:23:34.022Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="CSAPP">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-信息的表示与处理" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      信息的表示与处理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2022/02/04/%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E5%A4%84%E7%90%86/" class="article-date">
+	  <time datetime="2022-02-04T13:20:50.000Z" itemprop="datePublished">2022-02-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="信息存储"><a href="#信息存储" class="headerlink" title="信息存储"></a>信息存储</h1><p>虚拟内存是内存的抽象，机器级程序将内存视作非常大的字节数组；</p>
+<h2 id="十六进制表示"><a href="#十六进制表示" class="headerlink" title="十六进制表示"></a>十六进制表示</h2><p>一个字节可以用两个十六进制数字表示；</p>
+<h2 id="字数据大小"><a href="#字数据大小" class="headerlink" title="字数据大小"></a>字数据大小</h2><p>字长为32位或64位，即4字节或8字节；</p>
+<h2 id="寻址和字节顺序"><a href="#寻址和字节顺序" class="headerlink" title="寻址和字节顺序"></a>寻址和字节顺序</h2><p>在几乎所有机器上，多字节对象被存储为连续的字节序列，它的地址就是所使用的字节中最小的地址；大端法与小端法；</p>
+<h2 id="表示字符串"><a href="#表示字符串" class="headerlink" title="表示字符串"></a>表示字符串</h2><p>C语言中字符串的本质是以null结尾的字符数组；</p>
+<h2 id="表示代码"><a href="#表示代码" class="headerlink" title="表示代码"></a>表示代码</h2><p>二进制代码是不兼容的；</p>
+<h2 id="布尔代数"><a href="#布尔代数" class="headerlink" title="布尔代数"></a>布尔代数</h2><p>与或非、异或</p>
+<h2 id="C当中的位级运算"><a href="#C当中的位级运算" class="headerlink" title="C当中的位级运算"></a>C当中的位级运算</h2><p>用一串二进制数字（掩码）去操作另一串二进制数字;老鼠喝毒药问题；</p>
+<h2 id="C语言中的逻辑运算"><a href="#C语言中的逻辑运算" class="headerlink" title="C语言中的逻辑运算"></a>C语言中的逻辑运算</h2><p>逻辑运算与位运算区别；短路特性；</p>
+<h2 id="C语言中的移位运算"><a href="#C语言中的移位运算" class="headerlink" title="C语言中的移位运算"></a>C语言中的移位运算</h2><p>逻辑右移和算术右移；</p>
+<h2 id="整数表示"><a href="#整数表示" class="headerlink" title="整数表示"></a>整数表示</h2><p>补码、原码和反码；</p>
+<h2 id="有符号与无符号的强制转换"><a href="#有符号与无符号的强制转换" class="headerlink" title="有符号与无符号的强制转换"></a>有符号与无符号的强制转换</h2><p>位模式不变，从补码转换为无符号编码；C语言中强制转换时，位拓展先改变大小，再进行类型转换；</p>
+<h1 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h1><h2 id="整数的加减法"><a href="#整数的加减法" class="headerlink" title="整数的加减法"></a>整数的加减法</h2><p>阿贝尔群：群的概念涉及到一个集合与一种运算法则，阿贝尔群则是在群的基础上运算规则满足交换律；</p>
+<h2 id="无符号数求反"><a href="#无符号数求反" class="headerlink" title="无符号数求反"></a>无符号数求反</h2><p>无符号数求反溢出时，用2^w^减去该数</p>
+<h2 id="补码加法"><a href="#补码加法" class="headerlink" title="补码加法"></a>补码加法</h2><p>溢出时，减去或加上2^w^</p>
+<h1 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h1><h2 id="IEEE浮点表示"><a href="#IEEE浮点表示" class="headerlink" title="IEEE浮点表示"></a>IEEE浮点表示</h2><p>符号、尾数、阶码<br>$$<br>V = (-1)^{s}*(1+M)*2^{E%(2^{k-1}-1)}<br>$$<br>规格化数与非规格化数使用不同公式；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2022/02/04/信息的表示与处理/" target="_blank" title="信息的表示与处理">http://xiangweixi.cn/2022/02/04/信息的表示与处理/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSAPP/" rel="tag">CSAPP</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/03/16/%E5%A4%8D%E8%AF%95%E8%8B%B1%E6%96%87%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/02/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">计算机系统漫游</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%AD%98%E5%82%A8"><span class="nav-number">1.</span> <span class="nav-text">信息存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.</span> <span class="nav-text">十六进制表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E6%95%B0%E6%8D%AE%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.2.</span> <span class="nav-text">字数据大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BB%E5%9D%80%E5%92%8C%E5%AD%97%E8%8A%82%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.3.</span> <span class="nav-text">寻址和字节顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.4.</span> <span class="nav-text">表示字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E4%BB%A3%E7%A0%81"><span class="nav-number">1.5.</span> <span class="nav-text">表示代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E4%BB%A3%E6%95%B0"><span class="nav-number">1.6.</span> <span class="nav-text">布尔代数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E5%BD%93%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BA%A7%E8%BF%90%E7%AE%97"><span class="nav-number">1.7.</span> <span class="nav-text">C当中的位级运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="nav-number">1.8.</span> <span class="nav-text">C语言中的逻辑运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="nav-number">1.9.</span> <span class="nav-text">C语言中的移位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.10.</span> <span class="nav-text">整数表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E7%AC%A6%E5%8F%B7%E4%B8%8E%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9A%84%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.11.</span> <span class="nav-text">有符号与无符号的强制转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%9A%84%E5%8A%A0%E5%87%8F%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">整数的加减法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0%E6%B1%82%E5%8F%8D"><span class="nav-number">2.2.</span> <span class="nav-text">无符号数求反</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E7%A0%81%E5%8A%A0%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">补码加法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IEEE%E6%B5%AE%E7%82%B9%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.1.</span> <span class="nav-text">IEEE浮点表示</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2022 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2022 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
