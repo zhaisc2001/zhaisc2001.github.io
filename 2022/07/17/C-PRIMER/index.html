@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>c++_primer | Sisicca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="C++" />
+  
+  
+  
+  
+  <meta name="description" content="C++ primer1.BeginingC++至少要包含一个名字为main的函数cin,cout,cerror,clog cin.getline(char *buffer, int N);cin.get(char&amp; var);cin.ignore();  cin.ignore(numeric_limits::max(),’\n’):跳过流上限的输入，直到换行符   cout.write(c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++_PRIMER">
+<meta property="og:url" content="http://xiangweixi.cn/2022/07/17/C-PRIMER/index.html">
+<meta property="og:site_name" content="Sisicca">
+<meta property="og:description" content="C++ primer1.BeginingC++至少要包含一个名字为main的函数cin,cout,cerror,clog cin.getline(char *buffer, int N);cin.get(char&amp; var);cin.ignore();  cin.ignore(numeric_limits::max(),’\n’):跳过流上限的输入，直到换行符   cout.write(c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-17T01:52:58.000Z">
+<meta property="article:modified_time" content="2022-07-17T01:53:32.713Z">
+<meta property="article:author" content="Uestc_Sicca">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("/css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("/css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("/css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+  
+<script src="/js/bootstrap.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    
+<link rel="stylesheet" href="/css/dialog.css">
+
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="index.search" />
+    <button type="submit" class="search-form-submit"></button>
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:xiangweixi.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-C-PRIMER" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      C++_PRIMER
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2022/07/17/C-PRIMER/" class="article-date">
+	  <time datetime="2022-07-17T01:52:58.000Z" itemprop="datePublished">2022-07-17</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/technology/">technology</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="C-primer"><a href="#C-primer" class="headerlink" title="C++ primer"></a>C++ primer</h1><h2 id="1-Begining"><a href="#1-Begining" class="headerlink" title="1.Begining"></a>1.Begining</h2><h3 id="C-至少要包含一个名字为main的函数"><a href="#C-至少要包含一个名字为main的函数" class="headerlink" title="C++至少要包含一个名字为main的函数"></a>C++至少要包含一个名字为main的函数</h3><h3 id="cin-cout-cerror-clog"><a href="#cin-cout-cerror-clog" class="headerlink" title="cin,cout,cerror,clog"></a>cin,cout,cerror,clog</h3><ul>
+<li><p>cin.getline(char *buffer, int N);cin.get(char&amp; var);cin.ignore();</p>
+<ul>
+<li>cin.ignore(numeric_limits<streamsize>::max(),’\n’):跳过流上限的输入，直到换行符</streamsize></li>
+</ul>
+</li>
+<li><p>cout.write(char *str, int n);cout.put(char &amp;ch);cout.precision(int n)</p>
+<ul>
+<li>cout &lt;&lt; “Name : “ &lt;&lt; name &lt;&lt; endl<br>   &lt;&lt; “Age : “ &lt;&lt; age &lt;&lt; endl;</li>
+</ul>
+</li>
+<li><p>cerr: is used when we need to display the error message immediately and does not store the error message to display later</p>
+</li>
+</ul>
+<h3 id="flow-of-control"><a href="#flow-of-control" class="headerlink" title="flow of control"></a>flow of control</h3><ul>
+<li>++a,a++?</li>
+<li>val in for header is local</li>
+<li>reading an unknown number of inputs</li>
+</ul>
+<h3 id="class"><a href="#class" class="headerlink" title="class"></a>class</h3><ul>
+<li>#include “Sales_item.h”</li>
+<li>member functions = methods</li>
+</ul>
+<h2 id="2-Variable-and-basic-types"><a href="#2-Variable-and-basic-types" class="headerlink" title="2.Variable and basic types"></a>2.Variable and basic types</h2><h3 id="char-is-unsigned-on-some-machines-and-signed-on-others"><a href="#char-is-unsigned-on-some-machines-and-signed-on-others" class="headerlink" title="char is unsigned on some machines and signed on others."></a>char is unsigned on some machines and signed on others.</h3><ul>
+<li>char:’’,string:””</li>
+</ul>
+<h3 id="assign-an-out-of-range-value-to-an-object-of-signed-type-result-is-undefined"><a href="#assign-an-out-of-range-value-to-an-object-of-signed-type-result-is-undefined" class="headerlink" title="assign an out-of-range value to an object  of signed type, result is undefined."></a>assign an out-of-range value to an object  of signed type, result is undefined.</h3><h3 id="list-initialization"><a href="#list-initialization" class="headerlink" title="list initialization"></a>list initialization</h3><h3 id="Variable-names-lower-case-classes-we-define-begins-with-an-uppercase-letter-multiple-words-should-be-distinguished"><a href="#Variable-names-lower-case-classes-we-define-begins-with-an-uppercase-letter-multiple-words-should-be-distinguished" class="headerlink" title="Variable names:lower case;classes we define begins with an uppercase letter;multiple words should be distinguished."></a>Variable names:lower case;classes we define begins with an uppercase letter;multiple words should be distinguished.</h3><h3 id="cannot-define-a-reference-to-a-reference"><a href="#cannot-define-a-reference-to-a-reference" class="headerlink" title="cannot define a reference to a reference"></a>cannot define a reference to a reference</h3><h3 id="void-pointers"><a href="#void-pointers" class="headerlink" title="void* pointers"></a>void* pointers</h3><h3 id="reference-is-not-a-object"><a href="#reference-is-not-a-object" class="headerlink" title="reference is not a object"></a>reference is not a object</h3><ul>
+<li>a const type must be explicitly initialized.</li>
+</ul>
+<h3 id="constant-expression-depends-on-types-and-initializers"><a href="#constant-expression-depends-on-types-and-initializers" class="headerlink" title="constant expression depends on types and initializers."></a>constant expression depends on types and initializers.</h3><h3 id="auto-ordinarily-ignores-top-level-const"><a href="#auto-ordinarily-ignores-top-level-const" class="headerlink" title="auto ordinarily ignores top-level const."></a>auto ordinarily ignores top-level const.</h3><h2 id="3-string-vector-array"><a href="#3-string-vector-array" class="headerlink" title="3.string,vector,array"></a>3.string,vector,array</h2><h3 id="Don’t-use-for-loop-if-the-size-of-vector-changes-in-the-iteration"><a href="#Don’t-use-for-loop-if-the-size-of-vector-changes-in-the-iteration" class="headerlink" title="Don’t use for loop if the size of vector changes in the iteration."></a>Don’t use for loop if the size of vector changes in the iteration.</h3><h3 id="in-vector-subscripting-doesn’t-add-elements"><a href="#in-vector-subscripting-doesn’t-add-elements" class="headerlink" title="in vector, subscripting doesn’t add elements."></a>in vector, subscripting doesn’t add elements.</h3><h3 id="in-mac-os-use-control-d-to-end-the-cin-input"><a href="#in-mac-os-use-control-d-to-end-the-cin-input" class="headerlink" title="in mac os, use control+d to end the cin input."></a>in mac os, use control+d to end the cin input.</h3><h3 id="iterator-denotes-element-or-the-position-one-past-the-last-element-of-the-container"><a href="#iterator-denotes-element-or-the-position-one-past-the-last-element-of-the-container" class="headerlink" title="iterator: denotes element or the position one past the last element of the container."></a>iterator: denotes element or the position one past the last element of the container.</h3><ul>
+<li>dereference the iterators to get the value.</li>
+<li>loops that use iterators should not add elements to the container.</li>
+</ul>
+<h3 id="array-dimension-must-be-a-const-expression"><a href="#array-dimension-must-be-a-const-expression" class="headerlink" title="array: dimension must be a const expression"></a>array: dimension must be a const expression</h3><ul>
+<li><p>initialize character arrays from string literal remember that string ends with a null character.</p>
+</li>
+<li><p>No assignment or copy for arrays</p>
+</li>
+<li><p>read array from inside out to better understand the array type.</p>
+</li>
+<li><p>most places when we use arrays, the compiler automatically converts it to a pointer to its first element.array=&amp;array[0]</p>
+<ul>
+<li>this conversion doesn’t happen when we use decltype().</li>
+</ul>
+</li>
+<li><p>array subscript index can be negative.</p>
+<ul>
+<li>int *p[4] int(*p)[4]</li>
+<li>typedef int int_array[4]</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-expressions"><a href="#4-expressions" class="headerlink" title="4.expressions"></a>4.expressions</h2><h3 id="bool-values-shouldn’t-be-used-for-computation"><a href="#bool-values-shouldn’t-be-used-for-computation" class="headerlink" title="bool values shouldn’t be used for computation"></a>bool values shouldn’t be used for computation</h3><ul>
+<li>i&lt;j&lt;k:compares k to the bool result of i&lt;j, it means it’s always true when k &gt; 1</li>
+</ul>
+<h3 id="assignment-has-low-precedence"><a href="#assignment-has-low-precedence" class="headerlink" title="assignment has low precedence"></a>assignment has low precedence</h3><h3 id="The-difference-between-i-and-i"><a href="#The-difference-between-i-and-i" class="headerlink" title="The difference between i++ and ++i"></a>The difference between i++ and ++i</h3><ul>
+<li>*i++ means *(i++)</li>
+</ul>
+<h3 id="sizeof-a-dereferenced-pointer-need-not-to-be-a-valid-pointer"><a href="#sizeof-a-dereferenced-pointer-need-not-to-be-a-valid-pointer" class="headerlink" title="sizeof a dereferenced pointer need not to be a valid pointer"></a>sizeof a dereferenced pointer need not to be a valid pointer</h3><h3 id="array-doesn’t-convert-to-pointer-when-used-with-decltype-sizeof-amp-typeid"><a href="#array-doesn’t-convert-to-pointer-when-used-with-decltype-sizeof-amp-typeid" class="headerlink" title="array doesn’t convert to pointer when used with decltype(),sizeof(),&amp;,typeid"></a>array doesn’t convert to pointer when used with decltype(),sizeof(),&amp;,typeid</h3><h2 id="5-statement"><a href="#5-statement" class="headerlink" title="5.statement"></a>5.statement</h2><h3 id="switch-case-A-break-default-break"><a href="#switch-case-A-break-default-break" class="headerlink" title="switch(){case A: break;default:break;}"></a>switch(){case A: break;default:break;}</h3><h3 id="do-while-loop-doesn’t-allow-declaration-in-condition"><a href="#do-while-loop-doesn’t-allow-declaration-in-condition" class="headerlink" title="do while loop doesn’t allow declaration in condition"></a>do while loop doesn’t allow declaration in condition</h3><h3 id="if-throw-try-catch"><a href="#if-throw-try-catch" class="headerlink" title="if-throw;try-catch"></a>if-throw;try-catch</h3><h2 id="6-functions"><a href="#6-functions" class="headerlink" title="6.functions"></a>6.functions</h2><h3 id="call-operator"><a href="#call-operator" class="headerlink" title="call operator()"></a>call operator()</h3><h3 id="a-function-can’t-return-an-array-type-or-a-function-type"><a href="#a-function-can’t-return-an-array-type-or-a-function-type" class="headerlink" title="a function can’t return an array type or a function type."></a>a function can’t return an array type or a function type.</h3><h3 id="local-static-object-they-are-destroyed-when-program-terminates"><a href="#local-static-object-they-are-destroyed-when-program-terminates" class="headerlink" title="local static object: they are destroyed when program terminates."></a>local static object: they are destroyed when program terminates.</h3><h3 id="references-and-pointers-arguments-can-change-the-values-of-the-objects-through-function"><a href="#references-and-pointers-arguments-can-change-the-values-of-the-objects-through-function" class="headerlink" title="references and pointers arguments can change the values of the objects through function."></a>references and pointers arguments can change the values of the objects through function.</h3><ul>
+<li>use reference to const when possible</li>
+</ul>
+<h3 id="ways-to-make-the-function-know-the-size-of-array"><a href="#ways-to-make-the-function-know-the-size-of-array" class="headerlink" title="ways to make the function know the size of array"></a>ways to make the function know the size of array</h3><ul>
+<li>end marker</li>
+<li>standard library conventions</li>
+<li>explicitly pass a size parameter</li>
+</ul>
+<h3 id="initializer-list"><a href="#initializer-list" class="headerlink" title="initializer_list"></a>initializer_list</h3><ul>
+<li>the elements are const values</li>
+</ul>
+<h3 id="Don’t-return-a-reference-or-a-pointer-to-the-local-object"><a href="#Don’t-return-a-reference-or-a-pointer-to-the-local-object" class="headerlink" title="Don’t return a reference or a pointer to the local object"></a>Don’t return a reference or a pointer to the local object</h3><h3 id="The-main-function-may-not-call-itself"><a href="#The-main-function-may-not-call-itself" class="headerlink" title="The main function may not call itself"></a>The main function may not call itself</h3><h3 id="int-func-int-i-10"><a href="#int-func-int-i-10" class="headerlink" title="int (*func(int i))[10]"></a>int (*func(int i))[10]</h3><ul>
+<li><p>auto func(int i)-&gt;int(*)[10]</p>
+<ul>
+<li>decltype(array) *func(int i)</li>
+</ul>
+</li>
+</ul>
+<h3 id="overloaded-function-same-name-but-different-parameters"><a href="#overloaded-function-same-name-but-different-parameters" class="headerlink" title="overloaded function: same name but different parameters."></a>overloaded function: same name but different parameters.</h3><ul>
+<li>the main function may not be overloaded</li>
+</ul>
+<h3 id="local-declaration-hides-outer-declaration"><a href="#local-declaration-hides-outer-declaration" class="headerlink" title="local declaration hides outer declaration"></a>local declaration hides outer declaration</h3><h3 id="assert-do-nothing-if-the-condition-is-true"><a href="#assert-do-nothing-if-the-condition-is-true" class="headerlink" title="assert: do nothing if the condition is true."></a>assert: do nothing if the condition is true.</h3><h3 id="pointers-point-to-function-need-parameters-and-return-types"><a href="#pointers-point-to-function-need-parameters-and-return-types" class="headerlink" title="pointers point to function need parameters and return types"></a>pointers point to function need parameters and return types</h3><ul>
+<li>we can assign and call the function through pointers without dereferences</li>
+<li>the function in return type can’t convert to pointer automatically</li>
+</ul>
+<h2 id="7-class-types"><a href="#7-class-types" class="headerlink" title="7.class types"></a>7.class types</h2><h3 id="const-follows-the-parameter-list-means-this-is-a-pointer-to-const"><a href="#const-follows-the-parameter-list-means-this-is-a-pointer-to-const" class="headerlink" title="const follows the parameter list means this is a pointer to const"></a>const follows the parameter list means this is a pointer to const</h3><h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><ul>
+<li>can’t be declared</li>
+</ul>
+<h3 id="the-only-difference-between-class-and-struct-is-the-default-access-level"><a href="#the-only-difference-between-class-and-struct-is-the-default-access-level" class="headerlink" title="the only difference between class and struct is the default access level."></a>the only difference between class and struct is the default access level.</h3><h3 id="a-class-can-allow-another-class-or-function-to-access-its-nonpublic-members-by-make-that-class-or-function-a-friend"><a href="#a-class-can-allow-another-class-or-function-to-access-its-nonpublic-members-by-make-that-class-or-function-a-friend" class="headerlink" title="a class can allow another class or function to access its nonpublic members by make that class or function a friend"></a>a class can allow another class or function to access its nonpublic members by make that class or function a friend</h3><h3 id="a-mutable-data-number-is-never-const"><a href="#a-mutable-data-number-is-never-const" class="headerlink" title="a mutable data number is never const"></a>a mutable data number is never const</h3><h3 id="a-friend-declaration-affects-access-but-is-not-a-declaration"><a href="#a-friend-declaration-affects-access-but-is-not-a-declaration" class="headerlink" title="a friend declaration affects access but is not a declaration"></a>a friend declaration affects access but is not a declaration</h3><h3 id="must-use-a-constructor-initializer-list-to-provide-values-for-members-that-are-const-reference-or-of-a-class-type-that-doesn’t-have-a-default-constructor"><a href="#must-use-a-constructor-initializer-list-to-provide-values-for-members-that-are-const-reference-or-of-a-class-type-that-doesn’t-have-a-default-constructor" class="headerlink" title="must use a constructor initializer list to provide values for members that are const, reference, or of a class type that doesn’t have a default constructor."></a>must use a constructor initializer list to provide values for members that are const, reference, or of a class type that doesn’t have a default constructor.</h3><h3 id="a-constructor-that-supplies-default-arguments-for-all-its-parameters-also-define-the-default-constructor"><a href="#a-constructor-that-supplies-default-arguments-for-all-its-parameters-also-define-the-default-constructor" class="headerlink" title="a constructor that supplies default arguments for all its parameters also define the default constructor"></a>a constructor that supplies default arguments for all its parameters also define the default constructor</h3><h3 id="the-difference-between-Sales-item-obj-and-Sales-item-obj2"><a href="#the-difference-between-Sales-item-obj-and-Sales-item-obj2" class="headerlink" title="the difference between Sales_item obj() and Sales_item obj2"></a>the difference between Sales_item obj() and Sales_item obj2</h3><h3 id="member-definition-has-access-to-the-private-member-of-the-class"><a href="#member-definition-has-access-to-the-private-member-of-the-class" class="headerlink" title="member definition has access to the private member of the class"></a>member definition has access to the private member of the class</h3><h2 id="8-the-IO-library"><a href="#8-the-IO-library" class="headerlink" title="8.the IO library"></a>8.the IO library</h2><h3 id="io-classes-which-are-designed-to-support-languages-that-use-w-char-their-names-begin-with-w"><a href="#io-classes-which-are-designed-to-support-languages-that-use-w-char-their-names-begin-with-w" class="headerlink" title="io classes which are designed to support languages that use w_char, their names begin with w"></a>io classes which are designed to support languages that use w_char, their names begin with w</h3><h3 id="no-copy-or-assign-io-classes-no-parameter-or-return-type"><a href="#no-copy-or-assign-io-classes-no-parameter-or-return-type" class="headerlink" title="no copy or assign io classes, no parameter or return type"></a>no copy or assign io classes, no parameter or return type</h3><h3 id="Buffers-are-not-flushed-if-the-program-crashes"><a href="#Buffers-are-not-flushed-if-the-program-crashes" class="headerlink" title="Buffers are not flushed if the program crashes"></a>Buffers are not flushed if the program crashes</h3><h3 id="the-only-way-to-preserve-the-existing-data-in-a-file-opened-by-ostream-is-to-specify-app-or-in-explicitly"><a href="#the-only-way-to-preserve-the-existing-data-in-a-file-opened-by-ostream-is-to-specify-app-or-in-explicitly" class="headerlink" title="the only way to preserve the existing data in a file opened by ostream is to specify app or in explicitly"></a>the only way to preserve the existing data in a file opened by ostream is to specify app or in explicitly</h3><h2 id="9-sequential-containers"><a href="#9-sequential-containers" class="headerlink" title="9.sequential containers"></a>9.sequential containers</h2><h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><ul>
+<li>flexible size, fast random access, add or insert elements in the middle takes time</li>
+</ul>
+<h3 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h3><ul>
+<li>double-ended queue, fast random access, fast delete/insert at front or back</li>
+</ul>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><ul>
+<li>double linked list, only bidirectional access, fast delete/insert any point in the list</li>
+</ul>
+<h3 id="forward-list"><a href="#forward-list" class="headerlink" title="forward_list"></a>forward_list</h3><ul>
+<li>singly linked list, only sequential access in one direction, fast delete/insert any point in the list</li>
+<li>doesn’t have size operation</li>
+</ul>
+<h3 id="array"><a href="#array" class="headerlink" title="array"></a>array</h3><ul>
+<li>fixed-size, faa, can’t delete or insert element</li>
+<li>can’t use array a(b,e) to initialize arrays</li>
+<li>the size is part of array’s type</li>
+</ul>
+<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><ul>
+<li>similar vector that contains character, faa, fast delete/insert at the back</li>
+</ul>
+<h3 id="c-begin-can-get-a-const-iterator-if-elements-in-c-are-const"><a href="#c-begin-can-get-a-const-iterator-if-elements-in-c-are-const" class="headerlink" title="c.begin() can get a const_iterator if elements in c are const"></a>c.begin() can get a const_iterator if elements in c are const</h3><h3 id="the-default-constructor-initialize-an-empty-container-of-the-specified-type-except-array"><a href="#the-default-constructor-initialize-an-empty-container-of-the-specified-type-except-array" class="headerlink" title="the default constructor initialize an empty container of the specified type except array"></a>the default constructor initialize an empty container of the specified type except array</h3><h3 id="create-a-copy-of-a-container-to-initialize-container-types-and-element-types-must-match-while-use-iterators-to-initialize-just-need-element-types-can-be-converted"><a href="#create-a-copy-of-a-container-to-initialize-container-types-and-element-types-must-match-while-use-iterators-to-initialize-just-need-element-types-can-be-converted" class="headerlink" title="create a copy of a container to initialize, container types and element types must match, while use iterators to initialize just need element types can be converted"></a>create a copy of a container to initialize, container types and element types must match, while use iterators to initialize just need element types can be converted</h3><p><em>XMind: ZEN - Trial Version</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Uestc_Sicca</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2022/07/17/C-PRIMER/" target="_blank" title="C++_PRIMER">http://xiangweixi.cn/2022/07/17/C-PRIMER/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/02/04/%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E5%A4%84%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">信息的表示与处理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-primer"><span class="nav-number">1.</span> <span class="nav-text">C++ primer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Begining"><span class="nav-number">1.1.</span> <span class="nav-text">1.Begining</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-%E8%87%B3%E5%B0%91%E8%A6%81%E5%8C%85%E5%90%AB%E4%B8%80%E4%B8%AA%E5%90%8D%E5%AD%97%E4%B8%BAmain%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.1.</span> <span class="nav-text">C++至少要包含一个名字为main的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cin-cout-cerror-clog"><span class="nav-number">1.1.2.</span> <span class="nav-text">cin,cout,cerror,clog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flow-of-control"><span class="nav-number">1.1.3.</span> <span class="nav-text">flow of control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class"><span class="nav-number">1.1.4.</span> <span class="nav-text">class</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Variable-and-basic-types"><span class="nav-number">1.2.</span> <span class="nav-text">2.Variable and basic types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#char-is-unsigned-on-some-machines-and-signed-on-others"><span class="nav-number">1.2.1.</span> <span class="nav-text">char is unsigned on some machines and signed on others.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#assign-an-out-of-range-value-to-an-object-of-signed-type-result-is-undefined"><span class="nav-number">1.2.2.</span> <span class="nav-text">assign an out-of-range value to an object  of signed type, result is undefined.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list-initialization"><span class="nav-number">1.2.3.</span> <span class="nav-text">list initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variable-names-lower-case-classes-we-define-begins-with-an-uppercase-letter-multiple-words-should-be-distinguished"><span class="nav-number">1.2.4.</span> <span class="nav-text">Variable names:lower case;classes we define begins with an uppercase letter;multiple words should be distinguished.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cannot-define-a-reference-to-a-reference"><span class="nav-number">1.2.5.</span> <span class="nav-text">cannot define a reference to a reference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void-pointers"><span class="nav-number">1.2.6.</span> <span class="nav-text">void* pointers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference-is-not-a-object"><span class="nav-number">1.2.7.</span> <span class="nav-text">reference is not a object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constant-expression-depends-on-types-and-initializers"><span class="nav-number">1.2.8.</span> <span class="nav-text">constant expression depends on types and initializers.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auto-ordinarily-ignores-top-level-const"><span class="nav-number">1.2.9.</span> <span class="nav-text">auto ordinarily ignores top-level const.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-string-vector-array"><span class="nav-number">1.3.</span> <span class="nav-text">3.string,vector,array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Don%E2%80%99t-use-for-loop-if-the-size-of-vector-changes-in-the-iteration"><span class="nav-number">1.3.1.</span> <span class="nav-text">Don’t use for loop if the size of vector changes in the iteration.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#in-vector-subscripting-doesn%E2%80%99t-add-elements"><span class="nav-number">1.3.2.</span> <span class="nav-text">in vector, subscripting doesn’t add elements.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#in-mac-os-use-control-d-to-end-the-cin-input"><span class="nav-number">1.3.3.</span> <span class="nav-text">in mac os, use control+d to end the cin input.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iterator-denotes-element-or-the-position-one-past-the-last-element-of-the-container"><span class="nav-number">1.3.4.</span> <span class="nav-text">iterator: denotes element or the position one past the last element of the container.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array-dimension-must-be-a-const-expression"><span class="nav-number">1.3.5.</span> <span class="nav-text">array: dimension must be a const expression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-expressions"><span class="nav-number">1.4.</span> <span class="nav-text">4.expressions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bool-values-shouldn%E2%80%99t-be-used-for-computation"><span class="nav-number">1.4.1.</span> <span class="nav-text">bool values shouldn’t be used for computation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#assignment-has-low-precedence"><span class="nav-number">1.4.2.</span> <span class="nav-text">assignment has low precedence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-difference-between-i-and-i"><span class="nav-number">1.4.3.</span> <span class="nav-text">The difference between i++ and ++i</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sizeof-a-dereferenced-pointer-need-not-to-be-a-valid-pointer"><span class="nav-number">1.4.4.</span> <span class="nav-text">sizeof a dereferenced pointer need not to be a valid pointer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array-doesn%E2%80%99t-convert-to-pointer-when-used-with-decltype-sizeof-amp-typeid"><span class="nav-number">1.4.5.</span> <span class="nav-text">array doesn’t convert to pointer when used with decltype(),sizeof(),&amp;,typeid</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-statement"><span class="nav-number">1.5.</span> <span class="nav-text">5.statement</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#switch-case-A-break-default-break"><span class="nav-number">1.5.1.</span> <span class="nav-text">switch(){case A: break;default:break;}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#do-while-loop-doesn%E2%80%99t-allow-declaration-in-condition"><span class="nav-number">1.5.2.</span> <span class="nav-text">do while loop doesn’t allow declaration in condition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-throw-try-catch"><span class="nav-number">1.5.3.</span> <span class="nav-text">if-throw;try-catch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-functions"><span class="nav-number">1.6.</span> <span class="nav-text">6.functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#call-operator"><span class="nav-number">1.6.1.</span> <span class="nav-text">call operator()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-function-can%E2%80%99t-return-an-array-type-or-a-function-type"><span class="nav-number">1.6.2.</span> <span class="nav-text">a function can’t return an array type or a function type.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#local-static-object-they-are-destroyed-when-program-terminates"><span class="nav-number">1.6.3.</span> <span class="nav-text">local static object: they are destroyed when program terminates.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#references-and-pointers-arguments-can-change-the-values-of-the-objects-through-function"><span class="nav-number">1.6.4.</span> <span class="nav-text">references and pointers arguments can change the values of the objects through function.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ways-to-make-the-function-know-the-size-of-array"><span class="nav-number">1.6.5.</span> <span class="nav-text">ways to make the function know the size of array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#initializer-list"><span class="nav-number">1.6.6.</span> <span class="nav-text">initializer_list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Don%E2%80%99t-return-a-reference-or-a-pointer-to-the-local-object"><span class="nav-number">1.6.7.</span> <span class="nav-text">Don’t return a reference or a pointer to the local object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-main-function-may-not-call-itself"><span class="nav-number">1.6.8.</span> <span class="nav-text">The main function may not call itself</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#int-func-int-i-10"><span class="nav-number">1.6.9.</span> <span class="nav-text">int (*func(int i))[10]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overloaded-function-same-name-but-different-parameters"><span class="nav-number">1.6.10.</span> <span class="nav-text">overloaded function: same name but different parameters.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#local-declaration-hides-outer-declaration"><span class="nav-number">1.6.11.</span> <span class="nav-text">local declaration hides outer declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#assert-do-nothing-if-the-condition-is-true"><span class="nav-number">1.6.12.</span> <span class="nav-text">assert: do nothing if the condition is true.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pointers-point-to-function-need-parameters-and-return-types"><span class="nav-number">1.6.13.</span> <span class="nav-text">pointers point to function need parameters and return types</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-class-types"><span class="nav-number">1.7.</span> <span class="nav-text">7.class types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#const-follows-the-parameter-list-means-this-is-a-pointer-to-const"><span class="nav-number">1.7.1.</span> <span class="nav-text">const follows the parameter list means this is a pointer to const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor-NaN"><span class="nav-number">1.7.2.</span> <span class="nav-text">constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-only-difference-between-class-and-struct-is-the-default-access-level"><span class="nav-number">1.7.3.</span> <span class="nav-text">the only difference between class and struct is the default access level.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-class-can-allow-another-class-or-function-to-access-its-nonpublic-members-by-make-that-class-or-function-a-friend"><span class="nav-number">1.7.4.</span> <span class="nav-text">a class can allow another class or function to access its nonpublic members by make that class or function a friend</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-mutable-data-number-is-never-const"><span class="nav-number">1.7.5.</span> <span class="nav-text">a mutable data number is never const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-friend-declaration-affects-access-but-is-not-a-declaration"><span class="nav-number">1.7.6.</span> <span class="nav-text">a friend declaration affects access but is not a declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#must-use-a-constructor-initializer-list-to-provide-values-for-members-that-are-const-reference-or-of-a-class-type-that-doesn%E2%80%99t-have-a-default-constructor"><span class="nav-number">1.7.7.</span> <span class="nav-text">must use a constructor initializer list to provide values for members that are const, reference, or of a class type that doesn’t have a default constructor.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-constructor-that-supplies-default-arguments-for-all-its-parameters-also-define-the-default-constructor"><span class="nav-number">1.7.8.</span> <span class="nav-text">a constructor that supplies default arguments for all its parameters also define the default constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-difference-between-Sales-item-obj-and-Sales-item-obj2"><span class="nav-number">1.7.9.</span> <span class="nav-text">the difference between Sales_item obj() and Sales_item obj2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#member-definition-has-access-to-the-private-member-of-the-class"><span class="nav-number">1.7.10.</span> <span class="nav-text">member definition has access to the private member of the class</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-the-IO-library"><span class="nav-number">1.8.</span> <span class="nav-text">8.the IO library</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#io-classes-which-are-designed-to-support-languages-that-use-w-char-their-names-begin-with-w"><span class="nav-number">1.8.1.</span> <span class="nav-text">io classes which are designed to support languages that use w_char, their names begin with w</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#no-copy-or-assign-io-classes-no-parameter-or-return-type"><span class="nav-number">1.8.2.</span> <span class="nav-text">no copy or assign io classes, no parameter or return type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffers-are-not-flushed-if-the-program-crashes"><span class="nav-number">1.8.3.</span> <span class="nav-text">Buffers are not flushed if the program crashes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-only-way-to-preserve-the-existing-data-in-a-file-opened-by-ostream-is-to-specify-app-or-in-explicitly"><span class="nav-number">1.8.4.</span> <span class="nav-text">the only way to preserve the existing data in a file opened by ostream is to specify app or in explicitly</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-sequential-containers"><span class="nav-number">1.9.</span> <span class="nav-text">9.sequential containers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vector"><span class="nav-number">1.9.1.</span> <span class="nav-text">vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deque"><span class="nav-number">1.9.2.</span> <span class="nav-text">deque</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">1.9.3.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#forward-list"><span class="nav-number">1.9.4.</span> <span class="nav-text">forward_list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array"><span class="nav-number">1.9.5.</span> <span class="nav-text">array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string"><span class="nav-number">1.9.6.</span> <span class="nav-text">string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-begin-can-get-a-const-iterator-if-elements-in-c-are-const"><span class="nav-number">1.9.7.</span> <span class="nav-text">c.begin() can get a const_iterator if elements in c are const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-default-constructor-initialize-an-empty-container-of-the-specified-type-except-array"><span class="nav-number">1.9.8.</span> <span class="nav-text">the default constructor initialize an empty container of the specified type except array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#create-a-copy-of-a-container-to-initialize-container-types-and-element-types-must-match-while-use-iterators-to-initialize-just-need-element-types-can-be-converted"><span class="nav-number">1.9.9.</span> <span class="nav-text">create a copy of a container to initialize, container types and element types must match, while use iterators to initialize just need element types can be converted</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2020 - 2022 Sisicca All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+
+  
+<script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Sisicca
+          </div>
+          <div class="panel-body">
+            Copyright © 2022 Uestc_Sicca All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
