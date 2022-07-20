@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xiangweixi.cn/2022/07/20/Implementation-of-LinkList-C-version/</loc>
+    
+    <lastmod>2022-07-20</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xiangweixi.cn/about/index.html</loc>
     
     <lastmod>2022-07-20</lastmod>
@@ -614,6 +621,13 @@
   
   <url>
     <loc>http://xiangweixi.cn/tags/database/</loc>
+    <lastmod>2022-07-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xiangweixi.cn/tags/Data-Structure/</loc>
     <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

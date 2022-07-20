@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>dive_into_deeplearning | Sisicca</title>
+  <title>implementation of linklist(c++ version) | Sisicca</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="deep learning" />
+  <meta name="keywords" content="Data Structure" />
   
   
   
   
-  <meta name="description" content="prefaceTo successfully apply deep learning,you must understand how to cast a problem,the mathematics of modeling, the algorithms for fitting your models to data, and the engineering techniques to impl">
+  <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859#include&lt;iostream&gt;using namespace std;typedef struct Node&amp;#123;    int data;    struc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dive_into_deeplearning">
-<meta property="og:url" content="http://xiangweixi.cn/2022/07/17/dive-into-deeplearning/index.html">
+<meta property="og:title" content="Implementation of LinkList(C++ version)">
+<meta property="og:url" content="http://xiangweixi.cn/2022/07/20/Implementation-of-LinkList-C-version/index.html">
 <meta property="og:site_name" content="Sisicca">
-<meta property="og:description" content="prefaceTo successfully apply deep learning,you must understand how to cast a problem,the mathematics of modeling, the algorithms for fitting your models to data, and the engineering techniques to impl">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859#include&lt;iostream&gt;using namespace std;typedef struct Node&amp;#123;    int data;    struc">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-07-17T11:08:01.000Z">
-<meta property="article:modified_time" content="2022-07-17T11:15:56.522Z">
+<meta property="article:published_time" content="2022-07-20T13:34:05.000Z">
+<meta property="article:modified_time" content="2022-07-20T13:38:16.557Z">
 <meta property="article:author" content="Uestc_Sicca">
-<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="Data Structure">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Sisicca" type="application/atom+xml">
@@ -150,7 +150,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-dive-into-deeplearning" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-Implementation-of-LinkList-C-version" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -158,7 +158,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      dive_into_deeplearning
+      Implementation of LinkList(C++ version)
     </h1>
   
 
@@ -166,8 +166,8 @@
     
     <div class="article-meta">
       
-	<a href="/2022/07/17/dive-into-deeplearning/" class="article-date">
-	  <time datetime="2022-07-17T11:08:01.000Z" itemprop="datePublished">2022-07-17</time>
+	<a href="/2022/07/20/Implementation-of-LinkList-C-version/" class="article-date">
+	  <time datetime="2022-07-20T13:34:05.000Z" itemprop="datePublished">2022-07-20</time>
 	</a>
 
       
@@ -185,166 +185,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="preface"><a href="#preface" class="headerlink" title="preface"></a>preface</h2><h3 id="To-successfully-apply-deep-learning-you-must-understand-how-to-cast-a-problem-the-mathematics-of-modeling-the-algorithms-for-fitting-your-models-to-data-and-the-engineering-techniques-to-implement-it-all"><a href="#To-successfully-apply-deep-learning-you-must-understand-how-to-cast-a-problem-the-mathematics-of-modeling-the-algorithms-for-fitting-your-models-to-data-and-the-engineering-techniques-to-implement-it-all" class="headerlink" title="To successfully apply deep learning,you must understand how to cast a problem,the mathematics of modeling, the algorithms for fitting your models to data, and the engineering techniques to implement it all."></a>To successfully apply deep learning,you must understand how to cast a problem,the mathematics of modeling, the algorithms for fitting your models to data, and the engineering techniques to implement it all.</h3><h2 id="1-introduction"><a href="#1-introduction" class="headerlink" title="1.introduction"></a>1.introduction</h2><h3 id="speech-recognizing-system-example"><a href="#speech-recognizing-system-example" class="headerlink" title="speech recognizing system example"></a>speech recognizing system example</h3><ul>
-<li>model family and learning algorithm</li>
-<li>1.design a model;2.grab the data;3.update the model;4.check the model if good enough</li>
-</ul>
-<h3 id="key-components"><a href="#key-components" class="headerlink" title="key components"></a>key components</h3><ul>
-<li><p>data</p>
-<ul>
-<li>feature,label</li>
-<li>garbage in, garbage out</li>
-</ul>
-</li>
-<li><p>model</p>
-</li>
-<li><p>objective function</p>
-<ul>
-<li>lower is better(loss function)</li>
-<li>surrogate function</li>
-</ul>
-</li>
-<li><p>optimization algorithm</p>
-<ul>
-<li>gradient descent</li>
-</ul>
-</li>
-</ul>
-<h3 id="kinds-of-ml-problems"><a href="#kinds-of-ml-problems" class="headerlink" title="kinds of ml problems"></a>kinds of ml problems</h3><ul>
-<li><p>supervised</p>
-<ul>
-<li><p>regression</p>
-<ul>
-<li>linear regression:data corrupted by Gaussian noise</li>
-</ul>
-</li>
-<li><p>classification</p>
-<ul>
-<li>cross entropy</li>
-<li>hierarchical classification</li>
-</ul>
-</li>
-<li><p>tagging</p>
-<ul>
-<li>multi-class classification</li>
-</ul>
-</li>
-<li><p>search</p>
-<ul>
-<li><p>PageRank</p>
-<ul>
-<li>query-dependent relevance scores</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>recommender system</p>
-<ul>
-<li>personalization</li>
-<li>censored feedback</li>
-</ul>
-</li>
-<li><p>sequence learning</p>
-<ul>
-<li>tagging and parsing</li>
-<li>automatic speech recognition</li>
-<li>text to speech</li>
-<li>machine translation</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>unsupervised and self-supervised</p>
-<ul>
-<li><p>unsupervised</p>
-<ul>
-<li>clustering</li>
-<li>principle component analysis</li>
-<li>causality and probabilistic graphic model</li>
-<li>generative adversarial network</li>
-</ul>
-</li>
-<li><p>self-supervised</p>
-<ul>
-<li>leverages unlabeled data to provide supervision in training</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>interacting with an environment</p>
-<ul>
-<li><p>offline learning</p>
-</li>
-<li><p>distribution shift</p>
-</li>
-<li><p>reinforcement learning</p>
-<ul>
-<li>agent,environment;action,observation,reward,policy</li>
-<li>explore and exploit</li>
-<li>Markov decision process</li>
-<li>contextual bandit problem</li>
-<li>multi-armed bandit problem</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-preliminaries"><a href="#2-preliminaries" class="headerlink" title="2.preliminaries"></a>2.preliminaries</h2><h3 id="data-manipulation"><a href="#data-manipulation" class="headerlink" title="data manipulation"></a>data manipulation</h3><ul>
-<li>broadcasting mechanism</li>
-<li>saving memory</li>
-</ul>
-<h3 id="data-preprocessing"><a href="#data-preprocessing" class="headerlink" title="data preprocessing"></a>data preprocessing</h3><ul>
-<li><p>reading the dataset</p>
-<ul>
-<li><p>os</p>
-<ul>
-<li>makedir</li>
-<li>path.join</li>
-</ul>
-</li>
-<li><p>pandas</p>
-<ul>
-<li>read_csv</li>
-<li>iloc</li>
-<li>fillna</li>
-<li>get_dummies</li>
-</ul>
-</li>
-<li><p>torch</p>
-<ul>
-<li>tensor</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="linear-algebra"><a href="#linear-algebra" class="headerlink" title="linear algebra"></a>linear algebra</h3><h3 id="calculus"><a href="#calculus" class="headerlink" title="calculus"></a>calculus</h3><ul>
-<li>gradients</li>
-<li>automatic differentiation</li>
-<li>detaching computation</li>
-<li>back propagation</li>
-</ul>
-<h2 id="3-linear-neural-networks"><a href="#3-linear-neural-networks" class="headerlink" title="3.linear neural networks"></a>3.linear neural networks</h2><h3 id="linear-regression"><a href="#linear-regression" class="headerlink" title="linear regression"></a>linear regression</h3><ul>
-<li>assume y can be presented as weighted sum of x and noise, besides, noise is well-behaved(following a Gaussian distribution)</li>
-<li>weights and bias: affine transformation of inputs</li>
-<li>loss function: squared error</li>
-<li>linear regression has analytic solution(how to get it?)</li>
-<li>MSGD: sampling a random minibatch of examples every time we need to update, remember that we need an average gradient</li>
-<li>hyperparameter : adjust them on results accessed on a separate validation dataset</li>
-<li>we don’t need to find the real minimize of loss function because of generalization</li>
-<li>the different meaning of inference in deep learning and statistics</li>
-<li>maximum likelihood estimators: write it as log function</li>
-<li>from linear regression to deep networks</li>
-</ul>
-<h3 id="linear-regression-implementation-from-scratch"><a href="#linear-regression-implementation-from-scratch" class="headerlink" title="linear regression implementation from scratch"></a>linear regression implementation from scratch</h3><ul>
-<li>can be found on website : <a target="_blank" rel="noopener" href="https://colab.research.google.com/drive/19g79kWaCXUKuURw1bc0nY7PrNbfWJTt8?usp=sharing">https://colab.research.google.com/drive/19g79kWaCXUKuURw1bc0nY7PrNbfWJTt8?usp=sharing</a></li>
-</ul>
-<h3 id="softmax-regression"><a href="#softmax-regression" class="headerlink" title="softmax regression"></a>softmax regression</h3><ul>
-<li>hard assignment and soft assignment in classification problems</li>
-<li>labels with orders and one-hot encoding</li>
-</ul>
-<p><em>XMind: ZEN - Trial Version</em></p>
-
+        <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; Node;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">LinkList</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Time complexity is O(n)</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">GetItem</span><span class="params">(LinkList *L, <span class="keyword">int</span> i, <span class="keyword">int</span> *e)</span></span>&#123;</span><br><span class="line">    LinkList p = *L;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(j&lt;i &amp;&amp; p)&#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        ++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(j&gt;i || !p)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    *e = p-&gt;data;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Time complexity of insert and delte is O(1)</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListInsert</span><span class="params">(LinkList *L, <span class="keyword">int</span> i, <span class="keyword">int</span> e)</span></span>&#123;</span><br><span class="line">    LinkList p = *L;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">1</span>;</span><br><span class="line">    LinkList s;</span><br><span class="line">    <span class="keyword">while</span>(j&lt;i &amp;&amp; p)&#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        ++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(j&gt;i || !p)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    s = (LinkList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">    s-&gt;next = p-&gt;next;</span><br><span class="line">    s-&gt;data = e;</span><br><span class="line">    p-&gt;next = s;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListDelete</span><span class="params">(LinkList *L, <span class="keyword">int</span> i, <span class="keyword">int</span> *e)</span></span>&#123;</span><br><span class="line">    LinkList p = *L;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(j&lt;(i<span class="number">-1</span>) &amp;&amp; p)&#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        ++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(j&gt;(i<span class="number">-1</span>) || !(p-&gt;next-&gt;next))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    LinkList d = p-&gt;next;</span><br><span class="line">    *e = d-&gt;data;</span><br><span class="line">    p-&gt;next = d-&gt;next;</span><br><span class="line">    <span class="built_in">free</span>(d);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
@@ -357,7 +198,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2022/07/17/dive-into-deeplearning/" target="_blank" title="dive_into_deeplearning">http://xiangweixi.cn/2022/07/17/dive-into-deeplearning/</a>
+          <a href="/2022/07/20/Implementation-of-LinkList-C-version/" target="_blank" title="Implementation of LinkList(C++ version)">http://xiangweixi.cn/2022/07/20/Implementation-of-LinkList-C-version/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -397,7 +238,7 @@
       
       
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/deep-learning/" rel="tag">deep learning</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Structure/" rel="tag">Data Structure</a></li></ul>
 
       
 
@@ -407,19 +248,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/07/20/Implementation-of-LinkList-C-version/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Implementation of LinkList(C++ version)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/07/17/C-PRIMER/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/07/17/dive-into-deeplearning/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">C++_PRIMER</div>
+      <div class="article-nav-title">dive_into_deeplearning</div>
     </a>
   
 </nav>
@@ -433,7 +265,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#preface"><span class="nav-number">1.</span> <span class="nav-text">preface</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#To-successfully-apply-deep-learning-you-must-understand-how-to-cast-a-problem-the-mathematics-of-modeling-the-algorithms-for-fitting-your-models-to-data-and-the-engineering-techniques-to-implement-it-all"><span class="nav-number">1.1.</span> <span class="nav-text">To successfully apply deep learning,you must understand how to cast a problem,the mathematics of modeling, the algorithms for fitting your models to data, and the engineering techniques to implement it all.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-introduction"><span class="nav-number">2.</span> <span class="nav-text">1.introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#speech-recognizing-system-example"><span class="nav-number">2.1.</span> <span class="nav-text">speech recognizing system example</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key-components"><span class="nav-number">2.2.</span> <span class="nav-text">key components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kinds-of-ml-problems"><span class="nav-number">2.3.</span> <span class="nav-text">kinds of ml problems</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-preliminaries"><span class="nav-number">3.</span> <span class="nav-text">2.preliminaries</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#data-manipulation"><span class="nav-number">3.1.</span> <span class="nav-text">data manipulation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data-preprocessing"><span class="nav-number">3.2.</span> <span class="nav-text">data preprocessing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linear-algebra"><span class="nav-number">3.3.</span> <span class="nav-text">linear algebra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#calculus"><span class="nav-number">3.4.</span> <span class="nav-text">calculus</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-linear-neural-networks"><span class="nav-number">4.</span> <span class="nav-text">3.linear neural networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linear-regression"><span class="nav-number">4.1.</span> <span class="nav-text">linear regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linear-regression-implementation-from-scratch"><span class="nav-number">4.2.</span> <span class="nav-text">linear regression implementation from scratch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#softmax-regression"><span class="nav-number">4.3.</span> <span class="nav-text">softmax regression</span></a></li></ol></li></ol>
+        <ol class="nav">None</ol>
     
     </div>
   </aside>
