@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xiangweixi.cn/about/index.html</loc>
+    
+    <lastmod>2022-07-20</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xiangweixi.cn/2022/07/17/dive-into-deeplearning/</loc>
     
     <lastmod>2022-07-17</lastmod>
@@ -24,13 +31,6 @@
   
   <url>
     <loc>http://xiangweixi.cn/2021/06/21/%E5%85%B3%E4%BA%8E%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/</loc>
-    
-    <lastmod>2022-07-16</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xiangweixi.cn/about/index.html</loc>
     
     <lastmod>2022-07-16</lastmod>
     
@@ -459,7 +459,7 @@
 
   <url>
     <loc>http://xiangweixi.cn/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -467,154 +467,154 @@
   
   <url>
     <loc>http://xiangweixi.cn/tags/HFOs/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/hexo/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/C/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/calculus/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/unsupervised-learning/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/Docker/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/deep-learning/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/DCIC2021/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/LightGBM/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/reinforcement-learning/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/PAKDD2021/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/tensorflow/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/scrapy/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/research/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/CSAPP/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/EEG/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/research-plan/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/machine-learning/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/Spyder/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/NALAN/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/%E5%BD%B1%E8%AF%84/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/tags/database/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -623,21 +623,21 @@
   
   <url>
     <loc>http://xiangweixi.cn/categories/technology/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/categories/master-entrance-exam/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xiangweixi.cn/categories/how-s-life/</loc>
-    <lastmod>2022-07-17</lastmod>
+    <lastmod>2022-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
