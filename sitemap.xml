@@ -522,6 +522,13 @@
   </url>
   
   <url>
+    <loc>http://xiangweixi.cn/tags/Data-Structure/</loc>
+    <lastmod>2022-07-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://xiangweixi.cn/tags/DCIC2021/</loc>
     <lastmod>2022-07-21</lastmod>
     <changefreq>daily</changefreq>
@@ -550,14 +557,14 @@
   </url>
   
   <url>
-    <loc>http://xiangweixi.cn/tags/tensorflow/</loc>
+    <loc>http://xiangweixi.cn/tags/scrapy/</loc>
     <lastmod>2022-07-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://xiangweixi.cn/tags/scrapy/</loc>
+    <loc>http://xiangweixi.cn/tags/tensorflow/</loc>
     <lastmod>2022-07-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -578,6 +585,13 @@
   </url>
   
   <url>
+    <loc>http://xiangweixi.cn/tags/machine-learning/</loc>
+    <lastmod>2022-07-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://xiangweixi.cn/tags/EEG/</loc>
     <lastmod>2022-07-21</lastmod>
     <changefreq>daily</changefreq>
@@ -586,13 +600,6 @@
   
   <url>
     <loc>http://xiangweixi.cn/tags/research-plan/</loc>
-    <lastmod>2022-07-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xiangweixi.cn/tags/machine-learning/</loc>
     <lastmod>2022-07-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -621,13 +628,6 @@
   
   <url>
     <loc>http://xiangweixi.cn/tags/database/</loc>
-    <lastmod>2022-07-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xiangweixi.cn/tags/Data-Structure/</loc>
     <lastmod>2022-07-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
